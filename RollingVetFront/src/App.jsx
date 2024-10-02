@@ -9,14 +9,15 @@ import IniciarSesion from './views/IniciarSesion';
 import Registrarse from './views/Registrarse';
 import AdministrarPacientes from './views/AdministrarPacientes';
 import AdministrarTurnos from './views/AdministrarTurnos';
-
+import Header from './common/Header';
 
 function App() {
 
 
   return (
     <BrowserRouter className='bg-dark'>
-      <NavBarApp/>
+    
+      <NavBarApp/>  
         <Routes>
           <Route path='/' element={<Inicio/>}/>
           <Route path='/nosotros' element={<Nosotros />}/>

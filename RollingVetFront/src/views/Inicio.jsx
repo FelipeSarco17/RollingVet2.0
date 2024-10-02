@@ -1,8 +1,11 @@
 import React from 'react'
-
+import Header from '../common/Header'
 const Inicio = () => {
   return (
-    <div>Inicio</div>
+    <div>
+      <Header/>
+    </div>
+
   )
 }
 
