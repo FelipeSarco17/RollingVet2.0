@@ -1,34 +1,35 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import NavBarApp from './common/NavBarApp'
+import Inicio from './views/Inicio';
+import Nosotros from './views/Nosotros';
+import Contacto from './views/Contacto';
+import Planes from './views/Planes';
+import IniciarSesion from './views/IniciarSesion';
+import Registrarse from './views/Registrarse';
+import AdministrarPacientes from './views/AdministrarPacientes';
+import AdministrarTurnos from './views/AdministrarTurnos';
+
 
 function App() {
-  const [count, setCount] = useState(0)
+
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <BrowserRouter className='bg-dark'>
+      <NavBarApp/>
+        <Routes>
+          <Route path='/' element={<Inicio/>}/>
+          <Route path='/nosotros' element={<Nosotros />}/>
+          <Route path='/contacto' element={<Contacto />}/>
+          <Route path='/ingresar' element={<IniciarSesion/>}/>
+          <Route path='/registrarse' element={<Registrarse/>}/>
+          <Route path='/planes' element={<Planes />}/>
+          <Route path='/admin/gestionPacientes' element={<AdministrarPacientes/>}/>
+          <Route path='/admin/gestionTurnos' element={<AdministrarTurnos/>}/>
+          {/* <Route path='*' element={<ErrorScreen/>} /> */}
+          
+        </Routes>
+    </BrowserRouter>
   )
 }
 
