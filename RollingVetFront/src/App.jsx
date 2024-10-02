@@ -9,7 +9,7 @@ import IniciarSesion from './views/IniciarSesion';
 import Registrarse from './views/Registrarse';
 import AdministrarPacientes from './views/AdministrarPacientes';
 import AdministrarTurnos from './views/AdministrarTurnos';
-import Header from './common/Header';
+import Error404 from './views/Error404';
 
 function App() {
 
@@ -27,8 +27,7 @@ function App() {
           <Route path='/planes' element={<Planes />}/>
           <Route path='/admin/gestionPacientes' element={<AdministrarPacientes/>}/>
           <Route path='/admin/gestionTurnos' element={<AdministrarTurnos/>}/>
-          {/* <Route path='*' element={<ErrorScreen/>} /> */}
-          
+          <Route path='*' element={<Error404/>} />
         </Routes>
     </BrowserRouter>
   )
