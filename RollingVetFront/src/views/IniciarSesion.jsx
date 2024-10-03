@@ -1,10 +1,19 @@
 import React from 'react'
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import {useAuth} from '../contexts/AuthProvider'
+import { useNavigate } from 'react-router-dom';
+
 const IniciarSesion = () => {
 
+  const {validarUsuario,user} = useAuth();
+  const navigate = useNavigate()
   const { register, handleSubmit, formState: { errors }, reset } = useForm()
   
+  const onSubmit = async(obj)=>{
+     let res = await validarUsuario(obj);
+     navigate="/"
+  }
 
 
   return (
@@ -22,7 +31,7 @@ const IniciarSesion = () => {
           </div>
 
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form action="#" method="POST" className="space-y-6">
+            <form action="#" method="POST" className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
               <div>
                 <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                   Email
@@ -68,7 +77,7 @@ const IniciarSesion = () => {
                 <button
                   type="submit"
                   className="flex w-full justify-center rounded-md bg-rose-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                  onSubmit={handleSubmit()}
+                  
                 >
                   Ingresar
                 </button>

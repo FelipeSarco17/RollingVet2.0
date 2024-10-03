@@ -10,6 +10,7 @@ import Registrarse from './views/Registrarse';
 import AdministrarPacientes from './views/AdministrarPacientes';
 import AdministrarTurnos from './views/AdministrarTurnos';
 import Error404 from './views/Error404';
+import AuthProvider from './contexts/AuthProvider';
 
 
 
@@ -17,6 +18,9 @@ function App() {
 
 
   return (
+    <AuthProvider>
+
+    
     <BrowserRouter className='bg-dark'>
     
       <NavBarApp/>  
@@ -32,6 +36,7 @@ function App() {
           <Route path='*' element={<Error404/>} />
         </Routes>
     </BrowserRouter>
+    </AuthProvider>
   )
 }
 
