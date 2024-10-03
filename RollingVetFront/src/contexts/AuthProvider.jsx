@@ -15,15 +15,23 @@ export const useAuth = () => {
 const AuthProvider = ({children}) => {
 
     const [user,setUser] = useState(null);
+    const [authenticated,setAuthenticated] = useState(false);
 
     const validarUsuario = async(obj) =>{
-        let usuarioLogueado = await ingresoUsuario(obj);
-        setUser(usuarioLogueado);
+        try{
+            let usuarioLogueado = await ingresoUsuario(obj);
+            setUser(usuarioLogueado);
+            setAuthenticated(true);
+            
+            
+        }catch(error){
+            console.log(error.message);
+        }
+        
     }
 
-
     return (
-    <authContext.Provider value={{validarUsuario,setUser,user}}>
+    <authContext.Provider value={{validarUsuario,setUser,user,authenticated}}>
         {children}
     </authContext.Provider>
   )

@@ -4,11 +4,15 @@ import { Link, NavLink } from 'react-router-dom';
 import collapseIcon from "../assets/collapseIcon.svg"
 import calendarEditIcon from "../assets/calendarEditIcon.svg"
 import userEditIcon from "../assets/userEditIcon.svg"
+import userIcon from "../assets/userIcon.svg"
 import Container from 'react-bootstrap/Container';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import { useAuth } from '../contexts/AuthProvider';
+
 
 const NavBarApp = () => {
 
+    const {authenticated} = useAuth();
     const [menuOpen, useMenuOpen] = useState(false)
     const openMenu = () => {
         useMenuOpen(!menuOpen);
@@ -47,19 +51,21 @@ const NavBarApp = () => {
                         Contáctanos
                     </NavLink>
 
-                    <NavLink className="mx-4 text-lg mt-2" to="/admin/gestionPacientes">
-                        <img src={userEditIcon} alt="adminPacientesIcon" />
+                    <NavLink className="mx-4 mt-2" to="/admin/gestionPacientes">
+                        <img className='w-10' src={userEditIcon} alt="adminPacientesIcon" />
                     </NavLink>
 
-                    <NavLink className="mx-4 text-lg mt-2" to="/admin/gestionTurnos">
-                        <img src={calendarEditIcon} alt="adminTurnosIcon" />
+                    <NavLink className="mx-4 mt-2" to="/admin/gestionTurnos">
+                        <img className='w-10' src={calendarEditIcon} alt="adminTurnosIcon" />
                     </NavLink>
                 </div>
 
-
-                <NavLink className='p-1.5 text-black font-semibold bg-rose-500 rounded-md p-1 mt-2 lg:m-0 lg:me-4 ' to="/ingresar">
+                {authenticated? <NavLink className=" mx-4 mt-2"><img className=' w-10 lg:me-4' src={userIcon} alt="logoUser" /> </NavLink> : <NavLink className='p-1.5 text-black font-semibold bg-rose-500 rounded-md p-1 mt-2 lg:m-0 lg:me-4 ' to="/ingresar">
                     Iniciar Sesion
-                </NavLink>
+                </NavLink>}
+                
+                
+
             </Nav>
 
         </Navbar>

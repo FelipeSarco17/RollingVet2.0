@@ -12,7 +12,7 @@ const IniciarSesion = () => {
   
   const onSubmit = async(obj)=>{
      let res = await validarUsuario(obj);
-     navigate="/"
+     navigate("/");
   }
 
 
