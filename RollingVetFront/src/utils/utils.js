@@ -20,6 +20,14 @@ export const leerPacientes = async()=>{
 }
 
 
+export const registrarUsuario = async(obj)=>{
+
+    let res = await axios.post(`${urlPacientes}/crearPaciente`,obj);
+    return res.data;
+
+}
+
+
 
 
 

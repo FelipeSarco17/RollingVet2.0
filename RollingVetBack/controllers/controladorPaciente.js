@@ -60,7 +60,23 @@ const create = async (req, res) => {
     const { nombre, apellido, email, telefono, clave } = req.body;
     const nuevoPaciente = new Paciente({ nombre, apellido, email, telefono, clave });
     await nuevoPaciente.save();
-    return res.status(201).json({ msg: "Paciente registrado exitosamente.", paciente: nuevoPaciente })
+    
+    const usuario = await Paciente.findOne(email);
+    const usuarioLogueado = {
+        id: usuario._id,
+        nombre: usuario.nombre,
+        apellido: usuario.apellido,
+        email: usuario.email,
+        telefono: usuario.telefono,
+        admin: usuario.admin,
+        mascotasIDs: usuario.mascotasIDs,
+        estado: usuario.estado
+    }
+    const tokenPayload = usuarioLogueado;
+    const token = jwt.sign(tokenPayload,firma);
+    res.cookie("jwt",token);
+
+    return res.status(201).json(tokenPayload);
 }
 
 const update = async (req, res) => {

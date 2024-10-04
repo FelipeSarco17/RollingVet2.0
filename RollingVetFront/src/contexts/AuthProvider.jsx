@@ -1,6 +1,6 @@
 import React, { Children, useState } from 'react'
 import { useContext,createContext } from 'react'
-import { ingresoUsuario,leerPacientes } from '../utils/utils';
+import { ingresoUsuario,leerPacientes,registrarUsuario } from '../utils/utils';
 
 const authContext = createContext();
 export const useAuth = () => {
@@ -29,6 +29,17 @@ const AuthProvider = ({children}) => {
         }
         
     }
+
+    const registroUsuario = async(obj) =>{
+        try {
+            let usuarioNuevo = await registrarUsuario(obj);
+            setUser(usuarioNuevo);
+            setAuthenticated(true);
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
+
 
     return (
     <authContext.Provider value={{validarUsuario,setUser,user,authenticated}}>
