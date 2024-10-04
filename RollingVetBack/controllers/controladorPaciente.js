@@ -21,7 +21,16 @@ const login = async (req, res) => {
     try{
         let { email, password } = req.body;
         let usuario = await Paciente.findOne({ email })
-         
+        
+        if(!usuario) return res.status(400).json({mensaje:"Usuario no encontrado."})
+        
+        const contraseñaValida = (password == usuario.clave ); 
+
+
+        if(!contraseñaValida) return res.status(400).json({mensaje:"Contraseña incorrecta"})
+
+            
+
         if (password == usuario.clave) {
             
             

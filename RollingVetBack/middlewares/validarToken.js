@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken")
-const firma = process.env.JWT_SECRET_KEY;
+const firma = import.meta.env.JWT_SECRET_KEY;
 
 
 const validarPeticion = (req, res, next) => {
