@@ -1,5 +1,5 @@
-import axios from 'axios';
-
+import axios from './axios';
+import Cookies from "js-cookie"
 
 // const urlPacientes = import.meta.env.VITE_URL_PACIENTES;
 // const urlMascotas = import.meta.env.VITE_URL_MASCOTAS;
@@ -8,21 +8,23 @@ import axios from 'axios';
 const urlPacientes = "http://localhost:8080/api/pacientes"
 
 
+//FUNCIONES PACIENTE
+
 export const ingresoUsuario = async(obj)=>{
 
-    let res = await axios.post(`${urlPacientes}/ingresar`,obj);    
-    return res.data;
+    let res = await axios.post(`/pacientes/ingresar`,obj);    
+    return res;
 }
 
 export const leerPacientes = async()=>{
-    let pacientes = await axios.get(`${urlPacientes}`);
+    let pacientes = await axios.get(`/pacientes`);
     return pacientes.data;
 }
 
 
 export const registrarUsuario = async(obj)=>{
 
-    let res = await axios.post(`${urlPacientes}/crearPaciente`,obj);
+    let res = await axios.post(`/pacientes/crearPaciente`,obj);
     return res.data;
 
 }
@@ -30,6 +32,13 @@ export const registrarUsuario = async(obj)=>{
 
 
 
+
+//FUNCIONES TOKEN
+
+
+export const verificarToken = (token) =>{
+    // let res = await axios.get("")
+}
 
 
 

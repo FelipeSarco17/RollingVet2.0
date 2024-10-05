@@ -1,6 +1,7 @@
-import React, { Children, useState } from 'react'
+import React, { Children, useEffect, useState } from 'react'
 import { useContext,createContext } from 'react'
 import { ingresoUsuario,leerPacientes,registrarUsuario } from '../utils/utils';
+import Cookies from "js-cookie"
 
 const authContext = createContext();
 export const useAuth = () => {
@@ -17,12 +18,19 @@ const AuthProvider = ({children}) => {
     const [user,setUser] = useState(null);
     const [authenticated,setAuthenticated] = useState(false);
 
+    // useEffect(()=>{
+    //     const token = Cookies.get("access_token");
+
+    // },[])
+
     const validarUsuario = async(obj) =>{
         try{
             let usuarioLogueado = await ingresoUsuario(obj);
-            setUser(usuarioLogueado);
+          
+            setUser(usuarioLogueado.data);
             setAuthenticated(true);
-            
+            console.log(usuarioLogueado);
+              
             
         }catch(error){
             console.log(error.message);

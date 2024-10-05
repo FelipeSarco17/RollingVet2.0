@@ -18,4 +18,6 @@ Router.post("/activarPaciente/:id", enable)
 
 Router.post("/ingresar",login)
 
+// Router.get("/verificar",)
+
 module.exports = Router;

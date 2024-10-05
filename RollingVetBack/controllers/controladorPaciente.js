@@ -15,6 +15,18 @@ const getOne = async (req, res) => {
     return res.status(200).json({ paciente });
 }
 
+const verificarSesion = async(req,res) =>{
+
+    const {token} = req.cookies;
+
+    if (!token) return res.send(false);
+
+    jwt.verify(token,process.env.JWT_SECRET_KEY);
+
+
+}
+
+
 const login = async (req, res) => {
     
     
@@ -30,9 +42,6 @@ const login = async (req, res) => {
         if(!contraseñaValida) return res.status(400).json({mensaje:"Contraseña incorrecta"})
 
             
-
-        if (password == usuario.clave) {
-            
             
             const usuarioLogueado = {
                 id: usuario._id,
@@ -46,10 +55,19 @@ const login = async (req, res) => {
             }
 
             const tokenPayload = usuarioLogueado;
-            const token = jwt.sign(tokenPayload,firma);
-            res.cookie("jwt",token);
-            return res.status(200).json(tokenPayload);
-        }
+            const token = jwt.sign(tokenPayload,firma,{
+                expiresIn: '1d'
+            });
+            
+            res.cookie("jwt",token,{
+                sameSite:'none',
+                httpOnly:false,
+                secure:true,
+                priority:"high",
+              });
+            
+            return res.status(200).json({tokenPayload});
+        
 
     }catch(error){
         return res.status(500).json({message:"Error del servidor"});
