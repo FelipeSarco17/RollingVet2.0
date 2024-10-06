@@ -11,7 +11,8 @@ import AdministrarPacientes from './views/AdministrarPacientes';
 import AdministrarTurnos from './views/AdministrarTurnos';
 import Error404 from './views/Error404';
 import AuthProvider from './contexts/AuthProvider';
-
+import RutasProtegidasAdmin from './routes/RutasProtegidasAdmin'
+import { RutasProtegidasUser } from './routes/RutasProtegidasUser';
 
 
 function App() {
@@ -31,8 +32,18 @@ function App() {
           <Route path='/ingresar' element={<IniciarSesion/>}/>
           <Route path='/registrarse' element={<Registrarse/>}/>
           <Route path='/planes' element={<Planes />}/>
-          <Route path='/admin/gestionPacientes' element={<AdministrarPacientes/>}/>
-          <Route path='/admin/gestionTurnos' element={<AdministrarTurnos/>}/>
+          
+          <Route element={<RutasProtegidasUser/>}>
+          
+          </Route>
+          
+
+          <Route element={<RutasProtegidasAdmin/>}>
+            
+            <Route path='/admin/gestionPacientes' element={<AdministrarPacientes/>}/>
+            <Route path='/admin/gestionTurnos' element={<AdministrarTurnos/>}/>
+          </Route>
+          
           <Route path='*' element={<Error404/>} />
         </Routes>
     </BrowserRouter>

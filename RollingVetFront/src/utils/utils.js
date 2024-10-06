@@ -17,7 +17,7 @@ export const ingresoUsuario = async(obj)=>{
 }
 
 export const leerPacientes = async()=>{
-    let pacientes = await axios.get(`/pacientes`);
+    let pacientes = await axios.get(`/pacientes/obtenerTodos`);
     return pacientes.data;
 }
 
@@ -29,16 +29,16 @@ export const registrarUsuario = async(obj)=>{
 
 }
 
-
+export const verificarSesionIniciada = async()=>{
+    let res = await axios.get(`/pacientes/verificar`);
+    return res;
+}
 
 
 
 //FUNCIONES TOKEN
 
 
-export const verificarToken = (token) =>{
-    // let res = await axios.get("")
-}
 
 
 

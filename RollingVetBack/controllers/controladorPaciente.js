@@ -17,12 +17,27 @@ const getOne = async (req, res) => {
 
 const verificarSesion = async(req,res) =>{
 
-    const {token} = req.cookies;
+    const {access_token} = req.cookies;
+    
+    if (!access_token) return res.status(401).json({mensaje:"No autorizado"});
 
-    if (!token) return res.send(false);
+    jwt.verify(access_token,process.env.JWT_SECRET_KEY,async(err,validPayload)=>{
+       if(err) return res.status(401).json({Mensaje:'Token expirado'});
+       
+       return res.status(200).json({
+        id: validPayload.id,
+        nombre: validPayload.nombre,
+        apellido: validPayload.apellido,
+        email: validPayload.email,
+        telefono: validPayload.telefono,
+        admin: validPayload.admin,
+        mascotasIDs: validPayload.mascotasIDs,
+        estado: validPayload.estado
+    });
+       
+    });
 
-    jwt.verify(token,process.env.JWT_SECRET_KEY);
-
+    
 
 }
 
@@ -56,10 +71,10 @@ const login = async (req, res) => {
 
             const tokenPayload = usuarioLogueado;
             const token = jwt.sign(tokenPayload,firma,{
-                expiresIn: '1d'
+                expiresIn: '1m'
             });
             
-            res.cookie("jwt",token,{
+            res.cookie("access_token",token,{
                 sameSite:'none',
                 httpOnly:false,
                 secure:true,
@@ -134,5 +149,6 @@ module.exports = {
     del,
     disable,
     enable,
-    login
+    login,
+    verificarSesion
 }

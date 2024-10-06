@@ -6,5 +6,12 @@ import { useAuth } from '../contexts/AuthProvider';
 export const RutasProtegidasUser = () => {
   
     const {user,authenticated} = useAuth()
-    if(authenticated) return <> <Outlet/> </>
+    if(authenticated){
+        return (<Outlet/>)
+    } 
+    else{
+        return (<Navigate to='/ingresar' replace/>)
+
+    }
+
 }

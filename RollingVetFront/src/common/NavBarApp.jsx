@@ -5,28 +5,30 @@ import collapseIcon from "../assets/collapseIcon.svg"
 import calendarEditIcon from "../assets/calendarEditIcon.svg"
 import userEditIcon from "../assets/userEditIcon.svg"
 import userIcon from "../assets/userIcon.svg"
-import Container from 'react-bootstrap/Container';
-import NavDropdown from 'react-bootstrap/NavDropdown';
 import { useAuth } from '../contexts/AuthProvider';
 
 
 const NavBarApp = () => {
 
-    const {authenticated} = useAuth();
-    const [menuOpen, useMenuOpen] = useState(false)
+    const { authenticated, user } = useAuth();
+    const [menuOpen, setMenuOpen] = useState(false)
+    
     const openMenu = () => {
-        useMenuOpen(!menuOpen);
+        setMenuOpen(!menuOpen);
     }
+    
 
+    
+    
     return (
         <Navbar className='p-3 grid  grid-rows-1 grid-cols-2 bg-cyan-500 h-30 w-screen sm:gap-x-56 lg:grid-cols-5 lg:gap-0  '>
 
 
             <Nav className='w-32 col-span-1'>
 
-                <NavLink className='w-full' to="/">
+                <Link className='w-full' to="/">
                     <img className='w-20 m-4 md:w-full' src="https://www.zarla.com/images/zarla-carevet-1x1-2400x2400-20220323-t7b98tfcjcvqdcqwkpq3.png?crop=1:1,smart&width=250&dpr=2" alt="logo" />
-                </NavLink>
+                </Link>
 
             </Nav>
             <button className='ms-28 w-fit lg:hidden' onClick={openMenu}>
@@ -51,20 +53,32 @@ const NavBarApp = () => {
                         Contáctanos
                     </NavLink>
 
-                    <NavLink className="mx-4 mt-2" to="/admin/gestionPacientes">
-                        <img className='w-10' src={userEditIcon} alt="adminPacientesIcon" />
-                    </NavLink>
+                    {authenticated ? (
+                        <>
+                            {user.admin && 
+                                (<>
+                                    <NavLink className="mx-4 mt-2" to="/admin/gestionPacientes">
+                                        <img className='w-10' src={userEditIcon} alt="adminPacientesIcon" />
+                                    </NavLink>
 
-                    <NavLink className="mx-4 mt-2" to="/admin/gestionTurnos">
-                        <img className='w-10' src={calendarEditIcon} alt="adminTurnosIcon" />
-                    </NavLink>
+                                    <NavLink className="mx-4 mt-2" to="/admin/gestionTurnos">
+                                        <img className='w-10' src={calendarEditIcon} alt="adminTurnosIcon" />
+                                    </NavLink>
+                                </>) 
+                            }                             
+                        </>) : (<>
+                        
+                        </>)
+                    }
+
+
                 </div>
 
-                {authenticated? <NavLink className=" mx-4 mt-2"><img className=' w-10 lg:me-4' src={userIcon} alt="logoUser" /> </NavLink> : <NavLink className='p-1.5 text-black font-semibold bg-rose-500 rounded-md p-1 mt-2 lg:m-0 lg:me-4 ' to="/ingresar">
+                {authenticated ? <NavLink className=" mx-4 mt-2"><img className=' w-10 lg:me-4' src={userIcon} alt="logoUser" /> </NavLink> : <NavLink className='p-1.5 text-black font-semibold bg-rose-500 rounded-md p-1 mt-2 lg:m-0 lg:me-4 ' to="/ingresar">
                     Iniciar Sesion
                 </NavLink>}
-                
-                
+
+
 
             </Nav>
 

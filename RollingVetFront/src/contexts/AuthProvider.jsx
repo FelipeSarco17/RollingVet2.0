@@ -1,6 +1,6 @@
 import React, { Children, useEffect, useState } from 'react'
-import { useContext,createContext } from 'react'
-import { ingresoUsuario,leerPacientes,registrarUsuario } from '../utils/utils';
+import { useContext, createContext } from 'react'
+import { ingresoUsuario, leerPacientes, registrarUsuario, verificarSesionIniciada } from '../utils/utils';
 import Cookies from "js-cookie"
 
 const authContext = createContext();
@@ -13,32 +13,52 @@ export const useAuth = () => {
 }
 
 
-const AuthProvider = ({children}) => {
+const AuthProvider = ({ children }) => {
 
-    const [user,setUser] = useState(null);
-    const [authenticated,setAuthenticated] = useState(false);
+    const [user, setUser] = useState(null);
+    const [authenticated, setAuthenticated] = useState(false);
 
-    // useEffect(()=>{
-    //     const token = Cookies.get("access_token");
+    useEffect(() => {
+        async function verificarSesion() {
+            const token = Cookies.get("access_token");
+            if (!token) {
+                setUser(null);
+                setAuthenticated(false);
+            }
 
-    // },[])
+            const res = await verificarSesionIniciada();
+            if (res.status == 200) {
 
-    const validarUsuario = async(obj) =>{
-        try{
+                setUser(res.data);
+                setAuthenticated(true);
+            }
+            else
+            {
+                setUser(null);
+                setAuthenticated(false);
+            }
+        }
+
+        verificarSesion();
+
+    }, [])
+
+
+    const validarUsuario = async (obj) => {
+        try {
             let usuarioLogueado = await ingresoUsuario(obj);
-          
+            
             setUser(usuarioLogueado.data);
             setAuthenticated(true);
-            console.log(usuarioLogueado);
-              
-            
-        }catch(error){
+        
+
+        } catch (error) {
             console.log(error.message);
         }
-        
+
     }
 
-    const registroUsuario = async(obj) =>{
+    const registroUsuario = async (obj) => {
         try {
             let usuarioNuevo = await registrarUsuario(obj);
             setUser(usuarioNuevo);
@@ -50,10 +70,10 @@ const AuthProvider = ({children}) => {
 
 
     return (
-    <authContext.Provider value={{validarUsuario,setUser,user,authenticated}}>
-        {children}
-    </authContext.Provider>
-  )
+        <authContext.Provider value={{ validarUsuario, setUser, user, authenticated}}>
+            {children}
+        </authContext.Provider>
+    )
 }
 
 export default AuthProvider
