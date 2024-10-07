@@ -60,9 +60,8 @@ const AuthProvider = ({ children }) => {
 
     const registroUsuario = async (obj) => {
         try {
-            let usuarioNuevo = await registrarUsuario(obj);
-            setUser(usuarioNuevo);
-            setAuthenticated(true);
+            let res = await registrarUsuario(obj);
+            return res.data;
         } catch (error) {
             console.log(error.message);
         }
@@ -70,7 +69,7 @@ const AuthProvider = ({ children }) => {
 
 
     return (
-        <authContext.Provider value={{ validarUsuario, setUser, user, authenticated}}>
+        <authContext.Provider value={{ registroUsuario,validarUsuario, setUser, user, authenticated}}>
             {children}
         </authContext.Provider>
     )

@@ -1,12 +1,15 @@
 const Paciente = require("../models/paciente");
-const bcrypt = require('bcryptjs');
+const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken")
 const firma = process.env.JWT_SECRET_KEY;
+
+
+
 
 const get = async (req, res) => {
     let Pacientes = await Paciente.find({})
     return res.status(200).json({ Pacientes })
-    
+
 }
 
 const getOne = async (req, res) => {
@@ -15,101 +18,115 @@ const getOne = async (req, res) => {
     return res.status(200).json({ paciente });
 }
 
-const verificarSesion = async(req,res) =>{
+const verificarSesion = async (req, res) => {
 
-    const {access_token} = req.cookies;
-    
-    if (!access_token) return res.status(401).json({mensaje:"No autorizado"});
+    const { access_token } = req.cookies;
 
-    jwt.verify(access_token,process.env.JWT_SECRET_KEY,async(err,validPayload)=>{
-       if(err) return res.status(401).json({Mensaje:'Token expirado'});
-       
-       return res.status(200).json({
-        id: validPayload.id,
-        nombre: validPayload.nombre,
-        apellido: validPayload.apellido,
-        email: validPayload.email,
-        telefono: validPayload.telefono,
-        admin: validPayload.admin,
-        mascotasIDs: validPayload.mascotasIDs,
-        estado: validPayload.estado
+    if (!access_token) return res.status(401).json({ mensaje: "No autorizado" });
+
+    jwt.verify(access_token, process.env.JWT_SECRET_KEY, async (err, validPayload) => {
+        if (err) return res.status(401).json({ Mensaje: 'Token expirado' });
+
+        return res.status(200).json({
+            id: validPayload.id,
+            nombre: validPayload.nombre,
+            apellido: validPayload.apellido,
+            email: validPayload.email,
+            telefono: validPayload.telefono,
+            admin: validPayload.admin,
+            mascotasIDs: validPayload.mascotasIDs,
+            estado: validPayload.estado
+        });
+
     });
-       
-    });
 
-    
+
 
 }
 
 
 const login = async (req, res) => {
-    
-    
-    try{
+
+
+    try {
         let { email, password } = req.body;
         let usuario = await Paciente.findOne({ email })
-        
-        if(!usuario) return res.status(400).json({mensaje:"Usuario no encontrado."})
-        
-        const contraseñaValida = (password == usuario.clave ); 
+
+        if (!usuario) return res.status(400).json({ mensaje: "Usuario no encontrado." })
+
+        const contraseñaValida = bcryptjs.compareSync(password, usuario.clave);
 
 
-        if(!contraseñaValida) return res.status(400).json({mensaje:"Contraseña incorrecta"})
+        if (!contraseñaValida) return res.status(400).json({ mensaje: "Contraseña incorrecta" })
 
-            
-            
-            const usuarioLogueado = {
-                id: usuario._id,
-                nombre: usuario.nombre,
-                apellido: usuario.apellido,
-                email: usuario.email,
-                telefono: usuario.telefono,
-                admin: usuario.admin,
-                mascotasIDs: usuario.mascotasIDs,
-                estado: usuario.estado
-            }
 
-            const tokenPayload = usuarioLogueado;
-            const token = jwt.sign(tokenPayload,firma,{
-                expiresIn: '1m'
-            });
-            
-            res.cookie("access_token",token,{
-                sameSite:'none',
-                httpOnly:false,
-                secure:true,
-                priority:"high",
-              });
-            
-            return res.status(200).json({tokenPayload});
-        
 
-    }catch(error){
-        return res.status(500).json({message:"Error del servidor"});
+        const usuarioLogueado = {
+            id: usuario._id,
+            nombre: usuario.nombre,
+            apellido: usuario.apellido,
+            email: usuario.email,
+            telefono: usuario.telefono,
+            admin: usuario.admin,
+            mascotasIDs: usuario.mascotasIDs,
+            estado: usuario.estado
+        }
+
+        const tokenPayload = usuarioLogueado;
+        const token = jwt.sign(tokenPayload, firma, {
+            expiresIn: '1m'
+        });
+
+        res.cookie("access_token", token, {
+            sameSite: 'none',
+            httpOnly: false,
+            secure: true,
+            priority: "high",
+        });
+
+        return res.status(200).json({ tokenPayload });
+
+
+    } catch (error) {
+        return res.status(500).json({ message: "Error del servidor" });
     }
-}        
+}
 
 const create = async (req, res) => {
-    const { nombre, apellido, email, telefono, clave } = req.body;
-    const nuevoPaciente = new Paciente({ nombre, apellido, email, telefono, clave });
-    await nuevoPaciente.save();
-    
-    const usuario = await Paciente.findOne(email);
-    const usuarioLogueado = {
-        id: usuario._id,
-        nombre: usuario.nombre,
-        apellido: usuario.apellido,
-        email: usuario.email,
-        telefono: usuario.telefono,
-        admin: usuario.admin,
-        mascotasIDs: usuario.mascotasIDs,
-        estado: usuario.estado
-    }
-    const tokenPayload = usuarioLogueado;
-    const token = jwt.sign(tokenPayload,firma);
-    res.cookie("jwt",token);
 
-    return res.status(201).json(tokenPayload);
+    try {
+        const { nombre, apellido, email, telefono, clave } = req.body;
+
+        const usuarioRepetido = await Paciente.findOne({ email });
+        if (usuarioRepetido) return res.status(400).json({ message: "Ya existe un usuario con este Email." })
+
+        const claveEncriptada = bcryptjs.hashSync(clave, 10);
+
+        const nuevoPaciente = new Paciente({ nombre, apellido, email, telefono, clave:claveEncriptada });
+        const pacienteGuardado = await nuevoPaciente.save();
+        
+        return res.status(201).json({ message: "Usuario registrado con exito." });
+    } catch (error) {
+        return res.status(500).json({message:error.message})
+    }
+
+
+
+    // const usuario = await Paciente.findOne(email);
+    // const usuarioLogueado = {
+    //     id: usuario._id,
+    //     nombre: usuario.nombre,
+    //     apellido: usuario.apellido,
+    //     email: usuario.email,
+    //     telefono: usuario.telefono,
+    //     admin: usuario.admin,
+    //     mascotasIDs: usuario.mascotasIDs,
+    //     estado: usuario.estado
+    // }
+    // const tokenPayload = usuarioLogueado;
+    // const token = jwt.sign(tokenPayload,firma);
+    // res.cookie("jwt",token);
+    return res.status(201).json(usuarioLogueado);
 }
 
 const update = async (req, res) => {

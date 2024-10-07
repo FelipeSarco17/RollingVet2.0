@@ -25,8 +25,7 @@ export const leerPacientes = async()=>{
 export const registrarUsuario = async(obj)=>{
 
     let res = await axios.post(`/pacientes/crearPaciente`,obj);
-    return res.data;
-
+    return res;
 }
 
 export const verificarSesionIniciada = async()=>{
