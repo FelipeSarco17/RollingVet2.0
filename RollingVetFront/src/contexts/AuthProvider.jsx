@@ -2,6 +2,7 @@ import React, { Children, useEffect, useState } from 'react'
 import { useContext, createContext } from 'react'
 import { ingresoUsuario, leerPacientes, registrarUsuario, verificarSesionIniciada } from '../utils/utils';
 import Cookies from "js-cookie"
+import Swal from 'sweetalert2'
 
 const authContext = createContext();
 export const useAuth = () => {
@@ -67,9 +68,36 @@ const AuthProvider = ({ children }) => {
         }
     }
 
+    const cerrarSesion = () =>{
+        Swal.fire({
+            title: "¿Seguro que quieres cerrar sesion?",
+            icon: "warning",
+            showCancelButton: true,
+            cancelButtonColor: "#a40000",
+            confirmButtonText: "Cerrar sesion",
+            confirmButtonColor: "#197600",
+            cancelButtonText: "Cancelar",
+            reverseButtons: true,
+            background: '#393939',
+            color: '#fafafa'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: "Su sesion ha sido cerrada",
+                    icon: "success",
+                    background: '#393939',
+                    color: '#fafafa'
+
+                });
+                Cookies.remove("token");
+                setAuthenticated(false)
+                setUser(null)
+            }
+        });
+    }
 
     return (
-        <authContext.Provider value={{ registroUsuario,validarUsuario, setUser, user, authenticated}}>
+        <authContext.Provider value={{ cerrarSesion,registroUsuario,validarUsuario, setUser, user, authenticated}}>
             {children}
         </authContext.Provider>
     )

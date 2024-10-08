@@ -40,8 +40,6 @@ const verificarSesion = async (req, res) => {
 
     });
 
-
-
 }
 
 
@@ -74,7 +72,7 @@ const login = async (req, res) => {
 
         const tokenPayload = usuarioLogueado;
         const token = jwt.sign(tokenPayload, firma, {
-            expiresIn: '1m'
+            expiresIn: '3d'
         });
 
         res.cookie("access_token", token, {

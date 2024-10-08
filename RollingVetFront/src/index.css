@@ -38,6 +38,20 @@
     z-index: 1;
 }
 
+.dropdownPerfil{
+    background-color: white;
+    height: 150px;   
+}
+
+.dropdownPerfil li{
+    background-color: #F6F7F9;
+}
+
+
+.userLogo{
+    
+}
+
 
 input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button { 

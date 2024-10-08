@@ -1,4 +1,4 @@
-import React from 'react'
+import {useState} from 'react'
 import { Link } from 'react-router-dom'
 import "../styles/registrarse.css"
 import { useForm } from 'react-hook-form'
@@ -12,9 +12,10 @@ import MensajeError from '../common/MensajeError'
 const Registrarse = () => {
   const { register, handleSubmit, formState: { errors }, watch } = useForm({ resolver: zodResolver(userSchema) })
   const navigate = useNavigate()
-  const {registroUsuario} = useAuth()
+  const { registroUsuario } = useAuth()
+  
 
-  const onSubmit =  async (obj) => {
+  const onSubmit = async (obj) => {
     const usuarioNuevo = {
       nombre: obj.nombre,
       apellido: obj.apellido,
@@ -32,7 +33,7 @@ const Registrarse = () => {
       <div className=' w-screen lg:w-8/12 flex flex-col items-center justify-center '>
         <h1 className='text-3xl my-8 font-bold 2xl:mb-12'>Crea tu cuenta</h1>
         <article className='  w-screen  lg:w-full p-4 md:p-12 lg:p-0'>
-          <form  action="#" method='POST' onSubmit={handleSubmit(onSubmit)} className='grid grid-rows-7 grid-cols-1 gap-y-8 lg:w-full lg:grid lg:grid-cols-2 lg:grid-rows-4 lg:gap-4 px-4
+          <form action="#" method='POST' onSubmit={handleSubmit(onSubmit)} className='grid grid-rows-7 grid-cols-1 gap-y-8 lg:w-full lg:grid lg:grid-cols-2 lg:grid-rows-4 lg:gap-4 px-4
             2xl:px-32'>
 
             <div className='border-black border-2 rounded-md p-3 flex flex-col'>
