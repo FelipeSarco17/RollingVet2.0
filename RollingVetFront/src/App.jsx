@@ -10,6 +10,7 @@ import Registrarse from './views/Registrarse';
 import AdministrarPacientes from './views/AdministrarPacientes';
 import AdministrarTurnos from './views/AdministrarTurnos';
 import Error404 from './views/Error404';
+import ModificarPaciente from './views/ModificarPaciente';
 
 function App() {
 
@@ -26,6 +27,7 @@ function App() {
           <Route path='/registrarse' element={<Registrarse/>}/>
           <Route path='/planes' element={<Planes />}/>
           <Route path='/admin/gestionPacientes' element={<AdministrarPacientes/>}/>
+          <Route path='/admin/modificarPaciente/:id' element={<ModificarPaciente/>}/>
           <Route path='/admin/gestionTurnos' element={<AdministrarTurnos/>}/>
           <Route path='*' element={<Error404/>} />
         </Routes>
