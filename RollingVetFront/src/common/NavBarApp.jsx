@@ -29,7 +29,9 @@ const NavBarApp = () => {
 
     }
 
-
+    console.log(user);
+    
+    
 
 
     return (
@@ -96,8 +98,12 @@ const NavBarApp = () => {
                                     <p className='text-black'>{user.nombre}</p>
                                 </div>
                                 <ul className='rounded-lg border-2  flex flex-col justify-end absolute z-10 w-72 -left-28  lg:-left-56 lg:items-end lg:flex-row lg:top-0 lg:right-0 dropdownPerfil'>
-                                    <li className='text-center p-2 border-y-2 lg:border-y-0 lg:border-t-2 lg:border-r-2  lg:rounded-bl-lg  w-full'><NavLink to="">Ver Perfil</NavLink></li>
-                                    <li className='text-center p-2  rounded-b-lg  lg:border-t-2 lg:rounded-bl-none lg:rounded-br-lg  w-full'><button onClick={desloguear}>Cerrar Sesión</button></li>
+                                    <li className='text-center p-2 border-y-2 lg:border-y-0 lg:border-t-2 lg:border-r-2  lg:rounded-bl-lg  w-full'>
+                                        <NavLink to="">Ver Perfil</NavLink>
+                                    </li>
+                                    <li className='text-center p-2  rounded-b-lg  lg:border-t-2 lg:rounded-bl-none lg:rounded-br-lg  w-full'>
+                                        <button onClick={desloguear}>Cerrar Sesión</button>
+                                    </li>
                                 </ul>
                             </>
                         }

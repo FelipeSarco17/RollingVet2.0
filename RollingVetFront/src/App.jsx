@@ -21,32 +21,32 @@ function App() {
   return (
     <AuthProvider>
 
-    
-    <BrowserRouter className='bg-dark'>
-    
-      <NavBarApp/>  
-        <Routes>
-          <Route path='/' element={<Inicio/>}/>
-          <Route path='/nosotros' element={<Nosotros />}/>
-          <Route path='/contacto' element={<Contacto />}/>
-          <Route path='/ingresar' element={<IniciarSesion/>}/>
-          <Route path='/registrarse' element={<Registrarse/>}/>
-          <Route path='/planes' element={<Planes />}/>
-          
-          <Route element={<RutasProtegidasUser/>}>
-          
-          </Route>
-          
 
-          <Route element={<RutasProtegidasAdmin/>}>
-            
-            <Route path='/admin/gestionPacientes' element={<AdministrarPacientes/>}/>
-            <Route path='/admin/gestionTurnos' element={<AdministrarTurnos/>}/>
+      <BrowserRouter className='bg-dark'>
+
+        <NavBarApp />
+        <Routes>
+          <Route path='/' element={<Inicio />} />
+          <Route path='/nosotros' element={<Nosotros />} />
+          <Route path='/contacto' element={<Contacto />} />
+
+          <Route path='/planes' element={<Planes />} />
+
+          <Route element={<RutasProtegidasUser />}>
+            <Route path='/ingresar' element={<IniciarSesion />} />
+            <Route path='/registrarse' element={<Registrarse />} />
           </Route>
-          
-          <Route path='*' element={<Error404/>} />
+
+
+          <Route element={<RutasProtegidasAdmin />}>
+
+            <Route path='/admin/gestionPacientes' element={<AdministrarPacientes />} />
+            <Route path='/admin/gestionTurnos' element={<AdministrarTurnos />} />
+          </Route>
+
+          <Route path='*' element={<Error404 />} />
         </Routes>
-    </BrowserRouter>
+      </BrowserRouter>
     </AuthProvider>
   )
 }

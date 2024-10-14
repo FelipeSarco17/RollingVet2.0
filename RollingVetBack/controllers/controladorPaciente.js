@@ -59,7 +59,7 @@ const login = async (req, res) => {
 
 
 
-        const usuarioLogueado = {
+        const tokenPayload = {
             id: usuario._id,
             nombre: usuario.nombre,
             apellido: usuario.apellido,
@@ -70,7 +70,6 @@ const login = async (req, res) => {
             estado: usuario.estado
         }
 
-        const tokenPayload = usuarioLogueado;
         const token = jwt.sign(tokenPayload, firma, {
             expiresIn: '3d'
         });
@@ -82,7 +81,7 @@ const login = async (req, res) => {
             priority: "high",
         });
 
-        return res.status(200).json({ tokenPayload });
+        return res.status(200).json({  ...tokenPayload });
 
 
     } catch (error) {
