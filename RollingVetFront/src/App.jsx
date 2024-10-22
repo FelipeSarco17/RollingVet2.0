@@ -13,7 +13,7 @@ import Error404 from './views/Error404';
 import AuthProvider from './contexts/AuthProvider';
 import RutasProtegidasAdmin from './routes/RutasProtegidasAdmin'
 import { RutasProtegidasUser } from './routes/RutasProtegidasUser';
-
+import Footer from './common/Footer';
 
 function App() {
 
@@ -46,6 +46,7 @@ function App() {
 
           <Route path='*' element={<Error404 />} />
         </Routes>
+        <Footer/>
       </BrowserRouter>
     </AuthProvider>
   )
