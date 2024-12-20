@@ -1,61 +1,59 @@
 import React from 'react'
 import ReviewCard from './ReviewCard'
+import leftArrow from "../assets/leftArrow.svg"
+import rightArrow from "../assets/rightArrow.svg"
+import { reviews } from '../utils/dataArrays'
 
-const ReviewSlider = ({reviews}) => {
-  
-    const right_mover = () => {
-        
-        let seccionReviews = document.querySelector("#seccionReviews");
-        let mobile = (window.innerWidth < 768)
-        
-        if (mobile) {
-          seccionReviews.scrollLeft += 245;
-        }
-        else {
-          seccionReviews.scrollLeft += 1700;
-        }
-    
-      }
-    
-      const left_mover = () => {
-        let seccionReviews = document.querySelector("#seccionReviews");
-        let mobile = (window.innerWidth < 768)
-        
-    
-        if (mobile) {
-          seccionReviews.scrollLeft -= 245;
-        }
-        else {
-          seccionReviews.scrollLeft -= 1700;
-        }
-    
-      }
-  
-    return (
-    <div className='flex items-center justify-center w-[300px] gap-3'>
-          <button onClick={left_mover} className=''>
-            <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-              <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m15 19-7-7 7-7" />
-            </svg>
-          </button>
+const ReviewSlider = ({ reviews }) => {
 
-          <div id='seccionReviews' className='flex xl:w-[1700px] overflow-x-auto scroll-smooth'>
+  const right_mover = () => {
 
-            {
-              reviews.map((review, index) => {
-                return (
-                  <ReviewCard className="" key={`review${index}`} review={review} />
-                )
+    let seccionReviews = document.querySelector("#seccionReviews");
+    let mobile = (window.innerWidth < 768)
 
-              })
-            }
-          </div>
-          <button onClick={right_mover} className='reviewsArrows'>
-            <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-              <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m9 5 7 7-7 7" />
-            </svg>
-          </button>
-        </div>
+    if (mobile) {
+      seccionReviews.scrollLeft += 245;
+    }
+    else {
+      seccionReviews.scrollLeft += 1700;
+    }
+
+  }
+
+  const left_mover = () => {
+    let seccionReviews = document.querySelector("#seccionReviews");
+    let mobile = (window.innerWidth < 768)
+
+
+    if (mobile) {
+      seccionReviews.scrollLeft -= 245;
+    }
+    else {
+      seccionReviews.scrollLeft -= 200;
+    }
+
+  }
+
+  return (
+    <div className='flex items-center justify-center gap-3 w-full'>
+      <button onClick={left_mover} className=''>
+        <img src={leftArrow} alt="leftArrow" />
+      </button>
+
+      <div id='seccionReviews' className='flex gap-6 overflow-x-auto w-3/4'>
+
+        {
+          reviews.map((review,index)=>{
+            return <ReviewCard review={review} key={index}/>
+          })
+        }
+
+      </div>
+
+      <button onClick={right_mover} className='reviewsArrows'>
+        <img src={rightArrow} alt="rightArrow" />
+      </button>
+    </div>
   )
 }
 
