@@ -21,9 +21,21 @@ export const leerPacientes = async()=>{
     return pacientes.data;
 }
 
+export const capturarUnPaciente = async (id) => {
+    let paciente = await axios.get(`/pacientes/obtenerUno/${id}`);
+    return paciente.data;
+}
+
+export const modificarPaciente = async(id, obj) => {
+    let paciente = await axios.put(`/pacientes/${id}`, obj);
+    return paciente
+}
+
+export const eliminarPaciente = async (id) => {
+    let paciente = await axios.delete(`/pacientes/${id}`)
+}
 
 export const registrarUsuario = async(obj)=>{
-
     let res = await axios.post(`/pacientes/crearPaciente`,obj);
     return res;
 }

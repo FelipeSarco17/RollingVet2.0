@@ -24,6 +24,7 @@ const Registrarse = () => {
       clave: obj.clave
     }
     let res = await registroUsuario(usuarioNuevo)
+    navigate("/ingresar")
     return res;
   }
 
