@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
 const dbConnection = require("../database/config");
 
 class Server {
@@ -19,8 +20,9 @@ class Server {
         await dbConnection()
     }
     middlewares(){
-        this.app.use(cors())
+        this.app.use(cors({origin:"http://localhost:5173",credentials:true,optionsSuccessStatus:200}))
         this.app.use(express.json());
+        this.app.use(cookieParser());
     }
     rutas(){
         this.app.use(this.rutaPacientes , require("../routes/pacientes"));

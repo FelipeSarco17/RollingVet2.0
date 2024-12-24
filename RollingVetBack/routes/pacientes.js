@@ -1,12 +1,16 @@
 const express = require("express");
 const Router = express.Router();
-const { get, getOne, create, update, del, disable, enable } = require("../controllers/controladorPaciente")
+const { get, getOne, create, update, del, disable, enable, login,verificarSesion } = require("../controllers/controladorPaciente")
+const validateSchema = require("../middlewares/validarDatos")
+const { userSchema } = require("../validations/userSchema");
 
-Router.get("/", get)
+Router.get("/obtenerTodos", get)
 
-Router.get("/:id", getOne)
+Router.get("/obtenerUno/:id", getOne)
 
-Router.post("/crearPaciente", create)
+Router.get("/verificar",verificarSesion)
+
+Router.post("/crearPaciente", validateSchema(userSchema),create)
 
 Router.put("/:id", update)
 
@@ -15,5 +19,9 @@ Router.post("/desactivarPaciente/:id", disable)
 Router.delete("/:id", del)
 
 Router.post("/activarPaciente/:id", enable)
+
+Router.post("/ingresar",login)
+
+
 
 module.exports = Router;
