@@ -1,9 +1,10 @@
 import { useForm } from "react-hook-form";
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { modificarPaciente, capturarUnPaciente, leerPacientes } from "../utils/utils";
-import { zodResolver } from '@hookform/resolvers/zod';
-import { modificarUserSchema } from '../validations/userSchema';
+import { zodResolver } from "@hookform/resolvers/zod";
+import { modificarUserSchema } from "../validations/userSchema";
+import DropdownMascotas from "../components/DropdownMascotas";
 
 const ModificarPaciente = () => {
   const navigate = useNavigate();
@@ -11,59 +12,51 @@ const ModificarPaciente = () => {
   const { id } = useParams();
   const [emailOriginal, setEmailOriginal] = useState("");
 
-  // Modificar los datos del paciente
   const modificarDatos = (obj) => {
     modificarPaciente(id, obj);
     navigate("/admin/gestionPacientes");
   };
 
-  // Validar que el email no esté registrado
   const validarEmail = async (data) => {
     let emailValido = true;
 
-    // Verificamos si el email ha cambiado
     if (data.email !== emailOriginal) {
       try {
         const pacientesData = await leerPacientes();
         const { Pacientes } = pacientesData;
 
-        // Recorremos los pacientes y verificamos si el email ya existe
-        Pacientes.forEach(paciente => {
+        Pacientes.forEach((paciente) => {
           if (paciente.email === data.email && paciente.key !== id) {
             emailValido = false;
           }
         });
 
         if (!emailValido) {
-          // Si el email ya está registrado, mostramos un error
           alert("El email ya está registrado.");
         } else {
-          // Si el email es válido, modificamos los datos
           modificarDatos(data);
         }
       } catch (error) {
         console.error(error);
         alert("Hubo un error al validar el email.");
-        // FALTA HACER QUE EL MENSAJE DE ERROR APAREZCA DEBAJO DEL CAMPO DE EMAIL
       }
     } else {
-      // Si el email no cambió, podemos proceder sin validarlo
       modificarDatos(data);
     }
   };
 
-  // Obtener los datos del paciente para editarlos
   const obtenerProducto = async (id) => {
     try {
       let data = await capturarUnPaciente(id);
       let obj = data.paciente;
+
       if (obj) {
         setValue("nombre", obj.nombre);
         setValue("apellido", obj.apellido);
         setValue("email", obj.email);
         setValue("telefono", obj.telefono);
         setValue("key", obj.key);
-        setEmailOriginal(obj.email); // Guardamos el email original para futuras comparaciones
+        setEmailOriginal(obj.email);
       }
     } catch (error) {
       console.error(error);
@@ -76,78 +69,93 @@ const ModificarPaciente = () => {
 
   return (
     <main className="flex justify-center items-center py-8">
-      <form
-        className="w-full max-w-lg bg-white p-6 rounded-lg shadow-lg"
-        onSubmit={handleSubmit(validarEmail)} // Usamos handleSubmit para manejar la validación y el submit
-      >
-        {/* Nombre */}
-        <div className="mb-4">
-          <label className="block text-lg font-medium text-gray-700">Nombre</label>
-          <input
-            type="text"
-            className="mt-2 p-2 w-full border border-gray-300 rounded-md"
-            {...register("nombre", { required: "Este campo es obligatorio." })}
-          />
-          {errors.nombre && (
-            <p className="text-red-500 text-sm mt-1">{errors.nombre.message}</p>
-          )}
-        </div>
+      <div className="w-full max-w-lg bg-white p-6 rounded-lg shadow-lg">
+      <h1 className="mb-5 text-4xl font-bold text-black">
+        Modificar Paciente
+      </h1>
+        {/* Botón de regresar */}
+        <button
+          onClick={() => navigate("/admin/gestionPacientes")}
+          className="flex items-center gap-2 mb-6 py-2 px-4 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400"
+        >
+           <svg xmlns="http://www.w3.org/2000/svg" width="22.703" height="21.928">
+           <path transform="scale(-0.8, 0.8) translate(-22.703, 3)" d="M1.056 21.928c0-6.531 5.661-9.034 10.018-9.375V18.1L22.7 9.044 11.073 0v4.836a10.5 10.5 0 0 0-7.344 3.352C-.618 12.946-.008 21 .076 21.928z"/>
+           </svg>
+  Regresar
+        </button>
 
-        {/* Apellido */}
-        <div className="mb-4">
-          <label className="block text-lg font-medium text-gray-700">Apellido</label>
-          <input
-            type="text"
-            className="mt-2 p-2 w-full border border-gray-300 rounded-md"
-            {...register("apellido", { required: "Este campo es obligatorio." })}
-          />
-          {errors.apellido && (
-            <p className="text-red-500 text-sm mt-1">{errors.apellido.message}</p>
-          )}
-        </div>
+        <form onSubmit={handleSubmit(validarEmail)}>
+          {/* Nombre */}
+          <div className="mb-4">
+            <label className="block text-lg font-medium text-gray-700">Nombre</label>
+            <input
+              type="text"
+              className="mt-2 p-2 w-full border border-gray-300 rounded-md"
+              {...register("nombre", { required: "Este campo es obligatorio." })}
+            />
+            {errors.nombre && (
+              <p className="text-red-500 text-sm mt-1">{errors.nombre.message}</p>
+            )}
+          </div>
 
-        {/* Email */}
-        <div className="mb-4">
-          <label className="block text-lg font-medium text-gray-700">Email</label>
-          <input
-            type="email"
-            className="mt-2 p-2 w-full border border-gray-300 rounded-md"
-            {...register("email", {
-              required: "Este campo es obligatorio.",
-              pattern: {
-                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                message: "Por favor ingresa un email válido",
-              },
-            })}
-          />
-          {errors.email && (
-            <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
-          )}
-        </div>
+          {/* Apellido */}
+          <div className="mb-4">
+            <label className="block text-lg font-medium text-gray-700">Apellido</label>
+            <input
+              type="text"
+              className="mt-2 p-2 w-full border border-gray-300 rounded-md"
+              {...register("apellido", { required: "Este campo es obligatorio." })}
+            />
+            {errors.apellido && (
+              <p className="text-red-500 text-sm mt-1">{errors.apellido.message}</p>
+            )}
+          </div>
 
-        {/* Teléfono */}
-        <div className="mb-4">
-          <label className="block text-lg font-medium text-gray-700">Teléfono</label>
-          <input
-            type="text"
-            className="mt-2 p-2 w-full border border-gray-300 rounded-md"
-            {...register("telefono", { required: "Este campo es obligatorio." })}
-          />
-          {errors.telefono && (
-            <p className="text-red-500 text-sm mt-1">{errors.telefono.message}</p>
-          )}
-        </div>
+          {/* Email */}
+          <div className="mb-4">
+            <label className="block text-lg font-medium text-gray-700">Email</label>
+            <input
+              type="email"
+              className="mt-2 p-2 w-full border border-gray-300 rounded-md"
+              {...register("email", {
+                required: "Este campo es obligatorio.",
+                pattern: {
+                  value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                  message: "Por favor ingresa un email válido",
+                },
+              })}
+            />
+            {errors.email && (
+              <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
+            )}
+          </div>
 
-        {/* Botón de submit */}
-        <div className="mt-6">
-          <button
-            type="submit"
-            className="w-full py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600"
-          >
-            Modificar Paciente
-          </button>
-        </div>
-      </form>
+          {/* Teléfono */}
+          <div className="mb-4">
+            <label className="block text-lg font-medium text-gray-700">Teléfono</label>
+            <input
+              type="text"
+              className="mt-2 p-2 w-full border border-gray-300 rounded-md"
+              {...register("telefono", { required: "Este campo es obligatorio." })}
+            />
+            {errors.telefono && (
+              <p className="text-red-500 text-sm mt-1">{errors.telefono.message}</p>
+            )}
+          </div>
+
+          <DropdownMascotas label={"Mascotas"} />
+
+          {/* Botón de submit */}
+          <div className="mt-6">
+            <button
+              type="submit"
+              className="w-full py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600"
+            >
+              Modificar Paciente
+            </button>
+          </div>
+        </form>
+      </div>
     </main>
   );
 };
