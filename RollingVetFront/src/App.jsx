@@ -14,7 +14,7 @@ import ModificarPaciente from './views/ModificarPaciente';
 import AuthProvider from './contexts/AuthProvider';
 import RutasProtegidasAdmin from './routes/RutasProtegidasAdmin'
 import { RutasProtegidasUser } from './routes/RutasProtegidasUser';
-
+import Footer from './common/Footer';
 
 function App() {
 
@@ -43,20 +43,36 @@ function App() {
           </Route>
           
 
-          <Route element={<RutasProtegidasAdmin/>}>
-            
-            <Route path='/admin/gestionPacientes' element={<AdministrarPacientes/>}/>
-            <Route path='/admin/gestionTurnos' element={<AdministrarTurnos/>}/>
+      <BrowserRouter className='bg-dark'>
+
+        <NavBarApp />
+        <Routes>
+          <Route path='/' element={<Inicio />} />
+          <Route path='/nosotros' element={<Nosotros />} />
+          <Route path='/contacto' element={<Contacto />} />
+
+          <Route path='/planes' element={<Planes />} />
+
+          <Route element={<RutasProtegidasUser />}>
+            <Route path='/ingresar' element={<IniciarSesion />} />
+            <Route path='/registrarse' element={<Registrarse />} />
           </Route>
-          
-          */}
-          
-          
-          <Route path='*' element={<Error404/>} />
+
+
+          <Route element={<RutasProtegidasAdmin />}>
+
+
+          ////////////////////////////////////////////////////////  IMPORTANTE
+            <Route path='/admin/gestionPacientes' element={<AdministrarPacientes />} />
+            <Route path='/admin/gestionTurnos' element={<AdministrarTurnos />} />
+          </Route>
+*/}
+
+          <Route path='*' element={<Error404 />} />
         </Routes>
-    </BrowserRouter>
+        <Footer/>
+      </BrowserRouter>
     </AuthProvider>
   )
 }
-
 export default App

@@ -29,7 +29,7 @@ const AuthProvider = ({ children }) => {
 
             const res = await verificarSesionIniciada();
             if (res.status == 200) {
-
+                
                 setUser(res.data);
                 setAuthenticated(true);
             }
@@ -48,10 +48,12 @@ const AuthProvider = ({ children }) => {
     const validarUsuario = async (obj) => {
         try {
             let usuarioLogueado = await ingresoUsuario(obj);
+           
+            
             
             setUser(usuarioLogueado.data);
             setAuthenticated(true);
-        
+            
 
         } catch (error) {
             console.log(error.message);
