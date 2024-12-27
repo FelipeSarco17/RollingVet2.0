@@ -15,6 +15,8 @@ const get = async (req, res) => {
 const getOne = async (req, res) => {
     let { id } = req.params;
     let paciente = await Paciente.findById({ _id: id })
+    console.log(paciente);
+    
     return res.status(200).json({ paciente });
 }
 
