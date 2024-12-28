@@ -5,6 +5,7 @@ import collapseIcon from "../assets/collapseIcon.svg"
 import calendarEditIcon from "../assets/calendarEditIcon.svg"
 import userEditIcon from "../assets/userEditIcon.svg"
 import userIcon from "../assets/userIcon.svg"
+import petIcon from "../assets/petIcon.svg";
 import { useAuth } from '../contexts/AuthProvider';
 import dev1 from "../assets/Dev1.jpg"
 
@@ -97,7 +98,9 @@ const NavBarApp = () => {
                                     <NavLink className="mx-4 mt-2" to="/admin/gestionTurnos">
                                         <img className='w-10' src={calendarEditIcon} alt="adminTurnosIcon" />
                                     </NavLink>
-
+                                    <NavLink className="mx-4 mt-2" to="/admin/gestionMascotas">
+                                        <img className='w-10' src={petIcon} alt="petIcon" />
+                                    </NavLink>
 
 
                 </div>

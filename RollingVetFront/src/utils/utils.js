@@ -57,7 +57,7 @@ export const verificarSesionIniciada = async()=>{
 
 export const leerMascotas = async () => {
     let mascotas = await axios.get(`/mascotas/obtenerTodas`);
-    console.log(mascotas);
+    console.log(mascotas.data);
     return mascotas.data;
 }
 

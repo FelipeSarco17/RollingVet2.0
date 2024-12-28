@@ -9,6 +9,7 @@ import IniciarSesion from './views/IniciarSesion';
 import Registrarse from './views/Registrarse';
 import AdministrarPacientes from './views/AdministrarPacientes';
 import AdministrarTurnos from './views/AdministrarTurnos';
+import AdministrarMascotas from './views/AdministrarMascotas';
 import Error404 from './views/Error404';
 import ModificarPaciente from './views/ModificarPaciente';
 import AuthProvider from './contexts/AuthProvider';
@@ -36,7 +37,8 @@ function App() {
           <Route path='/admin/gestionPacientes' element={<AdministrarPacientes/>}/>
           <Route path='/admin/modificarPaciente/:id' element={<ModificarPaciente/>}/>
           <Route path='/admin/gestionTurnos' element={<AdministrarTurnos/>}/>
-          
+          <Route path='/admin/gestionMascotas' element={<AdministrarMascotas/>}/>
+
           {/*
           <Route element={<RutasProtegidasUser/>}>
           
