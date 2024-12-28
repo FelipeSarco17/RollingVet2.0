@@ -3,9 +3,9 @@ const Router = express.Router();
 const { get, getOne, create, update, del, disable, enable } = require("../controllers/controladorMascota")
 const validarPeticion = require("../middlewares/validarToken");
 
-Router.get("/", get)
+Router.get("/obtenerTodas", get)
 
-Router.get("/:id", getOne)
+Router.get("/obtenerUna/:id", getOne)
 
 Router.post("/crearMascota", create)
 

@@ -6,7 +6,7 @@ import Cookies from "js-cookie"
 // const urlTurnos = import.meta.env.VITE_URL_TURNOS;
 
 const urlPacientes = "http://localhost:8080/api/pacientes"
-
+const urlMascotas = "http://localhost:8080/api/mascotas"
 
 //FUNCIONES PACIENTE
 
@@ -50,3 +50,33 @@ export const verificarSesionIniciada = async()=>{
 //FUNCIONES TOKEN
 
 
+//////
+
+
+//FUNCIONES MASCOTAS
+
+export const leerMascotas = async () => {
+    let mascotas = await axios.get(`/mascotas/obtenerTodas`);
+    console.log(mascotas);
+    return mascotas.data;
+}
+
+export const capturarUnaMascota = async (id) => {
+    let mascota = await axios.get(`/mascotas/obtenerUna/${id}`);
+    console.log(mascota);
+    return mascota.data;
+}
+
+export const modificarMascota = async (id, obj) => {
+    let mascota = await axios.put(`/mascotas/${id}`, obj);
+    return mascota;
+}
+
+export const eliminarMascota = async (id) => {
+    let mascota = await axios.delete(`/mascotas/${id}`)
+}
+
+export const registrarMascota = async(obj)=>{
+    let res = await axios.post(`/pacientes/crearPaciente`,obj);
+    return res;
+}
