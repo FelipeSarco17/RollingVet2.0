@@ -7,8 +7,10 @@ import ReviewCard from '../components/ReviewCard';
 import "../styles/inicio.css"
 import ServiceCard from '../components/ServiceCard';
 import ReviewSlider from '../components/ReviewSlider';
-import { planes, reviews, services } from '../utils/dataArrays';
+import { planes, reviews, services,professionals } from '../utils/dataArrays';
 import Galery from '../components/Galery';
+import ProfessionalCard from '../components/ProfessionalCard';
+
 
 const Inicio = () => {
 
@@ -33,7 +35,13 @@ const Inicio = () => {
             return <ServiceCard servicio={servicio} key={index} />
           })}
         </div>
-
+        <h3 className='font-bold text-3xl'>Conoce a nuestros profesionales</h3>
+        <div className='flex items-center justify-center'>
+          {professionals.map((professional,index)=>{
+            return <ProfessionalCard key={index} professional={professional}/>
+          })}
+          
+        </div> 
 
       </article>
 
@@ -56,7 +64,15 @@ const Inicio = () => {
           </div>
       </article>
 
-      <article>marcas</article>
+      <article className='w-full flex flex-col items-center my-8 p-8 p-2'>
+      <h3 className='font-bold text-3xl p-8 my-4'>¡Trabajamos en conjunto con las siguientes marcas para ofrecerte el mejor servicio!</h3>
+      <div className='flex gap-12 items-center justify-items-center'>
+          <img className='w-64' src="https://www.trixie.de/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FTRIXIE_LOGO_RGB_Rot_NEW2024.5a8a215d.png&w=3840&q=75" alt="trixieLogo" />
+          <img className='w-64' src="https://m.media-amazon.com/images/S/stores-image-uploads-na-prod/0/AmazonStores/A1AM78C64UM0Y8/dd72b456777df8c1b6a741e3f321fa28.w900.h500.png" alt="" />
+          <img className='w-64' src="https://www.purina.com.ar/themes/custom/purina/purina/assets/images/logo/logo.png" alt="" />
+          
+      </div>
+      </article>
 
 
     </main>

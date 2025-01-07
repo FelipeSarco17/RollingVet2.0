@@ -224,3 +224,18 @@ export const services = [
     },
    
   ]
+
+  export const professionals = [
+    {
+      name: "Juan Lopez",
+      title: "Medico Veterinario"
+    },
+    {
+      name: "Elisa Rodriguez",
+      title: "Peluquera canina y felina"
+    },
+    {
+      name: "Juan Lopez",
+      title: "Medico Veterinario"
+    },
+  ]
