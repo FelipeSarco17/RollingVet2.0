@@ -1,9 +1,9 @@
 import { useForm } from "react-hook-form";
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { modificarMascota, capturarUnaMascota, leerMascotas } from "../utils/utils";
+import { registrarMascota } from "../utils/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
-// import { modificarPetSchema } from "../validations/petSchema";
+// import { PetSchema } from "../validations/petSchema";
 import DropdownMascotas from "../components/DropdownMascotas";
 
 
@@ -11,40 +11,29 @@ import DropdownMascotas from "../components/DropdownMascotas";
 
 
 
-const ModificarMascota = () => {
+const RegistrarMascota = () => {
   const navigate = useNavigate();
-  const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm(/*{ resolver: zodResolver(modificarPetSchema) }*/);
-  const { id } = useParams();
+  const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm(/*{ resolver: zodResolver(PetSchema) }*/);
 
-  const modificarDatos = (obj) => {
-    modificarMascota(id, obj);
+  const RegistrarMascota = async (obj) => {
+
+    const mascotaNueva = {
+      nombre: obj.nombre,
+      especie: obj.especie,
+      raza: obj.raza,
+      propietarioID: obj.propietarioID,
+    }
+    console.log(mascotaNueva);
+    
+    let res = await registrarMascota(mascotaNueva)
     navigate("/admin/gestionMascotas");
   };
-
-  const obtenerProducto = async (id) => {
-    try {
-      let data = await capturarUnaMascota(id);
-      let obj = data.mascota;
-
-      if (obj) {
-        setValue("nombre", obj.nombre);
-        setValue("especie", obj.especie);
-        setValue("raza", obj.raza);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  useEffect(() => {
-    obtenerProducto(id);
-  }, [id]);
 
   return (
     <main className="flex justify-center items-center py-8">
       <div className="w-full max-w-lg bg-white p-6 rounded-lg shadow-lg">
       <h1 className="mb-5 text-4xl font-bold text-black">
-        Modificar Mascota
+        Crear Mascota
       </h1>
         {/* Botón de regresar */}
         <button
@@ -57,7 +46,7 @@ const ModificarMascota = () => {
   Regresar
         </button>
 
-        <form onSubmit={handleSubmit(modificarDatos)}>
+        <form onSubmit={handleSubmit(RegistrarMascota)}>
           {/* Nombre */}
           <div className="mb-4">
             <label className="block text-lg font-medium text-gray-700">Nombre</label>
@@ -97,13 +86,26 @@ const ModificarMascota = () => {
             )}
           </div>
 
+          {/* Propietario */}
+          <div className="mb-4">
+            <label className="block text-lg font-medium text-gray-700">propietario</label>
+            <input
+              type="text"
+              className="mt-2 p-2 w-full border border-gray-300 rounded-md"
+              {...register("propietarioID", { required: "Este campo es obligatorio." })}
+            />
+            {errors.propietarioID && (
+              <p className="text-red-500 text-sm mt-1">{errors.propietarioID.message}</p>
+            )}
+          </div>
+
           {/* Botón de submit */}
           <div className="mt-6">
             <button
               type="submit"
               className="w-full py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600"
             >
-              Modificar Mascota
+              Agregar Mascota
             </button>
           </div>
         </form>
@@ -112,4 +114,4 @@ const ModificarMascota = () => {
   );
 };
 
-export default ModificarMascota;
+export default RegistrarMascota;

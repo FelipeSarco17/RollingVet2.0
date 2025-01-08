@@ -13,10 +13,12 @@ import AdministrarMascotas from './views/AdministrarMascotas';
 import Error404 from './views/Error404';
 import ModificarPaciente from './views/ModificarPaciente';
 import ModificarMascota from './views/ModificarMascota';
+import RegistrarMascota from './views/RegistrarMascota';
 import AuthProvider from './contexts/AuthProvider';
 import RutasProtegidasAdmin from './routes/RutasProtegidasAdmin'
 import { RutasProtegidasUser } from './routes/RutasProtegidasUser';
 import Footer from './common/Footer';
+
 
 
 function App() {
@@ -39,6 +41,7 @@ function App() {
           <Route path='/admin/gestionPacientes' element={<AdministrarPacientes/>}/>
           <Route path='/admin/modificarPaciente/:id' element={<ModificarPaciente/>}/>
           <Route path='/admin/modificarMascota/:id' element={<ModificarMascota/>}/>
+          <Route path='/admin/registrarMascota' element={<RegistrarMascota/>}/>
           <Route path='/admin/gestionTurnos' element={<AdministrarTurnos/>}/>
           <Route path='/admin/gestionMascotas' element={<AdministrarMascotas/>}/>
 

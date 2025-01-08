@@ -76,6 +76,6 @@ export const eliminarMascota = async (id) => {
 }
 
 export const registrarMascota = async(obj)=>{
-    let res = await axios.post(`/pacientes/crearPaciente`,obj);
+    let res = await axios.post(`/mascotas/crearMascota`,obj);
     return res;
 }

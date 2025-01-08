@@ -33,7 +33,8 @@ const AdministrarMascotas = () => {
     <main className="p-6">
       <div className="flex">
         <h1 className="text-3xl font-bold mb-6 mr-6">Administrar Mascotas</h1>
-        <button className="ml-6 mb-6 bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-50">
+        <button className="ml-6 mb-6 bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-50"
+        onClick={() => navigate("/admin/registrarMascota")}>
       Agregar Mascota
     </button>
       </div>
