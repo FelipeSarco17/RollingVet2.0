@@ -12,9 +12,9 @@ const getOne = async (req, res) => {
 }
 
 const create = async (req, res) => {
-    const { nombre, especie, raza, propietarioID } = req.body;
+    const { nombre, especie, descripcion, propietarioID } = req.body;
     // usar un elif para validar que lleguen todos los campos y si se logra entonces recien acceder a la db
-    const mascotaNueva = new Mascota({ nombre, especie, raza, propietarioID });
+    const mascotaNueva = new Mascota({ nombre, especie, descripcion, propietarioID });
     await mascotaNueva.save();
     return res.status(201).json({msg: "Mascota registrada exitosamente.", mascota:mascotaNueva})
 }
