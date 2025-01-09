@@ -4,46 +4,20 @@ import { useEffect, useState } from "react";
 import { modificarPaciente, capturarUnPaciente, leerPacientes } from "../utils/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { modificarUserSchema } from "../validations/userSchema";
+import { setEmailOriginal } from "../utils/estadosCompartidos";
 import DropdownMascotas from "../components/DropdownMascotas";
 
 const ModificarPaciente = () => {
   const navigate = useNavigate();
   const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm({ resolver: zodResolver(modificarUserSchema) });
   const { id } = useParams();
-  const [emailOriginal, setEmailOriginal] = useState("");
 
   const modificarDatos = (obj) => {
     modificarPaciente(id, obj);
     navigate("/admin/gestionPacientes");
   };
 
-  const validarEmail = async (data) => {
-    let emailValido = true;
-
-    if (data.email !== emailOriginal) {
-      try {
-        const pacientesData = await leerPacientes();
-        const { Pacientes } = pacientesData;
-
-        Pacientes.forEach((paciente) => {
-          if (paciente.email === data.email && paciente.key !== id) {
-            emailValido = false;
-          }
-        });
-
-        if (!emailValido) {
-          alert("El email ya está registrado.");
-        } else {
-          modificarDatos(data);
-        }
-      } catch (error) {
-        console.error(error);
-        alert("Hubo un error al validar el email.");
-      }
-    } else {
-      modificarDatos(data);
-    }
-  };
+  
 
   const obtenerProducto = async (id) => {
     try {
@@ -84,7 +58,7 @@ const ModificarPaciente = () => {
   Regresar
         </button>
 
-        <form onSubmit={handleSubmit(validarEmail)}>
+        <form onSubmit={handleSubmit(modificarDatos)}>
           {/* Nombre */}
           <div className="mb-4">
             <label className="block text-lg font-medium text-gray-700">Nombre</label>
