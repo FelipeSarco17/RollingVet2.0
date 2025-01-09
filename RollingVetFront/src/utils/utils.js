@@ -7,7 +7,7 @@ import Cookies from "js-cookie"
 
 const urlPacientes = "http://localhost:8080/api/pacientes"
 const urlMascotas = "http://localhost:8080/api/mascotas"
-
+const urlEspecies = "http://localhost:8080/api/especies"
 //FUNCIONES PACIENTE
 
 export const ingresoUsuario = async(obj)=>{
@@ -77,5 +77,34 @@ export const eliminarMascota = async (id) => {
 
 export const registrarMascota = async(obj)=>{
     let res = await axios.post(`/mascotas/crearMascota`,obj);
+    return res;
+}
+
+
+
+
+//FUNCIONES ESPECIES
+export const leerEspecies = async () => {
+    let especies = await axios.get(`/especies/obtenerTodas`);
+    return especies.data;
+}
+
+export const capturarUnaEspecie = async (id) => {
+    let especie = await axios.get(`/especies/obtenerUna/${id}`);
+    console.log(especie);
+    return especie.data;
+}
+
+export const modificarEspecie = async (id, obj) => {
+    let especie = await axios.put(`/especies/${id}`, obj);
+    return especie;
+}
+
+export const eliminarEspecie = async (id) => {
+    let especie = await axios.delete(`/especies/${id}`)
+}
+
+export const registrarEspecie = async(obj)=>{
+    let res = await axios.post(`/especies/crearEspecie`,obj);
     return res;
 }
