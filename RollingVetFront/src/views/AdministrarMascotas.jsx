@@ -37,7 +37,7 @@ const AdministrarMascotas = () => {
           onClick={() => navigate("/admin/registrarMascota")}>
           Agregar Mascota
         </button>
-        <button className="ml-6 mb-6 bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-50"
+        <button className="ml-6 mb-6 bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-50"
           onClick={() => navigate("/admin/gestionEspecies")}>
             Gestionar Especies
           </button>
@@ -51,7 +51,7 @@ const AdministrarMascotas = () => {
               <th className="py-3 px-6 text-left text-gray-700">#</th>
               <th className="py-3 px-6 text-left text-gray-700">Nombre</th>
               <th className="py-3 px-6 text-left text-gray-700">Especie</th>
-              <th className="py-3 px-6 text-left text-gray-700">Raza</th>
+              <th className="py-3 px-6 text-left text-gray-700">Descripción</th>
               <th className="py-3 px-6 text-left text-gray-700">Propietario</th>
               <th className="py-3 px-6 text-left text-gray-700">Acciones</th>
             </tr>
@@ -63,7 +63,7 @@ const AdministrarMascotas = () => {
                   <td className="py-3 px-6 text-gray-700">{mascota.uid}</td>
                   <td className="py-3 px-6 text-gray-700">{mascota.nombre}</td>
                   <td className="py-3 px-6 text-gray-700">{mascota.especie}</td>
-                  <td className="py-3 px-6 text-gray-700">{mascota.raza}</td>
+                  <td className="py-3 px-6 text-gray-700">{mascota.descripcion}</td>
                   <td className="py-3 px-6 text-gray-700">{mascota.propietario}</td>
                   <td className="py-3 px-6 text-gray-700">
                     <button

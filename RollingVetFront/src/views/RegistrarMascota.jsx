@@ -20,7 +20,7 @@ const RegistrarMascota = () => {
     const mascotaNueva = {
       nombre: obj.nombre,
       especie: obj.especie,
-      raza: obj.raza,
+      descripcion: obj.descripcion,
       propietarioID: obj.propietarioID,
     }
     console.log(mascotaNueva);
@@ -73,14 +73,14 @@ const RegistrarMascota = () => {
             )}
           </div>
 
-          {/* Raza */}
+          {/* Descripción */}
           <div className="mb-4">
-            <label className="block text-lg font-medium text-gray-700">Raza</label>
-            <input
-              type="text"
-              className="mt-2 p-2 w-full border border-gray-300 rounded-md"
-              {...register("raza", { required: "Este campo es obligatorio." })}
-            />
+            <label className="block text-lg font-medium text-gray-700">Descripción</label>
+            <textarea
+    placeholder="Agrega cualquier detalle que nos brinde más información sobre la mascota"
+    className="mt-2 p-2 w-full border border-gray-300 rounded-md h-32 resize-none"
+    {...register("raza", { required: "Este campo es obligatorio." })}
+  ></textarea>
             {errors.raza && (
               <p className="text-red-500 text-sm mt-1">{errors.raza.message}</p>
             )}
