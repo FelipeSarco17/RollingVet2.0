@@ -4,8 +4,7 @@ import { useEffect, useState } from "react";
 import { registrarMascota } from "../utils/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 // import { PetSchema } from "../validations/petSchema";
-import DropdownMascotas from "../components/DropdownMascotas";
-
+import DropdownEspecies from "../components/DropdownEspecies";
 
 /////////////////////////// FALTAN AGREGAR VALIDACIONES PARA LOS CAMPOS DEL FORMULARIO ///////////////////////////////////////////////////////
 
@@ -14,12 +13,12 @@ import DropdownMascotas from "../components/DropdownMascotas";
 const RegistrarMascota = () => {
   const navigate = useNavigate();
   const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm(/*{ resolver: zodResolver(PetSchema) }*/);
-
+  const [especieSeleccionada, setEspecieSeleccionada] = useState(null);
   const RegistrarMascota = async (obj) => {
 
     const mascotaNueva = {
       nombre: obj.nombre,
-      especie: obj.especie,
+      especie: especieSeleccionada.label,
       descripcion: obj.descripcion,
       propietarioID: obj.propietarioID,
     }
@@ -61,28 +60,18 @@ const RegistrarMascota = () => {
           </div>
 
           {/* Especie */}
-          <div className="mb-4">
-            <label className="block text-lg font-medium text-gray-700">Especie</label>
-            <input
-              type="text"
-              className="mt-2 p-2 w-full border border-gray-300 rounded-md"
-              {...register("especie", { required: "Este campo es obligatorio." })}
-            />
-            {errors.especie && (
-              <p className="text-red-500 text-sm mt-1">{errors.especie.message}</p>
-            )}
-          </div>
+          <DropdownEspecies label={"Especie"} onSelect={(opcion) => setEspecieSeleccionada(opcion)}/>      
 
           {/* Descripción */}
           <div className="mb-4">
             <label className="block text-lg font-medium text-gray-700">Descripción</label>
             <textarea
-    placeholder="Agrega cualquier detalle que nos brinde más información sobre la mascota"
-    className="mt-2 p-2 w-full border border-gray-300 rounded-md h-32 resize-none"
-    {...register("raza", { required: "Este campo es obligatorio." })}
-  ></textarea>
-            {errors.raza && (
-              <p className="text-red-500 text-sm mt-1">{errors.raza.message}</p>
+              placeholder="Agrega brevemente cualquier detalle que nos brinde información sobre la mascota"
+              className="mt-2 p-2 w-full border border-gray-300 rounded-md h-32 resize-none"
+              {...register("descripcion", { required: "Este campo es obligatorio." })}
+            ></textarea>
+            {errors.descripcion && (
+              <p className="text-red-500 text-sm mt-1">{errors.descripcion.message}</p>
             )}
           </div>
 

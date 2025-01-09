@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { modificarMascota, capturarUnaMascota, leerMascotas } from "../utils/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 // import { modificarPetSchema } from "../validations/petSchema";
-import DropdownMascotas from "../components/DropdownMascotas";
+import DropdownEspecies from "../components/DropdownEspecies";
 
 
 /////////////////////////// FALTAN AGREGAR VALIDACIONES PARA LOS CAMPOS DEL FORMULARIO ///////////////////////////////////////////////////////
@@ -29,7 +29,7 @@ const ModificarMascota = () => {
       if (obj) {
         setValue("nombre", obj.nombre);
         setValue("especie", obj.especie);
-        setValue("raza", obj.raza);
+        setValue("descripcion", obj.descripcion);
       }
     } catch (error) {
       console.error(error);
@@ -43,18 +43,18 @@ const ModificarMascota = () => {
   return (
     <main className="flex justify-center items-center py-8">
       <div className="w-full max-w-lg bg-white p-6 rounded-lg shadow-lg">
-      <h1 className="mb-5 text-4xl font-bold text-black">
-        Modificar Mascota
-      </h1>
+        <h1 className="mb-5 text-4xl font-bold text-black">
+          Modificar Mascota
+        </h1>
         {/* Botón de regresar */}
         <button
           onClick={() => navigate("/admin/gestionMascotas")}
           className="flex items-center gap-2 mb-6 py-2 px-4 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400"
         >
-           <svg xmlns="http://www.w3.org/2000/svg" width="22.703" height="21.928">
-           <path transform="scale(-0.8, 0.8) translate(-22.703, 3)" d="M1.056 21.928c0-6.531 5.661-9.034 10.018-9.375V18.1L22.7 9.044 11.073 0v4.836a10.5 10.5 0 0 0-7.344 3.352C-.618 12.946-.008 21 .076 21.928z"/>
-           </svg>
-  Regresar
+          <svg xmlns="http://www.w3.org/2000/svg" width="22.703" height="21.928">
+            <path transform="scale(-0.8, 0.8) translate(-22.703, 3)" d="M1.056 21.928c0-6.531 5.661-9.034 10.018-9.375V18.1L22.7 9.044 11.073 0v4.836a10.5 10.5 0 0 0-7.344 3.352C-.618 12.946-.008 21 .076 21.928z" />
+          </svg>
+          Regresar
         </button>
 
         <form onSubmit={handleSubmit(modificarDatos)}>
@@ -71,29 +71,16 @@ const ModificarMascota = () => {
             )}
           </div>
 
-          {/* Especie */}
+          {/* Descripción */}
           <div className="mb-4">
-            <label className="block text-lg font-medium text-gray-700">Especie</label>
-            <input
-              type="text"
-              className="mt-2 p-2 w-full border border-gray-300 rounded-md"
-              {...register("especie", { required: "Este campo es obligatorio." })}
-            />
-            {errors.especie && (
-              <p className="text-red-500 text-sm mt-1">{errors.especie.message}</p>
-            )}
-          </div>
-
-          {/* Raza */}
-          <div className="mb-4">
-            <label className="block text-lg font-medium text-gray-700">Raza</label>
-            <input
-              type="text"
-              className="mt-2 p-2 w-full border border-gray-300 rounded-md"
-              {...register("raza", { required: "Este campo es obligatorio." })}
-            />
-            {errors.raza && (
-              <p className="text-red-500 text-sm mt-1">{errors.raza.message}</p>
+            <label className="block text-lg font-medium text-gray-700">Descripción</label>
+            <textarea
+              placeholder="Agrega brevemente cualquier detalle que nos brinde información sobre la mascota"
+              className="mt-2 p-2 w-full border border-gray-300 rounded-md h-32 resize-none"
+              {...register("descripcion", { required: "Este campo es obligatorio." })}
+            ></textarea>
+            {errors.descripcion && (
+              <p className="text-red-500 text-sm mt-1">{errors.descripcion.message}</p>
             )}
           </div>
 
