@@ -7,10 +7,10 @@ const ReviewCard = ({ review }) => {
 
     for(let i=0; i<5;i++){
         if(i<review.estrellas){
-            estrellasSvg.push(<img className='w-4 h-4' src={goldStar}/>)
+            estrellasSvg.push(<img className='w-4 h-4' key={i} src={goldStar}/>)
         }
         else{
-            estrellasSvg.push(<img className='w-4 h-4' src={grayStar}/>)
+            estrellasSvg.push(<img className='w-4 h-4' key={i} src={grayStar}/>)
         }
     }
 

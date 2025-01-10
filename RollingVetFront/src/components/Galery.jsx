@@ -5,9 +5,9 @@ const Galery = () => {
 
     return (
 
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {productos.map((producto,index)=>{
-                return <ProductCard name={producto.nombre} image={producto.src}/>
+                return <ProductCard name={producto.nombre} key={index} image={producto.src}/>
             })}
         </div>
 
