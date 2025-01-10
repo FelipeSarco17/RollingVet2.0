@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import { Link } from 'react-router-dom'
 import "../styles/registrarse.css"
 import { useForm } from 'react-hook-form'
@@ -6,13 +6,21 @@ import { useAuth } from '../contexts/AuthProvider'
 import { useNavigate } from 'react-router-dom'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { userSchema } from '../validations/userSchema'
-
 import MensajeError from '../common/MensajeError'
+import { setEmailOriginal } from '../utils/estadosCompartidos'
+
+
 
 const Registrarse = () => {
+
   const { register, handleSubmit, formState: { errors }, watch } = useForm({ resolver: zodResolver(userSchema) })
   const navigate = useNavigate()
   const { registroUsuario } = useAuth()
+  
+
+   useEffect(() => {
+    setEmailOriginal("");
+  }, []);
   
 
   const onSubmit = async (obj) => {
