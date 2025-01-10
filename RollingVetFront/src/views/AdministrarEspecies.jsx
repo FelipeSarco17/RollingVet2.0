@@ -46,40 +46,40 @@ const AdministrarEspecies = () => {
       </div>
 
       <div className="overflow-x-auto">
-        <table className="min-w-full bg-white border border-gray-200 rounded-lg shadow-md">
-          <thead>
-            <tr className="bg-gray-100">
-              <th className="py-3 px-6 text-left text-gray-700">#</th>
-              <th className="py-3 px-6 text-left text-gray-700">Especie</th>
-              <th className="py-3 px-6 text-left text-gray-700">Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {especies.length > 0 ? (
-              especies.map((especie) => (
-                <tr key={especie.eid} className="border-t border-gray-200">
-                  <td className="py-3 px-6 text-gray-700">{especie.eid}</td>
-                  <td className="py-3 px-6 text-gray-700">{especie.especie}</td>
-                  <td className="py-3 px-6 text-gray-700">
-                    <button
-                      className="bg-red-500 text-white py-1 px-4 rounded-lg ml-2 hover:bg-red-600 transition"
-                      onClick={() => handleEliminar(especie.eid)}
-                    >
-                      Borrar
-                    </button>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="6" className="py-3 px-6 text-center text-gray-500">
-                  No hay especies registradas.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+  <table className="min-w-full bg-white border border-gray-200 rounded-lg shadow-md border-collapse">
+    <thead>
+      <tr className="bg-gray-100">
+        <th className="py-3 px-6 text-left text-gray-700 border border-gray-300 ">#</th>
+        <th className="py-3 px-6 text-left text-gray-700 border border-gray-300">Especie</th>
+        <th className="py-3 px-6 text-left text-gray-700 border border-gray-300">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {especies.length > 0 ? (
+        especies.map((especie) => (
+          <tr key={especie.eid} className="border-t border-gray-200">
+            <td className="py-3 px-6 text-gray-700 border border-gray-300 max-w-[100px] break-words whitespace-normal">{especie.eid}</td>
+            <td className="py-3 px-6 text-gray-700 border border-gray-300 max-w-[100px] break-words whitespace-normal">{especie.especie}</td>
+            <td className="py-3 px-6 text-gray-700 border border-gray-300 max-w-[100px]">
+              <button
+                className="bg-red-500 text-white py-1 px-4 rounded-lg ml-2 hover:bg-red-600 transition"
+                onClick={() => handleEliminar(especie.eid)}
+              >
+                Borrar
+              </button>
+            </td>
+          </tr>
+        ))
+      ) : (
+        <tr>
+          <td colSpan="6" className="py-3 px-6 text-center text-gray-500 border border-gray-300">
+            No hay especies registradas.
+          </td>
+        </tr>
+      )}
+    </tbody>
+  </table>
+</div>
     </main>
   );
 };

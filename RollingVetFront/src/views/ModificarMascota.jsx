@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { modificarMascota, capturarUnaMascota, leerMascotas } from "../utils/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
-// import { modificarPetSchema } from "../validations/petSchema";
+import { modificarPetSchema } from "../validations/petSchema";
 import DropdownEspecies from "../components/DropdownEspecies";
 
 
@@ -73,7 +73,7 @@ const ModificarMascota = () => {
 
           {/* Descripción */}
           <div className="mb-4">
-            <label className="block text-lg font-medium text-gray-700">Descripción</label>
+            <label className="block text-lg font-medium text-gray-700">Descripción (opcional)</label>
             <textarea
               placeholder="Agrega brevemente cualquier detalle que nos brinde información sobre la mascota"
               className="mt-2 p-2 w-full border border-gray-300 rounded-md h-32 resize-none"
