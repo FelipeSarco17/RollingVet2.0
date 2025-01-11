@@ -228,14 +228,17 @@ export const services = [
   export const professionals = [
     {
       name: "Juan Lopez",
-      title: "Medico Veterinario"
+      title: "Medico Veterinario",
+      img: "https://universidadeuropea.com/resources/media/images/medicina-veterinaria-1200x630.original.jpg"
+    },{
+      name: "Valentina Juarez",
+      title:  "Medico Veterinario",
+      img:"https://www.deutschland.de/sites/default/files/styles/image_carousel_mobile/public/media/image/germany-everyday-life-vet-janine-sommer-job-work.jpg?itok=LWpTTeYK"
     },
     {
       name: "Elisa Rodriguez",
-      title: "Peluquera canina y felina"
+      title: "Peluquera canina y felina",
+      img:"https://www.cimformacion.com/blog/wp-content/uploads/2020/09/peluquera-seca-perro.jpg"
     },
-    {
-      name: "Juan Lopez",
-      title: "Medico Veterinario"
-    },
+    
   ]
