@@ -1,12 +1,31 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { leerEspecies } from '../utils/utils';
 
-const DropdownMascotas = ({ options = [], label = "Menu" }) => {
+const DropdownEspecies = ({ label = "Menú", onSelect }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [options, setOptions] = useState([]); // Estado para las opciones
+  const [selectedOption, setSelectedOption] = useState(null); // Estado para la opción seleccionada
   const dropdownRef = useRef(null);
 
   const toggleDropdown = () => {
     setIsOpen((prev) => !prev);
   };
+
+  useEffect(() => {
+    leerEspecies()
+      .then((data) => {
+        if (data && data.especies) {
+          // Transformar las especies para usarlas como opciones
+          const formattedOptions = data.especies.map((especie) => ({
+            label: especie.especie,
+          }));
+          setOptions(formattedOptions);
+        }
+      })
+      .catch((error) => {
+        console.error('Error al cargar especies:', error);
+      });
+  }, []); // Solo se ejecuta una vez al montar
 
   const handleClickOutside = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -21,6 +40,14 @@ const DropdownMascotas = ({ options = [], label = "Menu" }) => {
     };
   }, []);
 
+  const handleOptionSelect = (option) => {
+    setSelectedOption(option);
+    setIsOpen(false);
+    if (onSelect) {
+      onSelect(option); // Notificamos al componente padre
+    }
+  };
+
   return (
     <div ref={dropdownRef} className="relative inline-block text-left">
       <button
@@ -28,7 +55,7 @@ const DropdownMascotas = ({ options = [], label = "Menu" }) => {
         onClick={toggleDropdown}
         className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
       >
-        {label}
+        {selectedOption ? selectedOption.label : label}
         <svg
           className="-mr-1 ml-2 h-5 w-5"
           xmlns="http://www.w3.org/2000/svg"
@@ -50,17 +77,19 @@ const DropdownMascotas = ({ options = [], label = "Menu" }) => {
         >
           <div className="py-1">
             {options.length > 0 ? (
-              options.map((option, index) => (
-                <a
-                  key={index}
-                  href={option.href || '#'}
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+              options.map((option) => (
+                <button
+                  key={option.label}
+                  onClick={() => handleOptionSelect(option)}
+                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                 >
                   {option.label}
-                </a>
+                </button>
               ))
             ) : (
-              <p className="block px-4 py-2 text-sm text-gray-500">No hay opciones disponibles.</p>
+              <p className="block px-4 py-2 text-sm text-gray-500">
+                No hay opciones disponibles.
+              </p>
             )}
           </div>
         </div>
@@ -69,4 +98,4 @@ const DropdownMascotas = ({ options = [], label = "Menu" }) => {
   );
 };
 
-export default DropdownMascotas;
+export default DropdownEspecies;

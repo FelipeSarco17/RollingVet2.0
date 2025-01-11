@@ -10,7 +10,7 @@ class Server {
         this.rutaPacientes = "/api/pacientes";
         this.rutaMascotas = "/api/mascotas";
         this.rutaTurnos = "/api/turnos";
-
+        this.rutaEspecies = "/api/especies";
 
         this.conectarDb();
         this.middlewares();
@@ -28,6 +28,7 @@ class Server {
         this.app.use(this.rutaPacientes , require("../routes/pacientes"));
         this.app.use(this.rutaMascotas , require("../routes/mascotas"));
         this.app.use(this.rutaTurnos , require("../routes/turnos"));
+        this.app.use(this.rutaEspecies , require("../routes/especies"));
     }
     listen(){
         this.app.listen(this.port, ()=>{
