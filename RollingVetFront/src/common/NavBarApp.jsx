@@ -29,10 +29,7 @@ const NavBarApp = () => {
 
     }
 
-    console.log(user);
     
-    
-
 
     return (
         <Navbar className='p-3 grid  grid-rows-1 grid-cols-2 bg-cyan-500 h-30 w-screen sm:gap-x-56 lg:grid-cols-5 lg:gap-0  '>
