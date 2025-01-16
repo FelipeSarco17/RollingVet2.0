@@ -7,13 +7,15 @@ import Contacto from './views/Contacto';
 import Planes from './views/Planes';
 import IniciarSesion from './views/IniciarSesion';
 import Registrarse from './views/Registrarse';
+import PaginaUsuario from './views/PaginaUsuario'
 import AdministrarPacientes from './views/AdministrarPacientes';
 import AdministrarTurnos from './views/AdministrarTurnos';
 import AdministrarMascotas from './views/AdministrarMascotas';
 import AdministrarEspecies from './views/AdministrarEspecies';
 import Error404 from './views/Error404';
 import ModificarPaciente from './views/ModificarPaciente';
-import ModificarMascota from './views/ModificarMascota';
+import ModificarMascotaAdmin from './views/ModificarMascotaAdmin';
+import ModificarMascotaUsuario from './views/ModificarMascotaUsuario';
 import RegistrarMascota from './views/RegistrarMascota';
 import RegistrarEspecie from './views/RegistrarEspecie';
 import AuthProvider from './contexts/AuthProvider';
@@ -51,6 +53,9 @@ function App() {
           <Route path='/admin/modificarPaciente/:id' element={<ModificarPaciente />} />
 
           <Route element={<RutasProtegidasUserLogueado />}>
+          <Route path='/user/userpage' element={<PaginaUsuario/>} />
+          <Route path='/user/modificarMascota/:id' element={<ModificarMascotaUsuario/>}/>
+          <Route path='/user/registrarMascota' element={<RegistrarMascota/>}/>
             <Route path='/registrarTurno' element={<RegistrarTurno />} />
           </Route>
 
@@ -60,12 +65,15 @@ function App() {
           </Route>
           <Route element={<RutasProtegidasAdmin />}>
             <Route path='/admin/gestionTurnos' element={<AdministrarTurnos />} />
-            <Route path='/admin/modificarMascota/:id' element={<ModificarMascota />} />
-            <Route path='/admin/modificarMascota/:id' element={<ModificarMascota />} />
+            <Route path='/admin/modificarMascota/:id' element={<ModificarMascotaAdmin/>}/>
+            <Route path='/admin/modificarPaciente/:id' element={<ModificarPaciente />} />
             <Route path='/admin/registrarMascota' element={<RegistrarMascota />} />
             <Route path='/admin/registrarEspecie' element={<RegistrarEspecie />} />
             <Route path='/admin/gestionTurnos' element={<AdministrarTurnos />} />
           </Route>
+
+          
+        
 
         </Routes>
         <Footer />

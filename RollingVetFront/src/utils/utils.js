@@ -112,6 +112,18 @@ export const registrarMascota = async(obj)=>{
     return res;
 }
 
+export const traerMascotasUsuario = async (IDmascotasUsuario) => {
+    try {
+      let mascotas = await leerMascotas();
+      
+      mascotas = mascotas.mascotas
+      console.log(mascotas);
+      
+      return mascotas.filter(mascota => IDmascotasUsuario.includes(mascota.uid));
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
 
 

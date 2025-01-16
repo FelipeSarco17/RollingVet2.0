@@ -14,6 +14,9 @@ export const useAuth = () => {
 }
 
 
+    //////////////////// ERROR NO SE PUDO HACER QUE LA MODIFICACIÓN DEL USUARIO SE EFECTÚE EN LA COOKIE A LA HORA DE REALIZAR UN CAMBIO.
+
+
 const AuthProvider = ({ children }) => {
 
     const [user, setUser] = useState(null);
@@ -69,6 +72,23 @@ const AuthProvider = ({ children }) => {
             console.log(error.message);
         }
     }
+
+    const modificarUsuario = async (obj) => {
+        try {
+            console.log("Modificando usuario:", obj);
+            await modificarPaciente(obj.id, obj);
+
+            const res = await verificarSesionIniciada();
+    
+            if (res.status === 200) {
+                setUser(res.data);
+            } else {
+                console.error("Error al obtener los datos actualizados del usuario.");
+            }
+        } catch (error) {
+            console.error("Error al modificar el usuario:", error.message);
+        }
+    };
 
     const cerrarSesion = () =>{
         Swal.fire({

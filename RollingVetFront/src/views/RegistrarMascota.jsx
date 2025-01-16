@@ -1,18 +1,20 @@
 import { useForm } from "react-hook-form";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { registrarMascota } from "../utils/utils";
+import { registrarMascota, modificarPaciente } from "../utils/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { petSchema } from "../validations/petSchema";
 import DropdownEspecies from "../components/DropdownEspecies";
+import { useAuth } from "../contexts/AuthProvider";
 
-/////////////////////////// FALTAN AGREGAR VALIDACIONES PARA LOS CAMPOS DEL FORMULARIO ///////////////////////////////////////////////////////
 
 
 
 const RegistrarMascota = () => {
+  
   const navigate = useNavigate();
   const { register, handleSubmit, formState: { errors }, reset, setValue, watch } = useForm({ resolver: zodResolver(petSchema) });
+  const { user, modificarUsuario } = useAuth()
   const RegistrarMascota = async (obj) => {
     console.log(obj);
 
@@ -20,17 +22,33 @@ const RegistrarMascota = () => {
       nombre: obj.nombre,
       especie: obj.especie,
       descripcion: obj.descripcion || "Sin descripción",
-      propietarioID: 1234567890,
+      propietarioID: obj.propietarioID,
     }
     console.log(mascotaNueva);
-
     let res = await registrarMascota(mascotaNueva)
-    navigate("/admin/gestionMascotas");
+if (res) {
+      // Actualiza la lista de mascotas del usuario con la nueva ID
+      console.log(res);
+      const mascotaID = res.data.mascota.uid;
+      const nuevasMascotasIDs = [...user.mascotasIDs, mascotaID];
+      const nuevoUsuario = {...user, mascotasIDs: nuevasMascotasIDs} 
+
+      modificarUsuario(nuevoUsuario).then(navigate("/user/userpage"))
+      
+      
+      
   };
+}
 
   useEffect(() => {
-    setValue("especie", "");
-  },[]);
+    
+    if (user) {
+      setValue("especie", "");
+      setValue("propietarioID", user.id)
+      console.log(user.id);
+      
+    }
+  },[user]);
     console.log(watch())
   return (
     <main className="flex justify-center items-center py-8">
@@ -40,7 +58,7 @@ const RegistrarMascota = () => {
         </h1>
         {/* Botón de regresar */}
         <button
-          onClick={() => navigate("/admin/gestionMascotas")}
+          onClick={() => navigate("/user/userpage")}
           className="flex items-center gap-2 mb-6 py-2 px-4 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400"
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="22.703" height="21.928">
@@ -80,6 +98,9 @@ const RegistrarMascota = () => {
             />
             {errors.descripcion && (
               <p className="text-red-500 text-sm mt-1">{errors.descripcion.message}</p>
+            )}
+            {errors.propietarioID && (
+              alert(errors.propietarioID.message)
             )}
           </div>
 
