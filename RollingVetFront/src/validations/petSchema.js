@@ -11,6 +11,7 @@ const mensajesValidacion = {
   nombreRegex: "El nombre solo debe incluir letras",
   especieInvalida: "Debes seleccionar una especie válida",
   descripcionMax: "La descripción no puede superar los 150 caracteres",
+  errorSistemaPropietario: "Lo sentimos, hay un error con el sistema. Por favor, vuelve a intentarlo más tarde."
 };
 
 // Función para validar la especie de manera eficiente.
@@ -40,6 +41,8 @@ export const petSchema = baseSchema.extend({
       async (especie) => await validarEspecie(especie),
       { message: mensajesValidacion.especieInvalida }
     ),
+  propietarioID: z
+  .string({message: mensajesValidacion.errorSistemaPropietario})
 });
 
 // Esquema para modificar mascotas, basado en `baseSchema`.

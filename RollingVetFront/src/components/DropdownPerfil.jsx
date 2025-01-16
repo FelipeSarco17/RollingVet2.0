@@ -47,7 +47,7 @@ const DropdownPerfil = ({ user, userIcon, desloguear }) => {
                     <ul className="flex flex-col border-t border-gray-300 w-full">
                         <li className="text-center p-0.5 cursor-pointer bg-green-500 hover:bg-green-600 transition duration-300">
                             <NavLink
-                                to="/perfil"
+                                to="/user/userpage"
                                 className="block w-full text-white p-2"
                             >
                                 Ver Perfil
