@@ -28,7 +28,7 @@ export const capturarUnPaciente = async (id) => {
 
 export const modificarPaciente = async(id, obj) => {
     let paciente = await axios.put(`/pacientes/${id}`, obj);
-    return paciente
+    return paciente.data;
 }
 
 export const eliminarPaciente = async (id) => {

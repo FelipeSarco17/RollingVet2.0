@@ -129,10 +129,42 @@ const create = async (req, res) => {
 }
 
 const update = async (req, res) => {
-    let { id } = req.params;
-    let obj = req.body;
-    let paciente = await Paciente.findByIdAndUpdate(id, obj, { new: true })
-    return res.status(203).json({ paciente });
+    
+    try{
+        let { id } = req.params;
+        let obj = req.body;
+        let paciente = await Paciente.findByIdAndUpdate(id, obj, { new: true })
+        const tokenPayload = {
+            id: paciente._id,
+            nombre: paciente.nombre,
+            apellido: paciente.apellido,
+            email: paciente.email,
+            telefono: paciente.telefono,
+            admin: paciente.admin,
+            mascotasIDs: paciente.mascotasIDs,
+            estado: paciente.estado
+        }
+    
+        const token = jwt.sign(tokenPayload, firma, {
+            expiresIn: '3d'
+        });
+    
+        res.cookie("access_token", token, {
+            sameSite: 'none',
+            httpOnly: false,
+            secure: true,
+            priority: "high",
+        });
+
+        
+        return res.status(203).json({ ...tokenPayload });
+    }catch(error){
+        return res.status(500).json({message:error.message})
+    }
+    
+
+   
+
 
 }
 

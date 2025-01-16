@@ -40,14 +40,18 @@ function App() {
 
 
 
-          <Route path='/registrarTurno' element={<RegistrarTurno />} />
+
           <Route path='*' element={<Error404 />} />
           <Route path='/' element={<Inicio />} />
           <Route path='/nosotros' element={<Nosotros />} />
           <Route path='/contacto' element={<Contacto />} />
           <Route path='/planes' element={<Planes />} />
 
+          <Route path='/admin/gestionPacientes' element={<AdministrarPacientes />} />
+          <Route path='/admin/modificarPaciente/:id' element={<ModificarPaciente />} />
+
           <Route element={<RutasProtegidasUserLogueado />}>
+            <Route path='/registrarTurno' element={<RegistrarTurno />} />
           </Route>
 
           <Route element={<RutasProtegidasUser />}>
@@ -55,10 +59,8 @@ function App() {
             <Route path='/registrarse' element={<Registrarse />} />
           </Route>
           <Route element={<RutasProtegidasAdmin />}>
-            <Route path='/admin/gestionPacientes' element={<AdministrarPacientes />} />
             <Route path='/admin/gestionTurnos' element={<AdministrarTurnos />} />
             <Route path='/admin/modificarMascota/:id' element={<ModificarMascota />} />
-            <Route path='/admin/modificarPaciente/:id' element={<ModificarPaciente />} />
             <Route path='/admin/modificarMascota/:id' element={<ModificarMascota />} />
             <Route path='/admin/registrarMascota' element={<RegistrarMascota />} />
             <Route path='/admin/registrarEspecie' element={<RegistrarEspecie />} />

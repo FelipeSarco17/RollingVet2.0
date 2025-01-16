@@ -10,7 +10,7 @@ export const RutasProtegidasUserLogueado = () => {
         return (<Outlet/>)
     } 
     else{
-        return (<Navigate to="/" replace />)
+        return (<Navigate to="/ingresar" replace />)
     }
 
 }

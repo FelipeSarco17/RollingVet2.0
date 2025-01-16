@@ -1,6 +1,6 @@
 import React, { Children, useEffect, useState } from 'react'
 import { useContext, createContext } from 'react'
-import { ingresoUsuario, leerPacientes, registrarUsuario, verificarSesionIniciada } from '../utils/utils';
+import { ingresoUsuario, leerPacientes, modificarPaciente, registrarUsuario, verificarSesionIniciada } from '../utils/utils';
 import Cookies from "js-cookie"
 import Swal from 'sweetalert2'
 
@@ -98,8 +98,19 @@ const AuthProvider = ({ children }) => {
         });
     }
 
+    const editarUsuario = async(id,obj) =>{
+        try{
+            const usuarioModificado = await modificarPaciente(id,obj);
+            setUser(usuarioModificado) 
+        }catch(error){
+            console.log(error.message);
+            
+        }
+    }
+
+
     return (
-        <authContext.Provider value={{ cerrarSesion,registroUsuario,validarUsuario, setUser, user, authenticated}}>
+        <authContext.Provider value={{ cerrarSesion,registroUsuario,editarUsuario,validarUsuario, setUser, user, authenticated}}>
             {children}
         </authContext.Provider>
     )
