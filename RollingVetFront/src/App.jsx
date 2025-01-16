@@ -50,6 +50,9 @@ function App() {
           <Route path='/planes' element={<Planes />} />
 
           <Route element={<RutasProtegidasUserLogueado />}>
+          <Route path='/user/userpage' element={<PaginaUsuario/>} />
+          <Route path='/user/modificarMascota/:id' element={<ModificarMascotaUsuario/>}/>
+          <Route path='/user/registrarMascota' element={<RegistrarMascota/>}/>
           </Route>
 
           <Route element={<RutasProtegidasUser />}>
@@ -59,13 +62,15 @@ function App() {
           <Route element={<RutasProtegidasAdmin />}>
             <Route path='/admin/gestionPacientes' element={<AdministrarPacientes />} />
             <Route path='/admin/gestionTurnos' element={<AdministrarTurnos />} />
-            <Route path='/admin/modificarMascota/:id' element={<ModificarMascota />} />
+            <Route path='/admin/modificarMascota/:id' element={<ModificarMascotaAdmin/>}/>
             <Route path='/admin/modificarPaciente/:id' element={<ModificarPaciente />} />
-            <Route path='/admin/modificarMascota/:id' element={<ModificarMascota />} />
             <Route path='/admin/registrarMascota' element={<RegistrarMascota />} />
             <Route path='/admin/registrarEspecie' element={<RegistrarEspecie />} />
             <Route path='/admin/gestionTurnos' element={<AdministrarTurnos />} />
           </Route>
+
+          
+        
 
         </Routes>
         <Footer />
