@@ -22,6 +22,8 @@ import AuthProvider from './contexts/AuthProvider';
 import RutasProtegidasAdmin from './routes/RutasProtegidasAdmin'
 import { RutasProtegidasUser } from './routes/RutasProtegidasUser';
 import Footer from './common/Footer';
+import RegistrarTurno from './views/RegistrarTurno';
+import { RutasProtegidasUserLogueado } from './routes/RutasProtegidasUserLogueado';
 
 
 
@@ -32,66 +34,43 @@ function App() {
   return (
     <AuthProvider>
 
-    
-    <BrowserRouter className='bg-dark'>
-    
-      <NavBarApp/>  
-        <Routes>
-          <Route path='/' element={<Inicio/>}/>
-          <Route path='/nosotros' element={<Nosotros />}/>
-          <Route path='/contacto' element={<Contacto />}/>
-          <Route path='/ingresar' element={<IniciarSesion/>}/>
-          <Route path='/registrarse' element={<Registrarse/>}/>
-          <Route path='/planes' element={<Planes />}/>
-          <Route path='/admin/gestionPacientes' element={<AdministrarPacientes/>}/>
-          <Route path='/admin/gestionMascotas' element={<AdministrarMascotas/>}/>
-          <Route path='/admin/gestionEspecies' element={<AdministrarEspecies/>}/>
-          <Route path='/admin/modificarPaciente/:id' element={<ModificarPaciente/>}/>
-          <Route path='/admin/modificarMascota/:id' element={<ModificarMascotaAdmin/>}/>
-          <Route path='/admin/registrarEspecie' element={<RegistrarEspecie/>}/>
-          <Route path='/admin/gestionTurnos' element={<AdministrarTurnos/>}/>
-          
-          {/* RUTAS PROTEGIDAS PARA EL USUARIO */}
-          <Route path='/user/userpage' element={<PaginaUsuario/>} />
-          <Route path='/user/modificarMascota/:id' element={<ModificarMascotaUsuario/>}/>
-          <Route path='/user/registrarMascota' element={<RegistrarMascota/>}/>
-          {/*
-          <Route element={<RutasProtegidasUser/>}>
-          
-          </Route>
-          
 
       <BrowserRouter className='bg-dark'>
 
         <NavBarApp />
         <Routes>
+
+
+
+          <Route path='/registrarTurno' element={<RegistrarTurno />} />
+          <Route path='*' element={<Error404 />} />
           <Route path='/' element={<Inicio />} />
           <Route path='/nosotros' element={<Nosotros />} />
           <Route path='/contacto' element={<Contacto />} />
-
           <Route path='/planes' element={<Planes />} />
+
+          <Route element={<RutasProtegidasUserLogueado />}>
+          </Route>
 
           <Route element={<RutasProtegidasUser />}>
             <Route path='/ingresar' element={<IniciarSesion />} />
             <Route path='/registrarse' element={<Registrarse />} />
           </Route>
-
-
           <Route element={<RutasProtegidasAdmin />}>
-
-
-          ////////////////////////////////////////////////////////  IMPORTANTE
             <Route path='/admin/gestionPacientes' element={<AdministrarPacientes />} />
             <Route path='/admin/gestionTurnos' element={<AdministrarTurnos />} />
-            <Route path='/admin/modificarMascota/:id' element={<ModificarMascota/>}/>
+            <Route path='/admin/modificarMascota/:id' element={<ModificarMascota />} />
+            <Route path='/admin/modificarPaciente/:id' element={<ModificarPaciente />} />
+            <Route path='/admin/modificarMascota/:id' element={<ModificarMascota />} />
+            <Route path='/admin/registrarMascota' element={<RegistrarMascota />} />
+            <Route path='/admin/registrarEspecie' element={<RegistrarEspecie />} />
+            <Route path='/admin/gestionTurnos' element={<AdministrarTurnos />} />
           </Route>
-*/}
 
-          <Route path='*' element={<Error404 />} />
         </Routes>
-        <Footer/>
+        <Footer />
       </BrowserRouter>
     </AuthProvider>
-  )
+  );
 }
 export default App

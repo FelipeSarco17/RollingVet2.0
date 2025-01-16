@@ -152,3 +152,12 @@ export const registrarEspecie = async(obj)=>{
     let res = await axios.post(`/especies/crearEspecie`,obj);
     return res;
 }
+
+
+//FUNCIONES TURNO
+
+export const registrarTurno = async(obj) =>{
+
+    let res = await axios.post(`/turnos/crearTurno`,obj);
+    return res.json();
+}
