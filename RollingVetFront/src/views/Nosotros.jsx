@@ -3,29 +3,36 @@ import AvatarCard from '../components/AvatarCard'
 import "../styles/nosotros.css"
 import brainIcon from "../assets/brainIcon.svg"
 import dev1 from "../assets/Dev1.jpg"
+import dev2 from "../assets/Dev2.jpeg"
+import welcomeImage from "../assets/welcomeImage.png"
 
 const Nosotros = () => {
-  
-  const devs=[
+
+  const devs = [
     {
-      img:dev1,
-      nombre:"Felipe Sarco",
+      img: dev1,
+      nombre: "Felipe Sarco",
+      puesto: "Desarrollador FullStack",
       edad: 21
 
     },
     {
-      img:"",
-      nombre:"Alberto Mainardi",
-      edad: 0,
+      img: dev2,
+      nombre: "Alberto Mainardi",
+      puesto: "Desarrollador FullStack",
+      edad: 18,
 
     }
   ]
-  
+
   return (
     <main className='flex flex-col justify-center'>
-      <div className='relative'>
-        <img className='headerImage' src="https://itssolutions.co/wp-content/uploads/2022/09/Perfil-de-personalidad-de-los-Desarrolladores-de-software-opt.jpg" alt="" />
-        <h1 className='absolute inset-0 text-center text-4xl mt-12'>Conocenos</h1>
+      <div className='relative   lg:h-[500px] xl:h-[600px] overflow-y-hidden'>
+        <img className='w-full' src="https://itssolutions.co/wp-content/uploads/2022/09/Perfil-de-personalidad-de-los-Desarrolladores-de-software-opt.jpg" alt="" />
+        <div className='absolute inset-0 text-center mt-12 flex flex-col items-center justify-center'>
+          <h1 className=' text-2xl md:text-4xl lg:text-7xl '>¡Conocenos!</h1>
+          <img src={welcomeImage} className=' w-32 md:w-[300px] lg:w-[500px]' alt="imagenAmigable" />
+        </div>
       </div>
 
       <article className='flex flex-col gap-5 my-32 items-center'>
@@ -39,8 +46,8 @@ const Nosotros = () => {
       <article className='w-full bg-gradient-to-r from-sky-500 to-indigo-500 grid grid-rows-1 grid-cols-2 py-5'>
         <p className='text-2xl col-span-2 place-self-center font-semibold'>Nuestros integrantes</p>
         {
-          devs.map(dev=>{
-            return <AvatarCard dev={dev}/>
+          devs.map(dev => {
+            return <AvatarCard dev={dev} />
           })
         }
       </article>
