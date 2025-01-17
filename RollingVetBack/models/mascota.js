@@ -8,7 +8,7 @@ const SchemaMascota = Schema({
         type:String,
         required:[true, "Este campo es obligatorio"]
     },
-    raza: {
+    descripcion: {
         type:String,
         required:[true, "Este campo es obligatorio"]
     },

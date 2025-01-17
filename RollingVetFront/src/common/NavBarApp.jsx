@@ -8,17 +8,13 @@ import userIcon from "../assets/userIcon.svg"
 import petIcon from "../assets/petIcon.svg";
 import { useAuth } from '../contexts/AuthProvider';
 import dev1 from "../assets/Dev1.jpg"
+import DropdownPerfil from '../components/DropdownPerfil';
 
 const NavBarApp = () => {
 
     const { authenticated, user, cerrarSesion } = useAuth();
     const [menuOpen, setMenuOpen] = useState(false)
     const [menuDrop, setMenuDrop] = useState(false)
-
-
-    const handleMenuDrop = () => {
-        setMenuDrop(!menuDrop);
-    }
 
     const desloguear = () => {
         cerrarSesion();
@@ -30,10 +26,7 @@ const NavBarApp = () => {
 
     }
 
-    console.log(user);
     
-    
-
 
     return (
         <Navbar className='p-3 grid  grid-rows-1 grid-cols-2 bg-cyan-500 h-30 w-screen sm:gap-x-56 lg:grid-cols-5 lg:gap-0  '>
@@ -91,13 +84,6 @@ const NavBarApp = () => {
                     {
                     // ESTO ES SOLO PARA TESTEAR
                     }
-                                                        <NavLink className="mx-4 mt-2" to="/admin/gestionPacientes">
-                                        <img className='w-10' src={userEditIcon} alt="adminPacientesIcon" />
-                                    </NavLink>
-
-                                    <NavLink className="mx-4 mt-2" to="/admin/gestionTurnos">
-                                        <img className='w-10' src={calendarEditIcon} alt="adminTurnosIcon" />
-                                    </NavLink>
                                     <NavLink className="mx-4 mt-2" to="/admin/gestionMascotas">
                                         <img className='w-10' src={petIcon} alt="petIcon" />
                                     </NavLink>
@@ -106,26 +92,7 @@ const NavBarApp = () => {
                 </div>
 
                 {authenticated ? (
-                    <div className='relative text-black w-16 h-16'>
-                        <button onClick={handleMenuDrop} id="imgUser" className={`rounded-full lg:transform lg:transition ${menuDrop ? "lg:scale-150" : ""} absolute  right-0  lg:top-1/4 lg:right-0 w-10 z-20 mx-3 mt-2 lg:me-6 `}><img className='rounded-full w-10 lg:me-4' src={userIcon} alt="logoUser" /> </button>
-                        {menuDrop &&
-                            <>
-                                <div className='hidden lg:flex lg:flex-col lg:absolute lg:right-32 lg:top-1/4 lg:z-30'>
-                                    <p className=' text-black'>{user.email}</p>
-                                    <p className='text-black'>{user.nombre}</p>
-                                </div>
-                                <ul className='rounded-lg border-2  flex flex-col justify-end absolute z-10 w-72 -left-28  lg:-left-56 lg:items-end lg:flex-row lg:top-0 lg:right-0 dropdownPerfil'>
-                                    <li className='text-center p-2 border-y-2 lg:border-y-0 lg:border-t-2 lg:border-r-2  lg:rounded-bl-lg  w-full'>
-                                        <NavLink to="">Ver Perfil</NavLink>
-                                    </li>
-                                    <li className='text-center p-2  rounded-b-lg  lg:border-t-2 lg:rounded-bl-none lg:rounded-br-lg  w-full'>
-                                        <button onClick={desloguear}>Cerrar Sesión</button>
-                                    </li>
-                                </ul>
-                            </>
-                        }
-
-                    </div>)
+                    <DropdownPerfil user={user} userIcon={userIcon} desloguear={desloguear}/>)
                     : (<><NavLink className='p-1.5 text-black font-semibold bg-rose-500 rounded-md p-1 mt-2 lg:m-0 lg:me-4 ' to="/ingresar">
                         Iniciar Sesion
                     </NavLink>

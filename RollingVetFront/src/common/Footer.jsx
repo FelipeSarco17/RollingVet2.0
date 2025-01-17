@@ -8,7 +8,7 @@ const Footer = () => {
             <div className="container mx-auto px-4">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <div className="space-y-4 order-1 md:order-1">
-                        <h3 className="text-lg font-semibold">Ubicación</h3>
+                        <h3 className="text-lg text-center font-semibold">Ubicación</h3>
                         <div className="w-full h-48 rounded-lg overflow-hidden">
                             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3561.0118290093533!2d-65.24980193826893!3d-26.807751976612774!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94225cfdaa3e3c59%3A0xc9e31434729ba71c!2sVETERINARIA%20DEL%20SOL!5e0!3m2!1ses-419!2sar!4v1729575864690!5m2!1ses-419!2sar" width="100%"
                                 height="100%"

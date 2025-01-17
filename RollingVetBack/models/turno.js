@@ -1,22 +1,18 @@
 const { Schema, model } = require("mongoose");
 const SchemaTurno = Schema({
-    paciente: {
-        type:Number,
+    mascota: {
+        type:Schema.Types.ObjectId,
         required:[true,"Este campo es obligatorio"]
     },
-    propietario: {
-        type:String,
-        required:[true, "Este campo es obligatorio"]
-    },
-    telefono: {
-        type:String,
+    cliente: {
+        type:Schema.Types.ObjectId,
         required:[true, "Este campo es obligatorio"]
     },
     sucursal: {
         type:String,
         required:[true, "Este campo es obligatorio"]
     },
-    motivoConsulta: {
+    servicio: {
         type:String,
         required:[true, "Este campo es obligatorio"]
     },

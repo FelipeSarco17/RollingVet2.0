@@ -1,5 +1,7 @@
 const Turno = require("../models/turno");
 
+
+
 const get = async (req, res) => {
   let Turnos = await Turno.find({});
   return res.status(200).json({ Turnos });
@@ -9,39 +11,46 @@ const getOne = async (req, res) => {
   let turno = await Turno.findById({ _id: id });
   return res.status(200).json({ turno });
 };
+
 const create = async (req, res) => {
   const {
-    paciente,
-    propietario,
-    telefono,
+    mascota,
+    cliente,
+    servicio,
     sucursal,
-    motivoConsulta,
     fecha,
     hora,
     estado,
   } = req.body;
-  const turnoOcupado = await Turno.findOne({ fecha, hora, sucursal, estado:true });
 
-  if (turnoOcupado) {
-    return res
-      .status(400)
-      .json({ msg: "El turno ya está asignado para esa fecha y hora." });
-  } 
+
+  const turnoOcupado = await Turno.findOne({ fecha, hora, sucursal, estado: true });
+
+  try {
+    if (turnoOcupado) {
+      return res
+        .status(400)
+        .json({ msg: "Este turno ya se encuentra ocupado." });
+    }
     const nuevoTurno = new Turno({
-      paciente,
-      propietario,
-      telefono,
+      mascota,
+      cliente,
+      servicio,
       sucursal,
-      motivoConsulta,
       fecha,
       hora,
-      estado:true,
-});
+      estado: true,
+    });
     await nuevoTurno.save();
     return res
       .status(201)
       .json({ msg: "Turno registrado exitosamente.", turno: nuevoTurno });
-  };
+  } catch (err) {
+    return res.status(500).json({msg:err.message});
+   }
+
+};
+
 const update = async (req, res) => {
   let { id } = req.params;
   let obj = req.body;

@@ -7,16 +7,16 @@ import Cookies from "js-cookie"
 
 const urlPacientes = "http://localhost:8080/api/pacientes"
 const urlMascotas = "http://localhost:8080/api/mascotas"
-
+const urlEspecies = "http://localhost:8080/api/especies"
 //FUNCIONES PACIENTE
 
-export const ingresoUsuario = async(obj)=>{
+export const ingresoUsuario = async (obj) => {
 
-    let res = await axios.post(`/pacientes/ingresar`,obj);    
+    let res = await axios.post(`/pacientes/ingresar`, obj);
     return res;
 }
 
-export const leerPacientes = async()=>{
+export const leerPacientes = async () => {
     let pacientes = await axios.get(`/pacientes/obtenerTodos`);
     return pacientes.data;
 }
@@ -35,16 +35,48 @@ export const eliminarPaciente = async (id) => {
     let paciente = await axios.delete(`/pacientes/${id}`)
 }
 
-export const registrarUsuario = async(obj)=>{
-    let res = await axios.post(`/pacientes/crearPaciente`,obj);
+export const registrarUsuario = async (obj) => {
+
+    let res = await axios.post(`/pacientes/crearPaciente`, obj);
     return res;
 }
 
-export const verificarSesionIniciada = async()=>{
+export const verificarSesionIniciada = async () => {
     let res = await axios.get(`/pacientes/verificar`);
     return res;
 }
 
+
+
+export const getClima = async () => {
+  if (navigator.geolocation) {
+    
+      const position = await new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(resolve, reject);
+      });
+
+      const { latitude, longitude } = position.coords;
+      const apiKey = "d1258136badc440788a220548250801";
+      const url = `https://api.weatherapi.com/v1/current.json?q=${latitude},${longitude}&lang=es&key=${apiKey}`;
+      const res = await fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        return data;
+      } else {
+        throw new Error("Error al obtener los datos del clima");
+      }
+
+  } else {
+    throw new Error("La geolocalización no es soportada en este navegador")
+  }
+};
 
 
 //FUNCIONES TOKEN
@@ -81,14 +113,51 @@ export const registrarMascota = async(obj)=>{
 }
 
 export const traerMascotasUsuario = async (IDmascotasUsuario) => {
-  try {
-    let mascotas = await leerMascotas();
-    
-    mascotas = mascotas.mascotas
-    console.log(mascotas);
-    
-    return mascotas.filter(mascota => IDmascotasUsuario.includes(mascota.uid));
-  } catch (error) {
-    console.error(error);
-  }
-};
+    try {
+      let mascotas = await leerMascotas();
+      
+      mascotas = mascotas.mascotas
+      console.log(mascotas);
+      
+      return mascotas.filter(mascota => IDmascotasUsuario.includes(mascota.uid));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+
+
+//FUNCIONES ESPECIES
+export const leerEspecies = async () => {
+    let especies = await axios.get(`/especies/obtenerTodas`);
+    return especies.data;
+}
+
+export const capturarUnaEspecie = async (id) => {
+    let especie = await axios.get(`/especies/obtenerUna/${id}`);
+    console.log(especie);
+    return especie.data;
+}
+
+export const modificarEspecie = async (id, obj) => {
+    let especie = await axios.put(`/especies/${id}`, obj);
+    return especie;
+}
+
+export const eliminarEspecie = async (id) => {
+    let especie = await axios.delete(`/especies/${id}`)
+}
+
+export const registrarEspecie = async(obj)=>{
+    let res = await axios.post(`/especies/crearEspecie`,obj);
+    return res;
+}
+
+
+//FUNCIONES TURNO
+
+export const registrarTurno = async(obj) =>{
+
+    let res = await axios.post(`/turnos/crearTurno`,obj);
+    return res.json();
+}

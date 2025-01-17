@@ -1,49 +1,70 @@
 import { useForm } from "react-hook-form";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { registrarMascota } from "../utils/utils";
+import { registrarMascota, modificarPaciente } from "../utils/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
-// import { PetSchema } from "../validations/petSchema";
-import DropdownMascotas from "../components/DropdownMascotas";
+import { petSchema } from "../validations/petSchema";
+import DropdownEspecies from "../components/DropdownEspecies";
+import { useAuth } from "../contexts/AuthProvider";
 
-
-/////////////////////////// FALTAN AGREGAR VALIDACIONES PARA LOS CAMPOS DEL FORMULARIO ///////////////////////////////////////////////////////
 
 
 
 const RegistrarMascota = () => {
+  
   const navigate = useNavigate();
-  const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm(/*{ resolver: zodResolver(PetSchema) }*/);
-
+  const { register, handleSubmit, formState: { errors }, reset, setValue, watch } = useForm({ resolver: zodResolver(petSchema) });
+  const { user, modificarUsuario } = useAuth()
   const RegistrarMascota = async (obj) => {
+    console.log(obj);
 
     const mascotaNueva = {
       nombre: obj.nombre,
       especie: obj.especie,
-      raza: obj.raza,
+      descripcion: obj.descripcion || "Sin descripción",
       propietarioID: obj.propietarioID,
     }
     console.log(mascotaNueva);
-    
     let res = await registrarMascota(mascotaNueva)
-    navigate("/admin/gestionMascotas");
-  };
+if (res) {
+      // Actualiza la lista de mascotas del usuario con la nueva ID
+      console.log(res);
+      const mascotaID = res.data.mascota.uid;
+      const nuevasMascotasIDs = [...user.mascotasIDs, mascotaID];
+      const nuevoUsuario = {...user, mascotasIDs: nuevasMascotasIDs} 
 
+      modificarUsuario(nuevoUsuario).then(navigate("/user/userpage"))
+      
+      
+      
+  };
+}
+
+  useEffect(() => {
+    
+    if (user) {
+      setValue("especie", "");
+      setValue("propietarioID", user.id)
+      console.log(user.id);
+      
+    }
+  },[user]);
+    console.log(watch())
   return (
     <main className="flex justify-center items-center py-8">
       <div className="w-full max-w-lg bg-white p-6 rounded-lg shadow-lg">
-      <h1 className="mb-5 text-4xl font-bold text-black">
-        Crear Mascota
-      </h1>
+        <h1 className="mb-5 text-4xl font-bold text-black">
+          Crear Mascota
+        </h1>
         {/* Botón de regresar */}
         <button
-          onClick={() => navigate("/admin/gestionMascotas")}
+          onClick={() => navigate("/user/userpage")}
           className="flex items-center gap-2 mb-6 py-2 px-4 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400"
         >
-           <svg xmlns="http://www.w3.org/2000/svg" width="22.703" height="21.928">
-           <path transform="scale(-0.8, 0.8) translate(-22.703, 3)" d="M1.056 21.928c0-6.531 5.661-9.034 10.018-9.375V18.1L22.7 9.044 11.073 0v4.836a10.5 10.5 0 0 0-7.344 3.352C-.618 12.946-.008 21 .076 21.928z"/>
-           </svg>
-  Regresar
+          <svg xmlns="http://www.w3.org/2000/svg" width="22.703" height="21.928">
+            <path transform="scale(-0.8, 0.8) translate(-22.703, 3)" d="M1.056 21.928c0-6.531 5.661-9.034 10.018-9.375V18.1L22.7 9.044 11.073 0v4.836a10.5 10.5 0 0 0-7.344 3.352C-.618 12.946-.008 21 .076 21.928z" />
+          </svg>
+          Regresar
         </button>
 
         <form onSubmit={handleSubmit(RegistrarMascota)}>
@@ -53,7 +74,7 @@ const RegistrarMascota = () => {
             <input
               type="text"
               className="mt-2 p-2 w-full border border-gray-300 rounded-md"
-              {...register("nombre", { required: "Este campo es obligatorio." })}
+              {...register("nombre")}
             />
             {errors.nombre && (
               <p className="text-red-500 text-sm mt-1">{errors.nombre.message}</p>
@@ -61,41 +82,25 @@ const RegistrarMascota = () => {
           </div>
 
           {/* Especie */}
-          <div className="mb-4">
-            <label className="block text-lg font-medium text-gray-700">Especie</label>
-            <input
-              type="text"
-              className="mt-2 p-2 w-full border border-gray-300 rounded-md"
-              {...register("especie", { required: "Este campo es obligatorio." })}
-            />
-            {errors.especie && (
+          <DropdownEspecies label={"Especie"} onSelect={(opcion) => setValue("especie", opcion.label) }/>
+          {errors.especie && (
               <p className="text-red-500 text-sm mt-1">{errors.especie.message}</p>
             )}
-          </div>
 
-          {/* Raza */}
+          {/* Descripción */}
           <div className="mb-4">
-            <label className="block text-lg font-medium text-gray-700">Raza</label>
+            <label className="block text-lg font-medium text-gray-700">Descripción</label>
             <input
               type="text"
-              className="mt-2 p-2 w-full border border-gray-300 rounded-md"
-              {...register("raza", { required: "Este campo es obligatorio." })}
+              placeholder="Agrega brevemente cualquier detalle que nos brinde información sobre la mascota"
+              className="mt-2 p-2 w-full border border-gray-300 rounded-md h-32"
+              {...register("descripcion")}
             />
-            {errors.raza && (
-              <p className="text-red-500 text-sm mt-1">{errors.raza.message}</p>
+            {errors.descripcion && (
+              <p className="text-red-500 text-sm mt-1">{errors.descripcion.message}</p>
             )}
-          </div>
-
-          {/* Propietario */}
-          <div className="mb-4">
-            <label className="block text-lg font-medium text-gray-700">propietario</label>
-            <input
-              type="text"
-              className="mt-2 p-2 w-full border border-gray-300 rounded-md"
-              {...register("propietarioID", { required: "Este campo es obligatorio." })}
-            />
             {errors.propietarioID && (
-              <p className="text-red-500 text-sm mt-1">{errors.propietarioID.message}</p>
+              alert(errors.propietarioID.message)
             )}
           </div>
 

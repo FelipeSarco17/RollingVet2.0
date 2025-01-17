@@ -20,7 +20,7 @@ const validarEmail = async (email, original = null) => {
   const pacientesData = await leerPacientes();
   const { Pacientes } = pacientesData;
 
-  // Verifica si el email ya existe, ignorando el original (si se proporciona)
+  // Verifica si el email ya existe, ignorando el original
   return !Pacientes.some(
     (paciente) => paciente.email === email && paciente.email !== original
   );

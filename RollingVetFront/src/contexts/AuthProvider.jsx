@@ -1,6 +1,6 @@
 import React, { Children, useEffect, useState } from 'react'
 import { useContext, createContext } from 'react'
-import { ingresoUsuario, leerPacientes, registrarUsuario, verificarSesionIniciada } from '../utils/utils';
+import { ingresoUsuario, leerPacientes, registrarUsuario, modificarPaciente, verificarSesionIniciada } from '../utils/utils';
 import Cookies from "js-cookie"
 import Swal from 'sweetalert2'
 
@@ -12,6 +12,9 @@ export const useAuth = () => {
     }
     return context
 }
+
+
+    //////////////////// ERROR NO SE PUDO HACER QUE LA MODIFICACIÓN DEL USUARIO SE EFECTÚE EN LA COOKIE A LA HORA DE REALIZAR UN CAMBIO.
 
 
 const AuthProvider = ({ children }) => {
@@ -70,6 +73,23 @@ const AuthProvider = ({ children }) => {
         }
     }
 
+    const modificarUsuario = async (obj) => {
+        try {
+            console.log("Modificando usuario:", obj);
+            await modificarPaciente(obj.id, obj);
+
+            const res = await verificarSesionIniciada();
+    
+            if (res.status === 200) {
+                setUser(res.data);
+            } else {
+                console.error("Error al obtener los datos actualizados del usuario.");
+            }
+        } catch (error) {
+            console.error("Error al modificar el usuario:", error.message);
+        }
+    };
+
     const cerrarSesion = () =>{
         Swal.fire({
             title: "¿Seguro que quieres cerrar sesion?",
@@ -99,7 +119,7 @@ const AuthProvider = ({ children }) => {
     }
 
     return (
-        <authContext.Provider value={{ cerrarSesion,registroUsuario,validarUsuario, setUser, user, authenticated}}>
+        <authContext.Provider value={{ cerrarSesion,registroUsuario,validarUsuario, user, authenticated, modificarUsuario}}>
             {children}
         </authContext.Provider>
     )
