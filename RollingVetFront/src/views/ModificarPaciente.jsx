@@ -12,6 +12,7 @@ const ModificarPaciente = () => {
   const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm({ resolver: zodResolver(modificarUserSchema) });
   const { id } = useParams();
 
+
   const modificarDatos = (obj) => {
     modificarPaciente(id, obj);
     navigate("/admin/gestionPacientes");

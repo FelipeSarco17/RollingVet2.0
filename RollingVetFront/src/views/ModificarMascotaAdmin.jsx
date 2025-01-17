@@ -10,7 +10,7 @@ const ModificarMascotaAdmin = () => {
       <div className="w-full max-w-lg bg-white p-6 rounded-lg shadow-lg">
         <h1 className="mb-5 text-4xl font-bold text-black">Modificar Mascota</h1>
         <button
-          onClick={() => navigate("/admin/gestionMascotas")}
+          onClick={() => navigate(-1)}
           className="flex items-center gap-2 mb-6 py-2 px-4 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400"
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="22.703" height="21.928">
@@ -24,7 +24,7 @@ const ModificarMascotaAdmin = () => {
 
         <FormModificarMascota
           id={id}
-          redirigir={() => navigate("/admin/gestionMascotas")}
+          redirigir={() => navigate(-1)}
         />
       </div>
     </main>

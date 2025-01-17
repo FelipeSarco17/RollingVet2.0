@@ -11,7 +11,6 @@ const urlEspecies = "http://localhost:8080/api/especies"
 //FUNCIONES PACIENTE
 
 export const ingresoUsuario = async (obj) => {
-
     let res = await axios.post(`/pacientes/ingresar`, obj);
     return res;
 }
