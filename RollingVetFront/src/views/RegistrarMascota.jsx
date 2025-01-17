@@ -1,55 +1,59 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { registrarMascota, modificarPaciente } from "../utils/utils";
+import { registrarMascota, modificarPaciente, leerEspecies } from "../utils/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { petSchema } from "../validations/petSchema";
 import DropdownEspecies from "../components/DropdownEspecies";
 import { useAuth } from "../contexts/AuthProvider";
-
-
-
+import Input from "../components/FormComponents/Input";
+import SelectEspecies from "../components/FormComponents/SelectEspecies";
+import TextArea from "../components/FormComponents/TextArea";
 
 const RegistrarMascota = () => {
-  
+
   const navigate = useNavigate();
-  const { register, handleSubmit, formState: { errors }, reset, setValue, watch } = useForm({ resolver: zodResolver(petSchema) });
+  const { register, handleSubmit, formState: { errors }, reset, setValue, watch } = useForm();
   const { user, modificarUsuario } = useAuth()
-  const RegistrarMascota = async (obj) => {
+  const [especies, setEspecies] = useState([]);
+
+  useEffect(() => {
+
+    async function obtenerEspecies() {
+      const especiesArray = await leerEspecies();
+      setEspecies(especiesArray)
+    }
+    obtenerEspecies();
+  }, []);
+
+
+
+  const registrarMascotaNueva = async (obj) => {
     console.log(obj);
 
     const mascotaNueva = {
       nombre: obj.nombre,
       especie: obj.especie,
-      descripcion: obj.descripcion || "Sin descripción",
-      propietarioID: obj.propietarioID,
+      descripcion: obj.descripcion ? obj.descripcion : "Sin descripción",
+      propietarioID: user.id,
     }
     console.log(mascotaNueva);
     let res = await registrarMascota(mascotaNueva)
-if (res) {
-      // Actualiza la lista de mascotas del usuario con la nueva ID
-      console.log(res);
-      const mascotaID = res.data.mascota.uid;
-      const nuevasMascotasIDs = [...user.mascotasIDs, mascotaID];
-      const nuevoUsuario = {...user, mascotasIDs: nuevasMascotasIDs} 
-
-      modificarUsuario(nuevoUsuario).then(navigate("/user/userpage"))
-      
-      
-      
-  };
-}
-
-  useEffect(() => {
+    console.log(res);
     
-    if (user) {
-      setValue("especie", "");
-      setValue("propietarioID", user.id)
-      console.log(user.id);
-      
-    }
-  },[user]);
-    console.log(watch())
+    //navigate("/user/userPage");
+    // if (res) {
+    //       // Actualiza la lista de mascotas del usuario con la nueva ID
+    //       console.log(res);
+    //       const mascotaID = res.data.mascota.uid;
+    //       const nuevasMascotasIDs = [...user.mascotasIDs, mascotaID];
+    //       const nuevoUsuario = {...user, mascotasIDs: nuevasMascotasIDs} 
+
+    //       modificarUsuario(nuevoUsuario).then(navigate("/user/userpage"))
+
+    //   };
+  }
+
   return (
     <main className="flex justify-center items-center py-8">
       <div className="w-full max-w-lg bg-white p-6 rounded-lg shadow-lg">
@@ -67,44 +71,10 @@ if (res) {
           Regresar
         </button>
 
-        <form onSubmit={handleSubmit(RegistrarMascota)}>
-          {/* Nombre */}
-          <div className="mb-4">
-            <label className="block text-lg font-medium text-gray-700">Nombre</label>
-            <input
-              type="text"
-              className="mt-2 p-2 w-full border border-gray-300 rounded-md"
-              {...register("nombre")}
-            />
-            {errors.nombre && (
-              <p className="text-red-500 text-sm mt-1">{errors.nombre.message}</p>
-            )}
-          </div>
-
-          {/* Especie */}
-          <DropdownEspecies label={"Especie"} onSelect={(opcion) => setValue("especie", opcion.label) }/>
-          {errors.especie && (
-              <p className="text-red-500 text-sm mt-1">{errors.especie.message}</p>
-            )}
-
-          {/* Descripción */}
-          <div className="mb-4">
-            <label className="block text-lg font-medium text-gray-700">Descripción</label>
-            <input
-              type="text"
-              placeholder="Agrega brevemente cualquier detalle que nos brinde información sobre la mascota"
-              className="mt-2 p-2 w-full border border-gray-300 rounded-md h-32"
-              {...register("descripcion")}
-            />
-            {errors.descripcion && (
-              <p className="text-red-500 text-sm mt-1">{errors.descripcion.message}</p>
-            )}
-            {errors.propietarioID && (
-              alert(errors.propietarioID.message)
-            )}
-          </div>
-
-          {/* Botón de submit */}
+        <form onSubmit={handleSubmit(registrarMascotaNueva)}>
+          <Input register={register} label="Nombre" name="nombre" error={errors.nombre?.message} type="text" />
+          <SelectEspecies register={register} label="Especie" name="especie" error={errors.especie?.message} options={especies} />
+          <TextArea label="Descripción" name="descripcion" register={register} error={errors.descripcion?.message}/>
           <div className="mt-6">
             <button
               type="submit"

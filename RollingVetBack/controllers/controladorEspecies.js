@@ -3,7 +3,8 @@ const Especie = require("../models/especie");
 
 const get = async (req, res) => {
     let especies = await Especie.find({})
-    return res.status(200).json({especies})
+     
+    return res.status(200).json([...especies])
 }
 const getOne = async (req, res) => {
     let {id} = req.params;

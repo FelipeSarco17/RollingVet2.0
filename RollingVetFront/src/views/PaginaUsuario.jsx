@@ -9,22 +9,21 @@ import { useAuth } from "../contexts/AuthProvider";
 const PaginaUsuario = () => {
   const [mascotasUsuario, setMascotasUsuario] = useState([]);
   const { user, modificarUsuario } = useAuth();
-
+  const [error, setError] = useState()
+  
   useEffect(() => {
-    if (user) {
-      console.log(user);
-      
-      const { mascotasIDs } = user;
-      console.log(user);
-      
-      traerMascotasUsuario(mascotasIDs).then((data) => {
-        console.log(data);
-        setMascotasUsuario(data);
-        console.log(mascotasUsuario);
-        
-      });
+    
+    async function obtenerMascotasUsuario(id){
+      try {
+        const mascotasUs = await traerMascotasUsuario(id);
+        setMascotasUsuario(mascotasUs.mascotas);
+      } catch (error) {
+        setError(error.message);
+      }
     }
-  }, [user]);
+    obtenerMascotasUsuario(user.id);
+
+  }, []);
 
   if (!user) {
     return (
@@ -61,11 +60,9 @@ const PaginaUsuario = () => {
               <div className="w-full">
                 <h2 className="text-lg font-medium">Mis Mascotas</h2>
 
-                {mascotasUsuario.length === 0 ? (
-                  <div className="mt-4 text-center">
-                    <p className="text-gray-600">No tienes mascotas registradas.</p>
-                  </div>
-                ) : (
+                {error ? <div className="mt-4 text-center">
+                  <p className="text-gray-600">{error}</p>
+                </div>: 
                   <div className="mt-4">
                     <ul className="space-y-2">
                       {mascotasUsuario.map((m) => (
@@ -80,18 +77,19 @@ const PaginaUsuario = () => {
                           >
                             Eliminar
                           </button>
-                        </li> 
+                        </li>
                       ))}
                     </ul>
                   </div>
-                  
-                )}
+                }
+
+
                 <Link
-                      to="/user/registrarMascota"
-                      className="inline-block mt-4 py-2 px-4 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600"
-                    >
-                      Agregar Mascota
-                    </Link>
+                  to={`/user/registrarMascota/${user.id}`}
+                  className="inline-block mt-4 py-2 px-4 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600"
+                >
+                  Agregar Mascota
+                </Link>
               </div>
             </li>
           </ul>

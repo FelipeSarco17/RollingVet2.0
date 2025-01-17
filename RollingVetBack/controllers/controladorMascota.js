@@ -1,5 +1,5 @@
 const Mascota = require("../models/mascota");
-
+const mongoose = require('mongoose');
 
 const get = async (req, res) => {
     let mascotas = await Mascota.find({})
@@ -24,6 +24,27 @@ const update = async (req, res) => {
     let mascota = await Mascota.findByIdAndUpdate(id, obj, {new:true})
     return res.status(203).json({mascota});
     
+}
+
+const getMascotasUsuario = async(req,res) =>{
+
+    const {propietarioID} = req.params;
+
+    // if (!mongoose.Types.ObjectId.isValid(propietarioID)) {
+    //     return res.status(400).json({ msg: "El ID del propietario no es válido" });
+    // }
+
+    try {
+        const mascotas = await Mascota.find({ propietarioID, state: true });
+        if (!mascotas || mascotas.length === 0) {
+            return res.status(404).json({ msg: "Este usuario no tiene mascotas" });
+        }
+        return res.status(200).json({ mascotas });
+    } catch (error) {
+        console.error("Error al obtener mascotas:", error);
+        return res.status(500).json({ msg: error.message });
+    }
+
 }
 
 const disable = async (req, res) => {
@@ -57,5 +78,6 @@ module.exports = {
     update,
     del,
     disable,
-    enable
+    enable,
+    getMascotasUsuario
 }

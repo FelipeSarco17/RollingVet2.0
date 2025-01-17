@@ -15,10 +15,10 @@ const mensajesValidacion = {
 };
 
 // Función para validar la especie de manera eficiente.
-const validarEspecie = async (especie) => {
-  const { especies } = await leerEspecies();
-  return especies.map((e) => e.especie).includes(especie);
-};
+// const validarEspecie = async (especie) => {
+//   const { especies } = await leerEspecies();
+//   return especies.map((e) => e.especie).includes(especie);
+// };
 
 // Base schema para campos comunes.
 const baseSchema = z.object({
@@ -35,14 +35,8 @@ const baseSchema = z.object({
 
 // Esquema para crear mascotas, extendiendo `baseSchema`.
 export const petSchema = baseSchema.extend({
-  especie: z
-    .string()
-    .refine(
-      async (especie) => await validarEspecie(especie),
-      { message: mensajesValidacion.especieInvalida }
-    ),
-  propietarioID: z
-  .string({message: mensajesValidacion.errorSistemaPropietario})
+  especie: z.string({required_error:mensajesValidacion.especieInvalida}),
+  propietarioID: z.string({message: mensajesValidacion.errorSistemaPropietario})
 });
 
 // Esquema para modificar mascotas, basado en `baseSchema`.

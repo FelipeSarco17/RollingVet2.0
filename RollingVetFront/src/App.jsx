@@ -55,7 +55,7 @@ function App() {
           <Route element={<RutasProtegidasUserLogueado />}>
           <Route path='/user/userpage' element={<PaginaUsuario/>} />
           <Route path='/user/modificarMascota/:id' element={<ModificarMascotaUsuario/>}/>
-          <Route path='/user/registrarMascota' element={<RegistrarMascota/>}/>
+          <Route path='/user/registrarMascota/:id' element={<RegistrarMascota/>}/>
             <Route path='/registrarTurno' element={<RegistrarTurno />} />
           </Route>
 

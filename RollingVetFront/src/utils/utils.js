@@ -89,6 +89,7 @@ export const getClima = async () => {
 
 export const leerMascotas = async () => {
     let mascotas = await axios.get(`/mascotas/obtenerTodas`);
+    if(!mascotas.data) throw new Error("No hay mascotas guardadas.");
     return mascotas.data;
 }
 
@@ -109,20 +110,16 @@ export const eliminarMascota = async (id) => {
 
 export const registrarMascota = async(obj)=>{
     let res = await axios.post(`/mascotas/crearMascota`,obj);
+    console.log(res);
     return res;
 }
 
-export const traerMascotasUsuario = async (IDmascotasUsuario) => {
-    try {
-      let mascotas = await leerMascotas();
-      
-      mascotas = mascotas.mascotas
-      console.log(mascotas);
-      
-      return mascotas.filter(mascota => IDmascotasUsuario.includes(mascota.uid));
-    } catch (error) {
-      console.error(error);
-    }
+export const traerMascotasUsuario = async (id) => {
+
+      let mascotas = await axios.get(`/mascotas/obtenerMascotasUsuario/${id}`);
+      console.log(mascotas.data);
+      return mascotas.data;
+   
   };
 
 
@@ -130,7 +127,7 @@ export const traerMascotasUsuario = async (IDmascotasUsuario) => {
 //FUNCIONES ESPECIES
 export const leerEspecies = async () => {
     let especies = await axios.get(`/especies/obtenerTodas`);
-    return especies.data;
+   return especies.data;
 }
 
 export const capturarUnaEspecie = async (id) => {
