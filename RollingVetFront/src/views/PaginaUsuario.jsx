@@ -10,10 +10,11 @@ const PaginaUsuario = () => {
   const [mascotasUsuario, setMascotasUsuario] = useState([]);
   const { user, modificarUsuario } = useAuth();
   const [error, setError] = useState()
-  
+  const [turnosUsuario, setTurnosUsuario] = useState();
+
   useEffect(() => {
-    
-    async function obtenerMascotasUsuario(id){
+
+    async function obtenerMascotasUsuario(id) {
       try {
         const mascotasUs = await traerMascotasUsuario(id);
         setMascotasUsuario(mascotasUs.mascotas);
@@ -62,7 +63,7 @@ const PaginaUsuario = () => {
 
                 {error ? <div className="mt-4 text-center">
                   <p className="text-gray-600">{error}</p>
-                </div>: 
+                </div> :
                   <div className="mt-4">
                     <ul className="space-y-2">
                       {mascotasUsuario.map((m) => (
@@ -83,13 +84,40 @@ const PaginaUsuario = () => {
                   </div>
                 }
 
-
                 <Link
                   to={`/user/registrarMascota/${user.id}`}
                   className="inline-block mt-4 py-2 px-4 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600"
                 >
                   Agregar Mascota
                 </Link>
+              </div>
+            </li>
+            <li className="p-4 border-b border-gray-200">
+              <div className="w-full">
+                <h2 className="text-lg font-medium my-5">Mis Turnos</h2>
+                {!turnosUsuario || turnosUsuario.length == 0 ?
+                  <div className="mt-4 text-center">
+                    <p className="text-gray-600">No hay turnos reservados.</p>
+                  </div> :
+                  <div className="mt-4">
+                    <ul className="space-y-2">
+                      {turnosUsuario.map((t, index) => (
+                        <li
+                          key={`turno${index}`}
+                          className="flex justify-between items-center p-2 bg-gray-100 rounded-md"
+                        >
+                          <span>{t.fecha}</span>
+                          <button
+                            onClick={() => handleEliminarTurno(t.uid)}
+                            className="bg-red-500 hover:bg-red-600 text-white text-sm px-2 py-1 rounded-md"
+                          >
+                            Eliminar
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                }
               </div>
             </li>
           </ul>

@@ -1,6 +1,8 @@
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 import { capturarUnaMascota, modificarMascota } from "../utils/utils";
+import Input from "./FormComponents/Input"
+import TextArea from "./FormComponents/TextArea"
 
 const FormModificarMascota = ({ id, redirigir }) => {
   const { register, handleSubmit, formState: { errors }, setValue } = useForm();
@@ -36,35 +38,9 @@ const FormModificarMascota = ({ id, redirigir }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      {/* Nombre */}
-      <div className="mb-4">
-        <label className="block text-lg font-medium text-gray-700">Nombre</label>
-        <input
-          type="text"
-          className="mt-2 p-2 w-full border border-gray-300 rounded-md"
-          {...register("nombre", { required: "Este campo es obligatorio." })}
-        />
-        {errors.nombre && (
-          <p className="text-red-500 text-sm mt-1">{errors.nombre.message}</p>
-        )}
-      </div>
-
-      {/* Descripción */}
-      <div className="mb-4">
-        <label className="block text-lg font-medium text-gray-700">
-          Descripción (opcional)
-        </label>
-        <textarea
-          placeholder="Agrega brevemente cualquier detalle que nos brinde información sobre la mascota"
-          className="mt-2 p-2 w-full border border-gray-300 rounded-md h-32 resize-none"
-          {...register("descripcion", { required: "Este campo es obligatorio." })}
-        ></textarea>
-        {errors.descripcion && (
-          <p className="text-red-500 text-sm mt-1">{errors.descripcion.message}</p>
-        )}
-      </div>
-
-      {/* Botón de submit */}
+        <Input name="nombre" register={register} label="Nombre" error={errors.nombre?.message} />
+        <TextArea name="descripcion" register={register} label="Descripción" error={errors.descripcion?.message}/>
+     
       <div className="mt-6">
         <button
           type="submit"
