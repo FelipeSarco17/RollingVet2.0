@@ -117,7 +117,7 @@ const ModificarPaciente = () => {
             )}
           </div>
 
-          <DropdownMascotas label={"Mascotas"} />
+          <DropdownMascotas id={id} label={"Mascotas"} />
 
           {/* Botón de submit */}
           <div className="mt-6">

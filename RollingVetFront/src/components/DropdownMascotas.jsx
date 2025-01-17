@@ -1,9 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { capturarUnPaciente, traerMascotasUsuario } from '../utils/utils';
 
-const Dropdown = ({ options = [], label = "Menu" }) => {
+const DropdownMascotas = ({ id, label }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef(null);
+  const [options, setOptions] = useState([])
 
+  const dropdownRef = useRef(null);
   const toggleDropdown = () => {
     setIsOpen((prev) => !prev);
   };
@@ -14,12 +16,28 @@ const Dropdown = ({ options = [], label = "Menu" }) => {
     }
   };
 
+const obtenerMascotas = async (id) => {
+  try {
+    const data = await capturarUnPaciente(id);
+    const mascotas = await traerMascotasUsuario(data.paciente.mascotasIDs);
+    setOptions(mascotas);
+  } catch (error) {
+    console.error("Error al obtener las mascotas del paciente:", error.message);
+  }
+}
+
   useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
+    if (id) {
+      obtenerMascotas(id);
+      
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => {
+        document.removeEventListener('mousedown', handleClickOutside);
+      };
+      
+    }
+
+  }, [id]);
 
   return (
     <div ref={dropdownRef} className="relative inline-block text-left">
@@ -56,7 +74,7 @@ const Dropdown = ({ options = [], label = "Menu" }) => {
                   href={option.href || '#'}
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                 >
-                  {option.label}
+                  {option.nombre}
                 </a>
               ))
             ) : (
@@ -69,4 +87,4 @@ const Dropdown = ({ options = [], label = "Menu" }) => {
   );
 };
 
-export default Dropdown;
+export default DropdownMascotas;
