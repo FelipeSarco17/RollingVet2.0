@@ -51,15 +51,18 @@ const AuthProvider = ({ children }) => {
     const validarUsuario = async (obj) => {
         try {
             let usuarioLogueado = await ingresoUsuario(obj);
-           
-            
-            
             setUser(usuarioLogueado.data);
             setAuthenticated(true);
-            
-
+            navigate("/");
         } catch (error) {
-            console.log(error.message);
+            console.log(error)
+            Swal.fire({
+                title: "Hubo un error al iniciar sesion",
+                text: error.response.data.mensaje,
+                icon: "error",
+                background: '#393939',
+                color: '#fafafa',
+              })
         }
 
     }
