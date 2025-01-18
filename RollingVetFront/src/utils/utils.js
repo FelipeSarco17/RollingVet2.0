@@ -84,9 +84,16 @@ export const enviarEmailCliente = async(obj) =>{
     const res = await axios.post("/pacientes/contacto",obj);
     return res.data;
 
+}
 
+export const enviarEmailPlanes = async(obj) =>{
+
+    const res = await axios.post("/pacientes/enviarPlan",obj);
+    return res.data;
 
 }
+
+
 
 //FUNCIONES TOKEN
 
