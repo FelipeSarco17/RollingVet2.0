@@ -87,7 +87,13 @@ const NavBarApp = () => {
                                     <NavLink className="mx-4 mt-2" to="/admin/gestionMascotas">
                                         <img className='w-10' src={petIcon} alt="petIcon" />
                                     </NavLink>
+                                    <NavLink className="mx-4 mt-2" to="/admin/gestionPacientes">
+                                        <img className='w-10' src={userEditIcon} alt="adminPacientesIcon" />
+                                    </NavLink>
 
+                                    <NavLink className="mx-4 mt-2" to="/admin/gestionTurnos">
+                                        <img className='w-10' src={calendarEditIcon} alt="adminTurnosIcon" />
+                                    </NavLink>
 
                 </div>
 

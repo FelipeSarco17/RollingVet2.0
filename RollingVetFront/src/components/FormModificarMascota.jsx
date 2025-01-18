@@ -28,8 +28,8 @@ const FormModificarMascota = ({ id, redirigir }) => {
   const onSubmit = async (data) => {
     try {
       await modificarMascota(id, data);
-      if (onRedirigir) {
-        onRedirigir(); // Redirigir en caso necesario
+      if (redirigir) {
+        redirigir(); // Redirigir en caso necesario
       }
     } catch (error) {
       console.error("Error al modificar la mascota:", error);

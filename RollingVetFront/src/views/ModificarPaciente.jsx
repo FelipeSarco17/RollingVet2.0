@@ -6,15 +6,35 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { modificarUserSchema } from "../validations/userSchema";
 import { setEmailOriginal } from "../utils/estadosCompartidos";
 import DropdownMascotas from "../components/DropdownMascotas";
+import Swal from "sweetalert2";
 
 const ModificarPaciente = () => {
   const navigate = useNavigate();
   const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm({ resolver: zodResolver(modificarUserSchema) });
   const { id } = useParams();
 
+
   const modificarDatos = (obj) => {
-    modificarPaciente(id, obj);
-    navigate("/admin/gestionPacientes");
+    Swal.fire({
+      title: "Deseas guardar los cambios?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#008000",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Guardar cambios",
+      cancelButtonText: "Cancelar"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        modificarPaciente(id, obj);
+        
+        Swal.fire({
+          title: "Cambios Guardados!",
+          icon: "success"
+        });
+        navigate("/admin/gestionPacientes");
+      }
+    });
+    
   };
 
   
@@ -117,7 +137,7 @@ const ModificarPaciente = () => {
             )}
           </div>
 
-          <DropdownMascotas label={"Mascotas"} />
+          <DropdownMascotas id={id} label={"Mascotas"} />
 
           {/* Botón de submit */}
           <div className="mt-6">
