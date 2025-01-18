@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { leerEspecies } from '../utils/utils';
 
 // Expresión regular para nombres válidos.
-const regexNombre = /^[A-Za-z]+$/;
+const regexNombre = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;
 
 // Mensajes comunes para validaciones.
 const mensajesValidacion = {
@@ -35,8 +35,7 @@ const baseSchema = z.object({
 
 // Esquema para crear mascotas, extendiendo `baseSchema`.
 export const petSchema = baseSchema.extend({
-  especie: z.string({required_error:mensajesValidacion.especieInvalida}),
-  propietarioID: z.string({message: mensajesValidacion.errorSistemaPropietario})
+  especie: z.string({required_error:mensajesValidacion.especieInvalida})
 });
 
 // Esquema para modificar mascotas, basado en `baseSchema`.

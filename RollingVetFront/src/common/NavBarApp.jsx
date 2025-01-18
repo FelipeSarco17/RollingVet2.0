@@ -79,7 +79,19 @@ const NavBarApp = () => {
                         </>)
                     }
 
+                    {authenticated? (
+                        <>
+                            {!user.admin &&
+                                (<>
+                                    
+                                    <NavLink className="mx-4 mt-2" to={`/registrarTurno/${user.id}`}>
+                                        <img className='w-10' src={calendarEditIcon} alt="registrarTurnoIcon" />
+                                    </NavLink>
+                                </>)
+                            }
+                        </>) : (<>
 
+                        </>)}
 
                     {
                     // ESTO ES SOLO PARA TESTEAR

@@ -48,7 +48,6 @@ function App() {
           <Route path='/nosotros' element={<Nosotros />} />
           <Route path='/contacto' element={<Contacto />} />
           <Route path='/planes' element={<Planes />} />
-
           <Route path='/admin/gestionPacientes' element={<AdministrarPacientes />} />
           <Route path='/admin/modificarPaciente/:id' element={<ModificarPaciente />} />
 
@@ -56,7 +55,8 @@ function App() {
           <Route path='/user/userpage' element={<PaginaUsuario/>} />
           <Route path='/user/modificarMascota/:id' element={<ModificarMascotaUsuario/>}/>
           <Route path='/user/registrarMascota/:id' element={<RegistrarMascota/>}/>
-            <Route path='/registrarTurno' element={<RegistrarTurno />} />
+            
+          <Route path='/registrarTurno/:id' element={<RegistrarTurno />} />
           </Route>
 
           <Route element={<RutasProtegidasUser />}>

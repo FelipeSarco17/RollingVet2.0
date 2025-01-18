@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { traerMascotasUsuario, eliminarMascota, modificarPaciente } from "../utils/utils";
 import { useAuth } from "../contexts/AuthProvider";
+import TurnosUsuario from "../components/TurnosUsuario";
 
 
 // HAY QUE ARREGLAR: EL USUARIO NO SE ACTUALIZA CORRECTAMENTE AL ENVIAR EL FORMULARIO PARA REGRISTRAR UNA MASCOTA O AL ELIMINAR UNA MASCOTA
@@ -19,12 +20,14 @@ const PaginaUsuario = () => {
         const mascotasUs = await traerMascotasUsuario(id);
         setMascotasUsuario(mascotasUs.mascotas);
       } catch (error) {
-        setError(error.message);
+        setError(error.response.data.message);
       }
     }
     obtenerMascotasUsuario(user.id);
 
   }, []);
+
+  
 
   if (!user) {
     return (
@@ -93,7 +96,7 @@ const PaginaUsuario = () => {
               </div>
             </li>
             <li className="p-4 border-b border-gray-200">
-              <div className="w-full">
+              {/* <div className="w-full">
                 <h2 className="text-lg font-medium my-5">Mis Turnos</h2>
                 {!turnosUsuario || turnosUsuario.length == 0 ?
                   <div className="mt-4 text-center">
@@ -118,7 +121,8 @@ const PaginaUsuario = () => {
                     </ul>
                   </div>
                 }
-              </div>
+              </div> */}
+              <TurnosUsuario/>
             </li>
           </ul>
         </div>
