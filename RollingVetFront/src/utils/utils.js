@@ -79,6 +79,15 @@ export const getClima = async () => {
 };
 
 
+export const enviarEmailCliente = async(obj) =>{
+
+    const res = await axios.post("/pacientes/contacto",obj);
+    return res.data;
+
+
+
+}
+
 //FUNCIONES TOKEN
 
 

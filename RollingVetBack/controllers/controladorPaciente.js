@@ -2,8 +2,94 @@ const Paciente = require("../models/paciente");
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken")
 const firma = process.env.JWT_SECRET_KEY;
+const nodemailer = require("nodemailer")
+
+const transporter = nodemailer.createTransport({
+    host: 'smtp.ethereal.email',
+    port: 587,
+    auth: {
+        user: 'raegan23@ethereal.email',
+        pass: '7yPbnkqzQqHQrfKvg4'
+    }
+})
+
+const createMailWithTemplate = () => {
+    return `
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Email Veterinaria</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #f4f4f4;">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color: #f4f4f4; padding: 20px 0;">
+    <tr>
+      <td align="center">
+        <table width="600" border="0" cellspacing="0" cellpadding="0" style="background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+          <!-- Encabezado -->
+          <tr>
+            <td align="center" style="background-color: #00bcd4; padding: 20px;">
+              <img src="https://www.zarla.com/images/zarla-carevet-1x1-2400x2400-20220323-t7b98tfcjcvqdcqwkpq3.png?crop=1:1,smart&width=250&dpr=2" alt="Logo Carevet" style="width: 100px;  display: block;">
+            
+            </td>
+          </tr>
+          <!-- Cuerpo -->
+          <tr>
+            <td style="padding: 20px;">
+              <h2 style="color: #333333; text-align: center; font-size: 22px; margin-bottom: 10px;">¡Conoce nuestros planes!</h2>
+              <p style="color: #555555; text-align: center; font-size: 16px; line-height: 1.5; margin-bottom: 20px;">En Carevet tenemos opciones diseñadas para cuidar de tus mascotas de la mejor manera. Pronto nos contactaremos contigo para darte toda la informacion que necesitas.</p>
+              
+            </td>
+          </tr>
+          
+          <!-- Pie de página -->
+          <tr>
+            <td align="center" style="background-color: #333333; padding: 10px; color: #ffffff; font-size: 14px;">
+              <p style="margin: 0;">Carevet © 2025 | Todos los derechos reservados.</p>
+              <p style="margin: 0;">Tucumán, Argentina</p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+
+    `
+}
 
 
+
+const sendEmail = async(req,res) => {
+
+    const {email} = req.body;
+
+    const info = await transporter.sendMail({
+        from: ' "Carevet" <RollingVet96i@gmail.com>',
+        to: email,
+        subject: "Contacto sobre planes",
+        html: createMailWithTemplate()
+    });
+
+    return res.status(200).json(info);
+
+}
+
+const sendEmailContacto = async(req,res) =>{
+
+    const {cliente,email,texto} = req.body;
+
+    const info = await transporter.sendMail({
+        from: `"${cliente} <${email}>"`,
+        to: "raegan23@ethereal.email",
+        subject: `Mensaje del cliente ${cliente} <${email}>`,
+        text: texto
+    });
+
+    if(info.rejected.length != 0) return res.status(500).json(info)
+    return res.status(200).json(info)
+}
 
 
 const get = async (req, res) => {
@@ -16,7 +102,7 @@ const getOne = async (req, res) => {
     let { id } = req.params;
     let paciente = await Paciente.findById({ _id: id })
     console.log(paciente);
-    
+
     return res.status(200).json({ paciente });
 }
 
@@ -83,7 +169,7 @@ const login = async (req, res) => {
             priority: "high",
         });
 
-        return res.status(200).json({  ...tokenPayload });
+        return res.status(200).json({ ...tokenPayload });
 
 
     } catch (error) {
@@ -101,12 +187,12 @@ const create = async (req, res) => {
 
         const claveEncriptada = bcryptjs.hashSync(clave, 10);
 
-        const nuevoPaciente = new Paciente({ nombre, apellido, email, telefono, clave:claveEncriptada });
+        const nuevoPaciente = new Paciente({ nombre, apellido, email, telefono, clave: claveEncriptada });
         const pacienteGuardado = await nuevoPaciente.save();
-        
+
         return res.status(201).json({ message: "Usuario registrado con exito." });
     } catch (error) {
-        return res.status(500).json({message:error.message})
+        return res.status(500).json({ message: error.message })
     }
 
 
@@ -129,8 +215,8 @@ const create = async (req, res) => {
 }
 
 const update = async (req, res) => {
-    
-    try{
+
+    try {
         let { id } = req.params;
         let obj = req.body;
         let paciente = await Paciente.findByIdAndUpdate(id, obj, { new: true })
@@ -144,11 +230,11 @@ const update = async (req, res) => {
             mascotasIDs: paciente.mascotasIDs,
             estado: paciente.estado
         }
-    
+
         const token = jwt.sign(tokenPayload, firma, {
             expiresIn: '3d'
         });
-    
+
         res.cookie("access_token", token, {
             sameSite: 'none',
             httpOnly: false,
@@ -156,14 +242,14 @@ const update = async (req, res) => {
             priority: "high",
         });
 
-        
-        return res.status(203).json({ ...tokenPayload });
-    }catch(error){
-        return res.status(500).json({message:error.message})
-    }
-    
 
-   
+        return res.status(203).json({ ...tokenPayload });
+    } catch (error) {
+        return res.status(500).json({ message: error.message })
+    }
+
+
+
 
 
 }
@@ -198,5 +284,7 @@ module.exports = {
     disable,
     enable,
     login,
-    verificarSesion
+    verificarSesion,
+    sendEmail,
+    sendEmailContacto
 }

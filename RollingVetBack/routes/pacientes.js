@@ -1,6 +1,6 @@
 const express = require("express");
 const Router = express.Router();
-const { get, getOne, create, update, del, disable, enable, login,verificarSesion } = require("../controllers/controladorPaciente")
+const { get, getOne, create, update, del, disable, enable, login,verificarSesion, sendEmail, sendEmailContacto } = require("../controllers/controladorPaciente")
 const validateSchema = require("../middlewares/validarDatos")
 const { userSchema } = require("../validations/userSchema");
 
@@ -22,6 +22,9 @@ Router.post("/activarPaciente/:id", enable)
 
 Router.post("/ingresar",login)
 
+Router.post("/enviarPlan",sendEmail);
+
+Router.post("/contacto",sendEmailContacto)
 
 
 module.exports = Router;
