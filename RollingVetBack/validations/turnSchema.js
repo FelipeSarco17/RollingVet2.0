@@ -26,7 +26,8 @@ const turnSchema = z.object({
     }),
     hora:z.string({required_error:'La Hora es requerida'}),
     sucursal:z.string({required_error:"La sucursal es requerida"}),
-    servicio:z.string({required_error:"El servicio es requerido"})
+    veterinario:z.string({required_error:"El veterinario es requerido"}),
+    detalleCita:z.string({required_error:"El detalle de la cita es requerido"}).min(15,{message:"El detalle debe tener mínimo 15 caracteres"}).max(200,{message:"El detalle debe tener máximo 200 caracteres"})
 })
 
 

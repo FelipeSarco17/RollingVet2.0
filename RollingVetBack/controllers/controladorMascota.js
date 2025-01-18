@@ -37,12 +37,12 @@ const getMascotasUsuario = async(req,res) =>{
     try {
         const mascotas = await Mascota.find({ propietarioID, state: true });
         if (!mascotas || mascotas.length === 0) {
-            return res.status(404).json({ msg: "Este usuario no tiene mascotas" });
+            return res.status(404).json({ message: "Este usuario no tiene mascotas" });
         }
         return res.status(200).json({ mascotas });
     } catch (error) {
         console.error("Error al obtener mascotas:", error);
-        return res.status(500).json({ msg: error.message });
+        return res.status(500).json({ message: error.message });
     }
 
 }

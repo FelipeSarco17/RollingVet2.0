@@ -11,6 +11,7 @@ import { useAuth } from "../../contexts/AuthProvider"
 import SelectMascotas from '../FormComponents/SelectMascotas'
 import { traerMascotasUsuario } from '../../utils/utils'
 import { useParams } from 'react-router-dom'
+import TextArea from "../FormComponents/TextArea"
 
 const FormRegistrarTurno = () => {
     const {id} = useParams();
@@ -87,7 +88,8 @@ const FormRegistrarTurno = () => {
 
     }
 
-
+    console.log(watch());
+    
     const today = new Date().toISOString().split("T")[0];
     const maxDate = new Date();
     maxDate.setFullYear(maxDate.getFullYear() + 1);
@@ -97,9 +99,10 @@ const FormRegistrarTurno = () => {
             className="flex flex-col gap-12 w-full max-w-lg p-6">
             <Input label="Fecha del Turno" type="date" min={today} max={maxDateString} name="fecha" register={register} error={errors.fechaTurno?.message} />
             <SelectMascotas label="Mascota" name="mascota" options={mascotasCliente} register={register} error={errors.mascotas?.message} />
-            <Select label="Servicio" name="servicio" options={servicios} register={register} error={errors.servicios?.message} />
+            <Select label="Veterinario" name="veterinario" options={["Dr.Juan Lopez" ,"Dr.Eugenia Rodriguez","Dr.Leandro Perez"]} register={register} error={errors.veterinario?.message} />
             <Select label="Horario" name="hora" options={horarios} register={register} error={errors.horaTurno?.message} />
             <Select label="Sucursal" name="sucursal" options={["Sucursal 1", "Sucursal 2"]} register={register} error={errors.sucursal?.message} />
+            <TextArea label="Detalle de cita" name="detalleCita" register={register} error={errors.detalleCita?.message}/>
             <button type='submit' className='p-1.5 text-black font-semibold bg-rose-500 rounded-md p-1 mt-2 '>Reservar</button>
         </form>
     )
