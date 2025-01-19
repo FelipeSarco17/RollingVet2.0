@@ -18,12 +18,8 @@ const DropdownMascotas = ({ id, label }) => {
 
   const obtenerMascotas = async (id) => {
     try {
-      const data = await capturarUnPaciente(id);
-      console.log(data.paciente);
-      
-      const mascotas = await traerMascotasUsuario(data.paciente.mascotasIDs);
-      console.log(mascotas);
-      
+      const data = await traerMascotasUsuario(id);
+      const mascotas = data.mascotas
       setOptions(mascotas);
     } catch (error) {
       console.error("Error al obtener las mascotas del paciente:", error.message);
@@ -32,9 +28,7 @@ const DropdownMascotas = ({ id, label }) => {
 
   useEffect(() => {
     if (id) {
-
       obtenerMascotas(id);
-
       document.addEventListener('mousedown', handleClickOutside);
       return () => {
         document.removeEventListener('mousedown', handleClickOutside);

@@ -13,7 +13,7 @@ import TextArea from "../components/FormComponents/TextArea";
 const RegistrarMascota = () => {
 
   const navigate = useNavigate();
-  const { register, handleSubmit, formState: { errors }, reset, setValue, watch } = useForm();
+  const { register, handleSubmit, formState: { errors }, reset, setValue, watch } = useForm({ resolver: zodResolver(petSchema) });
   const { user, modificarUsuario } = useAuth()
   const [especies, setEspecies] = useState([]);
 

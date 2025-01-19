@@ -65,6 +65,7 @@ function App() {
           </Route>
           <Route element={<RutasProtegidasAdmin />}>
             <Route path='/admin/gestionPacientes' element={<AdministrarPacientes />} />
+            <Route path='/admin/gestionMascotas' element={<AdministrarMascotas />} />
             <Route path='/admin/gestionTurnos' element={<AdministrarTurnos />} />
             <Route path='/admin/gestionEspecies' element={<AdministrarEspecies />} />
             <Route path='/admin/modificarMascota/:id' element={<ModificarMascotaAdmin/>}/>
@@ -74,11 +75,15 @@ function App() {
           </Route>
 
       {/* LAS RUTAS A CONTINUACIÓN SON PROVISORIAS HASTA QUE SE ARREGLEN LAS COOKIES */}
-          <Route path='/admin/gestionMascotas' element={<AdministrarMascotas />} />
-          <Route path='/admin/gestionPacientes' element={<AdministrarPacientes />} />
-          <Route path='/admin/modificarPaciente/:id' element={<ModificarPaciente />} />
-          <Route path='/admin/modificarMascota/:id' element={<ModificarMascotaAdmin/>}/>
-          <Route path='/admin/gestionTurnos' element={<AdministrarTurnos />} />
+            {/* <Route path='/admin/gestionPacientes' element={<AdministrarPacientes />} />
+            <Route path='/admin/gestionMascotas' element={<AdministrarMascotas />} />
+            <Route path='/admin/gestionTurnos' element={<AdministrarTurnos />} />
+
+            <Route path='/admin/gestionEspecies' element={<AdministrarEspecies />} />
+            <Route path='/admin/modificarMascota/:id' element={<ModificarMascotaAdmin/>}/>
+            <Route path='/admin/modificarPaciente/:id' element={<ModificarPaciente />} />
+            <Route path='/admin/registrarMascota' element={<RegistrarMascota />} />
+            <Route path='/admin/registrarEspecie' element={<RegistrarEspecie />} /> */}
 
         </Routes>
         <Footer />

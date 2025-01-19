@@ -36,7 +36,6 @@ const baseSchema = z.object({
 // Esquema para crear mascotas, extendiendo `baseSchema`.
 export const petSchema = baseSchema.extend({
   especie: z.string({required_error:mensajesValidacion.especieInvalida}),
-  propietarioID: z.string({message: mensajesValidacion.errorSistemaPropietario})
 });
 
 // Esquema para modificar mascotas, basado en `baseSchema`.

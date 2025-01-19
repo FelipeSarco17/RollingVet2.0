@@ -45,29 +45,38 @@ const AdministrarPacientes = () => {
       </tr>
     </thead>
     <tbody>
-      {pacientes.map((paciente) => (
-        <tr key={paciente.uid} className="border-t border-gray-200">
-          <td className="py-3 px-6 text-gray-700 border border-gray-300 break-words whitespace-normal max-w-[100px]">{paciente.uid}</td>
-          <td className="py-3 px-6 text-gray-700 border border-gray-300 break-words whitespace-normal max-w-[100px]">{paciente.nombre}</td>
-          <td className="py-3 px-6 text-gray-700 border border-gray-300 break-words whitespace-normal max-w-[100px]">{paciente.apellido}</td>
-          <td className="py-3 px-6 text-gray-700 border border-gray-300 break-words whitespace-normal max-w-[100px]">{paciente.email}</td>
-          <td className="py-3 px-6 text-gray-700 border border-gray-300 break-words whitespace-normal max-w-[100px]">{paciente.telefono}</td>
-          <td className="py-3 px-6 text-gray-700 border border-gray-300 break-words whitespace-normal max-w-[100px]">
-            <button
-              className="bg-red-500 text-white py-1 px-4 rounded-lg hover:bg-red-600 transition"
-              onClick={() => navigate(`/admin/modificarPaciente/${paciente.uid}`)}
-            >
-              Editar
-            </button>
-            <button
-              className="bg-red-500 text-white py-1 px-4 rounded-lg ml-2 hover:bg-red-600 transition"
-              onClick={() => handleEliminar(paciente.uid)}
-            >
-              Borrar
-            </button>
-          </td>
-        </tr>
-      ))}
+    {pacientes.map((paciente) => (
+  <tr key={paciente.uid} className="border-t border-gray-200">
+    <td className="py-3 px-6 text-gray-700 border border-gray-300 break-words whitespace-normal max-w-[100px]">{paciente.uid}</td>
+    <td className="py-3 px-6 text-gray-700 border border-gray-300 break-words whitespace-normal max-w-[100px]">{paciente.nombre}</td>
+    <td className="py-3 px-6 text-gray-700 border border-gray-300 break-words whitespace-normal max-w-[100px]">{paciente.apellido}</td>
+    <td className="py-3 px-6 text-gray-700 border border-gray-300 break-words whitespace-normal max-w-[100px]">{paciente.email}</td>
+    <td className="py-3 px-6 text-gray-700 border border-gray-300 break-words whitespace-normal max-w-[100px]">{paciente.telefono}</td>
+    <td className="py-3 px-6 text-gray-700 border border-gray-300 break-words whitespace-normal max-w-[100px]">
+      <button
+        className="bg-red-500 text-white py-1 px-4 rounded-lg hover:bg-red-600 transition"
+        onClick={() => navigate(`/admin/modificarPaciente/${paciente.uid}`)}
+      >
+        Editar
+      </button>
+      {paciente.admin ? (
+        <button
+          className="bg-red-300 text-white py-1 px-4 rounded-lg ml-2 cursor-not-allowed"
+          disabled
+        >
+          No se puede eliminar
+        </button>
+      ) : (
+        <button
+          className="bg-red-500 text-white py-1 px-4 rounded-lg ml-2 hover:bg-red-600 transition"
+          onClick={() => handleEliminar(paciente.uid)}
+        >
+          Borrar
+        </button>
+      )}
+    </td>
+  </tr>
+))}
     </tbody>
   </table>
 </div>
