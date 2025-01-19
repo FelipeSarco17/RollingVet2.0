@@ -85,7 +85,7 @@ const NavBarApp = () => {
                                 (<>
                                     
                                     <NavLink className="mx-4 mt-2" to={`/registrarTurno/${user.id}`}>
-                                        <img className='w-10' src={calendarEditIcon} alt="registrarTurnoIcon" />
+                                       Reservar turno
                                     </NavLink>
                                 </>)
                             }
