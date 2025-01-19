@@ -42,7 +42,7 @@ const FormModificarMascota = ({ id, redirigir }) => {
             
             modificarMascota(id, data)
             Swal.fire({
-              title: "C¡ambios Guardados!",
+              title: "¡Cambios Guardados!",
               icon: "success"
             });
             redirigir()
