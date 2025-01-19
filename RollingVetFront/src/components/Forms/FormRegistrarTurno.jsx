@@ -54,8 +54,8 @@ const FormRegistrarTurno = () => {
         Swal.fire({
             title: "¿Desea reservar este turno?",
             icon: 'question',
-            background: '#393939',
-            color: '#fafafa',
+            background: '#fafafa',
+            color: '#393939',
             confirmButtonColor: "#197600",
             cancelButtonColor: "#a40000",
             confirmButtonText: "Aceptar",
@@ -70,15 +70,15 @@ const FormRegistrarTurno = () => {
                     Swal.fire({
                         title: res.msg,
                         icon: "success",
-                        background: '#393939',
-                        color: '#fafafa',
+                        background: '#fafafa',
+                        color: '#393939',
                     })
                 }catch(error){
                     Swal.fire({
                         title: error.response.data.msg,
                         icon:"error",
-                        background: '#393939',
-                        color: '#fafafa',
+                        background: '#fafafa',
+                        color: '#393939',
                     })
                 }
                 
