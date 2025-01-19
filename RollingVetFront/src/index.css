@@ -47,11 +47,12 @@
     background-color: #F6F7F9;
 }
 
-
-.userLogo{
-    
+.background-image{
+    background-image: url(https://img2.wallspic.com/crops/3/2/0/2/82023/82023-gato-raza_de_perro-cuidado_de_mascotas-refugio_de_animales-veterinario-1920x1080.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50%;
 }
-
 
 input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button { 

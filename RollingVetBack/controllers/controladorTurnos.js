@@ -16,15 +16,16 @@ const create = async (req, res) => {
   const {
     mascota,
     cliente,
-    servicio,
+    veterinario,
     sucursal,
     fecha,
     hora,
+    detalleCita,
     estado,
   } = req.body;
 
 
-  const turnoOcupado = await Turno.findOne({ fecha, hora, sucursal, estado: true });
+  const turnoOcupado = await Turno.findOne({ fecha, hora, sucursal,veterinario, estado: true });
 
   try {
     if (turnoOcupado) {
@@ -35,10 +36,11 @@ const create = async (req, res) => {
     const nuevoTurno = new Turno({
       mascota,
       cliente,
-      servicio,
+      veterinario,
       sucursal,
       fecha,
       hora,
+      detalleCita,
       estado: true,
     });
     await nuevoTurno.save();
@@ -60,9 +62,37 @@ const update = async (req, res) => {
 
 const del = async (req, res) => {
   let { id } = req.params;
-  await Turno.findByIdAndDelete({ _id: id });
-  return res.send({ msg: "Turno eliminado con éxito." });
+  
+  try {
+    await Turno.findByIdAndDelete({ _id: id });
+    return res.status(200).json("Turno eliminado con éxito.");
+  } catch (error) {
+    
+    return res.status(500).json(`Algo salio mal: ${error.message}`);
+  }
+  
+  
 };
+
+const obtenerTurnosUsuario = async(req,res) =>{
+
+  const {cliente} = req.params;
+  try {
+          const turnos = await Turno.find({ cliente, estado: true });
+          console.log(turnos);
+          
+          if (!turnos || turnos.length == 0) {
+              return res.status(404).json({ message: "Este usuario no tiene turnos reservados" });
+          }
+          return res.status(200).json([...turnos]);
+      } catch (error) {
+          console.error("Error al obtener turnos:", error);
+          return res.status(500).json({ message: error.message });
+      }
+
+
+}
+
 
 module.exports = {
   get,
@@ -70,4 +100,5 @@ module.exports = {
   create,
   update,
   del,
+  obtenerTurnosUsuario
 };

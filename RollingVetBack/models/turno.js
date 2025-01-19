@@ -12,9 +12,9 @@ const SchemaTurno = Schema({
         type:String,
         required:[true, "Este campo es obligatorio"]
     },
-    servicio: {
+    veterinario:{
         type:String,
-        required:[true, "Este campo es obligatorio"]
+        required:[true,"Este campo es obligatorio"]
     },
     fecha: {
         type:String,
@@ -23,6 +23,10 @@ const SchemaTurno = Schema({
     hora: {
         type:String,
         required:[true, "Este campo es obligatorio"]
+    },
+    detalleCita:{
+        type:String,
+        required:[true,"Este campo es obligatorio"]
     },
     estado: {
         type:Boolean,
