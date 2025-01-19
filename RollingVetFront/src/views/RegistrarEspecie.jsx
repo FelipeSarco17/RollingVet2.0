@@ -2,9 +2,7 @@ import { useForm } from "react-hook-form";
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { registrarEspecie } from "../utils/utils";
-
-
-/////////////////////////// FALTAN AGREGAR VALIDACIONES PARA LOS CAMPOS DEL FORMULARIO ///////////////////////////////////////////////////////
+import Swal from "sweetalert2";
 
 
 
@@ -12,16 +10,59 @@ const RegistrarEspecie = () => {
   const navigate = useNavigate();
   const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm(/*{ resolver: zodResolver(PetSchema) }*/);
 
+
+  const handleRegresar = () => {
+    Swal.fire({
+      title: "¿Deseas regresar?",
+      text: "Advertencia: No se guardarán los cambios.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#008000",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Aceptar",
+      cancelButtonText: "Cancelar"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        navigate("/admin/gestionEspecies");
+      }
+    });
+  }
+
   const RegistrarEspecie = async (obj) => {
     console.log(obj);
-    
-    const especieNueva = {
-      especie: obj.Especie
-    }
-    console.log(especieNueva);
-    
-    let res = await registrarEspecie(especieNueva)
-    navigate("/admin/gestionEspecies");
+        Swal.fire({
+                  title: "¿Deseas Registrar la especie?",
+                  text: "Asegúrate que esté escrita correctamente.",
+                  icon: "warning",
+                  showCancelButton: true,
+                  confirmButtonColor: "#008000",
+                  cancelButtonColor: "#d33",
+                  confirmButtonText: "Aceptar",
+                  cancelButtonText: "Cancelar"
+                }).then((result) => {
+                  if (result.isConfirmed) {
+
+                    const especieNueva = {
+                      especie: obj.Especie
+                    }
+                    console.log(especieNueva);
+                    
+                    let res = registrarEspecie(especieNueva).then(
+                      Swal.fire({
+                        title: "¡Especie Registrada Exitosamente!",
+                        icon: "success"
+                      }),  navigate("/admin/gestionEspecies")
+                    )
+                   
+                    
+                      
+                    
+                    
+                    
+                  }
+                });
+
+   
   };
 
   return (
@@ -32,7 +73,7 @@ const RegistrarEspecie = () => {
       </h1>
         {/* Botón de regresar */}
         <button
-          onClick={() => navigate("/admin/gestionEspecies")}
+          onClick={() => handleRegresar()}
           className="flex items-center gap-2 mb-6 py-2 px-4 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400"
         >
            <svg xmlns="http://www.w3.org/2000/svg" width="22.703" height="21.928">

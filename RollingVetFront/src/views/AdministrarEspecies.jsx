@@ -24,9 +24,23 @@ const AdministrarEspecies = () => {
   }, []);
 
   const handleEliminar = (eid) => {
-    eliminarEspecie(eid).then(() => {
-      obtenerEspecies(); // Volver a cargar la lista de especies
-    });
+    Swal.fire({
+                      title: "¿Deseas eliminar esta especie?",
+                      text: "Esta acción es permanente",
+                      icon: "warning",
+                      showCancelButton: true,
+                      confirmButtonColor: "#008000",
+                      cancelButtonColor: "#d33",
+                      confirmButtonText: "Eliminar",
+                      cancelButtonText: "Cancelar"
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        eliminarEspecie(eid).then(() => {
+                          obtenerEspecies(); // Volver a cargar la lista de especies
+                        });
+                      }
+                    });
+    
   };
 
   return (

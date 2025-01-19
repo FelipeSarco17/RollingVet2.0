@@ -71,4 +71,6 @@ export const userSchema = baseSchema
   });
 
 // Esquema para modificar usuario
-export const modificarUserSchema = baseSchema.extend({});
+export const modificarUserSchema = baseSchema.extend({
+  admin: z.string().min(2, { message: "Debes seleccionar una opción" })
+});

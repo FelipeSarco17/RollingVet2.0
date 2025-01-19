@@ -29,13 +29,15 @@ const update = async (req, res) => {
 const getMascotasUsuario = async(req,res) =>{
 
     const {propietarioID} = req.params;
-
-    // if (!mongoose.Types.ObjectId.isValid(propietarioID)) {
-    //     return res.status(400).json({ msg: "El ID del propietario no es válido" });
-    // }
-
+    console.log(propietarioID);
+    
+    
     try {
+        console.log("HOLA")
         const mascotas = await Mascota.find({ propietarioID, state: true });
+        console.log(mascotas);
+        
+        
         if (!mascotas || mascotas.length === 0) {
             return res.status(404).json({ message: "Este usuario no tiene mascotas" });
         }

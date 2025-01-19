@@ -9,11 +9,12 @@ import { useAuth } from "../contexts/AuthProvider";
 import Input from "../components/FormComponents/Input";
 import SelectEspecies from "../components/FormComponents/SelectEspecies";
 import TextArea from "../components/FormComponents/TextArea";
+import Swal from "sweetalert2";
 
 const RegistrarMascota = () => {
 
   const navigate = useNavigate();
-  const { register, handleSubmit, formState: { errors }, reset, setValue, watch } = useForm({resolver:zodResolver(petSchema)});
+  const { register, handleSubmit, formState: { errors }, reset, setValue, watch } = useForm({ resolver: zodResolver(petSchema) });
   const { user, modificarUsuario } = useAuth()
   const [especies, setEspecies] = useState([]);
 
@@ -29,29 +30,34 @@ const RegistrarMascota = () => {
 
 
   const registrarMascotaNueva = async (obj) => {
-    console.log(obj);
-
-    const mascotaNueva = {
-      nombre: obj.nombre,
-      especie: obj.especie,
-      descripcion: obj.descripcion ? obj.descripcion : "Sin descripción",
-      propietarioID: user.id,
-    }
-    console.log(mascotaNueva);
-    let res = await registrarMascota(mascotaNueva)
-    console.log(res);
-    
-    //navigate("/user/userPage");
-    // if (res) {
-    //       // Actualiza la lista de mascotas del usuario con la nueva ID
-    //       console.log(res);
-    //       const mascotaID = res.data.mascota.uid;
-    //       const nuevasMascotasIDs = [...user.mascotasIDs, mascotaID];
-    //       const nuevoUsuario = {...user, mascotasIDs: nuevasMascotasIDs} 
-
-    //       modificarUsuario(nuevoUsuario).then(navigate("/user/userpage"))
-
-    //   };
+    Swal.fire({
+              title: "¿Deseas Registrar la mascota?",
+              text: "Asegúrate que los datos sean correctos",
+              icon: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#008000",
+              cancelButtonColor: "#d33",
+              confirmButtonText: "Aceptar",
+              cancelButtonText: "Cancelar"
+            }).then((result) => {
+              if (result.isConfirmed) {
+                const mascotaNueva = {
+                  nombre: obj.nombre,
+                  especie: obj.especie,
+                  descripcion: obj.descripcion ? obj.descripcion : "Sin descripción",
+                  propietarioID: user.id,
+                }
+                console.log(mascotaNueva);
+                let res = registrarMascota(mascotaNueva).then(
+                  Swal.fire({
+                    title: "¡Mascota Creada Exitosamente!",
+                    icon: "success"
+                  }),  navigate("/user/userPage")
+                );
+                
+                
+              }
+            });
   }
 
   return (

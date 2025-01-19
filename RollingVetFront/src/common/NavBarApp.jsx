@@ -93,14 +93,6 @@ const NavBarApp = () => {
 
                         </>)}
 
-                    {
-                    // ESTO ES SOLO PARA TESTEAR
-                    }
-                                    <NavLink className="mx-4 mt-2" to="/admin/gestionMascotas">
-                                        <img className='w-10' src={petIcon} alt="petIcon" />
-                                    </NavLink>
-
-
                 </div>
 
                 {authenticated ? (
