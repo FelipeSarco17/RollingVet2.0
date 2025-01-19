@@ -50,12 +50,18 @@ const login = async (req, res) => {
 
     try {
         let { email, password } = req.body;
+        console.log(email, password);
+        
         let usuario = await Paciente.findOne({ email })
 
+        console.log(usuario);
+        
         if (!usuario) return res.status(400).json({ mensaje: "Usuario no encontrado." })
 
         const contraseñaValida = bcryptjs.compareSync(password, usuario.clave);
 
+        console.log(contraseñaValida);
+        
 
         if (!contraseñaValida) return res.status(400).json({ mensaje: "Contraseña incorrecta" })
 
