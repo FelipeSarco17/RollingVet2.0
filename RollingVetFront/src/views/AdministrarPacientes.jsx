@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { leerPacientes, eliminarPaciente } from "../utils/utils";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const AdministrarPacientes = () => {
   const [pacientes, setPacientes] = useState([]);
@@ -23,9 +24,24 @@ const AdministrarPacientes = () => {
   }, []);
 
   const handleEliminar = (uid) => {
-    eliminarPaciente(uid).then(() => {
-      obtenerPacientes(); // Volver a cargar la lista de pacientes
-    });
+        Swal.fire({
+              title: "¿Deseas eliminar este usuario?",
+              text: "Esta acción es permanente",
+              icon: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#008000",
+              cancelButtonColor: "#d33",
+              confirmButtonText: "Eliminar",
+              cancelButtonText: "Cancelar"
+            }).then((result) => {
+              if (result.isConfirmed) {
+                eliminarPaciente(uid).then(() => {
+                  obtenerPacientes(); // Volver a cargar la lista de pacientes
+                });
+              }
+            });
+        
+    
   };
 
   return (

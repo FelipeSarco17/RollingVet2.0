@@ -53,6 +53,10 @@ const AuthProvider = ({ children }) => {
             let usuarioLogueado = await ingresoUsuario(obj);
             setUser(usuarioLogueado.data);
             setAuthenticated(true);
+            Swal.fire({
+                title: "Sesión Iniciada Exitosamente",
+                icon: "success"
+              });
             navigate("/");
         } catch (error) {
             console.log(error)
@@ -103,15 +107,15 @@ const AuthProvider = ({ children }) => {
             confirmButtonColor: "#197600",
             cancelButtonText: "Cancelar",
             reverseButtons: true,
-            background: '#393939',
-            color: '#fafafa'
+            background: '#fafafa',
+            color: '#393939'
         }).then((result) => {
             if (result.isConfirmed) {
                 Swal.fire({
                     title: "Su sesion ha sido cerrada",
                     icon: "success",
-                    background: '#393939',
-                    color: '#fafafa'
+                    background: '#fafafa',
+                    color: '#393939'
 
                 });
                 Cookies.remove("token");

@@ -30,7 +30,7 @@ const FormModificarMascota = ({ id, redirigir }) => {
 
   const onSubmit = async (data) => {
     Swal.fire({
-          title: "Deseas guardar los cambios?",
+          title: "¿Deseas guardar los cambios?",
           icon: "warning",
           showCancelButton: true,
           confirmButtonColor: "#008000",
@@ -42,7 +42,7 @@ const FormModificarMascota = ({ id, redirigir }) => {
             
             modificarMascota(id, data)
             Swal.fire({
-              title: "Cambios Guardados!",
+              title: "C¡ambios Guardados!",
               icon: "success"
             });
             redirigir()

@@ -15,6 +15,22 @@ const ModificarPaciente = () => {
   const { id } = useParams();
 
 
+  const handleRegresar = () => {
+    Swal.fire({
+      title: "¿Deseas regresar?",
+      text: "Advertencia: No se guardarán los cambios.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#008000",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Aceptar",
+      cancelButtonText: "Cancelar"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        navigate("/admin/gestionPacientes");
+      }
+    });
+  }
 
   const modificarDatos = (obj) => {
     const formattedObj = {
@@ -24,7 +40,7 @@ const ModificarPaciente = () => {
     console.log(formattedObj);
 
     Swal.fire({
-      title: "Deseas guardar los cambios?",
+      title: "¿Deseas guardar los cambios?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#008000",
@@ -36,7 +52,7 @@ const ModificarPaciente = () => {
         modificarPaciente(id, obj);
 
         Swal.fire({
-          title: "Cambios Guardados!",
+          title: "¡Cambios Guardados!",
           icon: "success"
         });
         navigate("/admin/gestionPacientes");
@@ -75,7 +91,7 @@ const ModificarPaciente = () => {
         </h1>
         {/* Botón de regresar */}
         <button
-          onClick={() => navigate("/admin/gestionPacientes")}
+          onClick={() => handleRegresar()}
           className="flex items-center gap-2 mb-6 py-2 px-4 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400"
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="22.703" height="21.928">

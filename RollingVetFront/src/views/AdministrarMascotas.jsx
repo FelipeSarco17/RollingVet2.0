@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { leerMascotas, eliminarMascota } from "../utils/utils";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const AdministrarMascotas = () => {
   const [mascotas, setMascotas] = useState([]);
@@ -24,9 +25,23 @@ const AdministrarMascotas = () => {
   }, []);
 
   const handleEliminar = (uid) => {
-    eliminarMascota(uid).then(() => {
-      obtenerMascotas(); // Volver a cargar la lista de mascotas
-    });
+    Swal.fire({
+                  title: "¿Deseas eliminar esta mascota?",
+                  text: "Esta acción es permanente",
+                  icon: "warning",
+                  showCancelButton: true,
+                  confirmButtonColor: "#008000",
+                  cancelButtonColor: "#d33",
+                  confirmButtonText: "Eliminar",
+                  cancelButtonText: "Cancelar"
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    eliminarMascota(uid).then(() => {
+                      obtenerMascotas(); // Volver a cargar la lista de mascotas
+                    });
+                  }
+                });
+
   };
 
   return (
