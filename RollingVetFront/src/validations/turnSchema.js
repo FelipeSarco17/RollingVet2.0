@@ -7,7 +7,8 @@ const maxDateString = maxDate.toISOString().split("T")[0];
 
 export const turnSchema = z.object({
     fecha: z.string().date().superRefine((val,ctx)=> {
-        if(new Date(val)< new Date()){
+        const fecha = new Date(val);
+        if(fecha< new Date()){
             ctx.addIssue({
                 code: z.ZodIssueCode.invalid_date,
                 message: "La fecha mínima es hoy",
@@ -15,14 +16,29 @@ export const turnSchema = z.object({
             })
             return z.NEVER;
         }
+        console.log(fecha.getDay());
+        
+        // if(fecha.getDay() == 6 || fecha.getDay() == 5){
+        //     ctx.addIssue({
+        //         code: z.ZodIssueCode.invalid_date,
+        //         message: "La fecha no puede ser un sábado o domingo."
+        //     })
+        // }
 
-        if(new Date(val) > maxDate){
+        if(fecha > maxDate){
             ctx.addIssue({
                 code: z.ZodIssueCode.invalid_date,
                 message: "La fecha máxima es a un año",
             })
         }
-    }),
+    }).refine((dateString) => {
+        const date = new Date(dateString);
+        const day = date.getDay();
+        // Validar que el día no sea sábado (6) ni domingo (0)
+        return day !== 5 && day !== 6;
+      }, {
+        message: "La fecha no puede ser un sábado o domingo."
+      }),
     mascota: z.string({required_error:"La mascota es requerida."}),
     veterinario: z.string({required_error:"El veterinario es requerido."}),
     sucursal: z.string({required_error:"La sucursal es requerida."}),

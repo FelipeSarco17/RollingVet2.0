@@ -23,7 +23,14 @@ const turnSchema = z.object({
                 message: "La fecha máxima es a un año",
             })
         }
-    }),
+    }).refine((dateString) => {
+        const date = new Date(dateString);
+        const day = date.getDay();
+        // Validar que el día no sea sábado (6) ni domingo (0)
+        return day !== 5 && day !== 6;
+      }, {
+        message: "La fecha no puede ser un sábado o domingo."
+      }),
     hora:z.string({required_error:'La Hora es requerida'}),
     sucursal:z.string({required_error:"La sucursal es requerida"}),
     veterinario:z.string({required_error:"El veterinario es requerido"}),

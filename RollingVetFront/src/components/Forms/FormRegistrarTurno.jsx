@@ -97,7 +97,7 @@ const FormRegistrarTurno = () => {
     return (
         <form onSubmit={handleSubmit(reservar)}
             className="flex flex-col gap-12 w-full max-w-lg p-6">
-            <Input label="Fecha del Turno" type="date" min={today} max={maxDateString} name="fecha" register={register} error={errors.fechaTurno?.message} />
+            <Input label="Fecha del Turno" type="date" min={today} max={maxDateString} name="fecha" register={register} error={errors.fecha?.message} />
             <SelectMascotas label="Mascota" name="mascota" options={mascotasCliente} register={register} error={errors.mascotas?.message} />
             <Select label="Veterinario" name="veterinario" options={["Dr.Juan Lopez" ,"Dr.Eugenia Rodriguez","Dr.Leandro Perez"]} register={register} error={errors.veterinario?.message} />
             <Select label="Horario" name="hora" options={horarios} register={register} error={errors.horaTurno?.message} />
