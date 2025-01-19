@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { traerMascotasUsuario, eliminarMascota, modificarPaciente } from "../utils/utils";
 import { useAuth } from "../contexts/AuthProvider";
 import TurnosUsuario from "../components/TurnosUsuario";
-
+import Swal from "sweetalert2";
 
 // HAY QUE ARREGLAR: EL USUARIO NO SE ACTUALIZA CORRECTAMENTE AL ENVIAR EL FORMULARIO PARA REGRISTRAR UNA MASCOTA O AL ELIMINAR UNA MASCOTA
 
@@ -13,21 +13,42 @@ const PaginaUsuario = () => {
   const [error, setError] = useState()
   const [turnosUsuario, setTurnosUsuario] = useState();
 
-  useEffect(() => {
-
-    async function obtenerMascotasUsuario(id) {
-      try {
-        const mascotasUs = await traerMascotasUsuario(id);
-        setMascotasUsuario(mascotasUs.mascotas);
-      } catch (error) {
-        setError(error.response.data.message);
-      }
+  async function obtenerMascotasUsuario(id) {
+    try {
+      const mascotasUs = await traerMascotasUsuario(id);
+      setMascotasUsuario(mascotasUs.mascotas);
+    } catch (error) {
+      setError(error.response.data.message);
     }
-    obtenerMascotasUsuario(user.id);
+  }
 
+  useEffect(() => {
+    obtenerMascotasUsuario(user.id);
   }, []);
 
-  
+  const handleEliminarMascota = async (id) => {
+    Swal.fire({
+                      title: "¿Deseas eliminar esta mascota?",
+                      text: "Esta acción es permanente",
+                      icon: "warning",
+                      showCancelButton: true,
+                      confirmButtonColor: "#008000",
+                      cancelButtonColor: "#d33",
+                      confirmButtonText: "Eliminar",
+                      cancelButtonText: "Cancelar"
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        eliminarMascota(id).then(() => {
+                          obtenerMascotasUsuario(user.id)
+                          Swal.fire({
+                                        title: "¡Mascota Eliminada Exitosamente!",
+                                        icon: "success"
+                                      });
+                        });
+                      }
+                    });
+  }
+
 
   if (!user) {
     return (
@@ -123,6 +144,13 @@ const PaginaUsuario = () => {
                 }
               </div> */}
               <TurnosUsuario/>
+              <Link
+                  to={`/registrarTurno/${user.id}`}
+                  className="inline-block mt-4 py-2 px-4 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600"
+                >
+                  Agendar Turno
+                </Link>
+              
             </li>
           </ul>
         </div>

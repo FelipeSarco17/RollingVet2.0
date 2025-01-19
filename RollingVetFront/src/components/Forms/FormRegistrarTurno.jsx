@@ -1,37 +1,27 @@
-import React, { useEffect, useState } from 'react'
-import Input from "../FormComponents/Input"
-import { useForm } from 'react-hook-form'
-import Select from '../FormComponents/Select'
-import { turnSchema } from '../../validations/turnSchema'
-import { registrarTurno } from '../../utils/utils'
-import AlertaConfirmacion from '../../common/AlertaConfirmacion'
-import { zodResolver } from '@hookform/resolvers/zod'
-import Swal from 'sweetalert2'
-import { useAuth } from "../../contexts/AuthProvider"
-import SelectMascotas from '../FormComponents/SelectMascotas'
-import { traerMascotasUsuario } from '../../utils/utils'
-import { useParams } from 'react-router-dom'
-import TextArea from "../FormComponents/TextArea"
+import React, { useEffect, useState } from 'react';
+import Input from "../FormComponents/Input";
+import { useForm } from 'react-hook-form';
+import Select from '../FormComponents/Select';
+import { turnSchema } from '../../validations/turnSchema';
+import { registrarTurno } from '../../utils/utils';
+import Swal from 'sweetalert2';
+import { useAuth } from "../../contexts/AuthProvider";
+import SelectMascotas from '../FormComponents/SelectMascotas';
+import { traerMascotasUsuario } from '../../utils/utils';
+import { useParams } from 'react-router-dom';
+import TextArea from "../FormComponents/TextArea";
 
 const FormRegistrarTurno = () => {
-    const {id} = useParams();
-    const [turno, setTurno] = useState();
-    const [mascotasCliente, setMascotasCliente] = useState([])
-    const [mascotasError,setMascotasError] = useState();
-    const {user} = useAuth()
-    const { register, handleSubmit, formState: { errors }, watch } = useForm({ resolver: zodResolver(turnSchema) })
+    const { id } = useParams();
+    const [mascotasCliente, setMascotasCliente] = useState([]);
+    const [mascotasError, setMascotasError] = useState();
+    const { user } = useAuth();
+    const { register, handleSubmit, formState: { errors } } = useForm({ resolver: zodResolver(turnSchema) });
 
-    const servicios = [
-        "Peluqueria",
-        "Consulta Veterinaria",
-        "Baño"
-    ]
-    const horarios = ["9:00", "10:00", "11:00", "17:00", "18:00", "19:00", "20:00"];
-    console.log(user);
-    
+    const servicios = ["Peluquería", "Consulta Veterinaria", "Baño"];
+    const horarios = ["9:00", "10:00", "11:00", "12:00", "17:00", "18:00", "19:00", "20:00"];
 
     useEffect(() => {
-
         async function obtenerMascotasUsuario(id) {
             try {
                 const mascotasUs = await traerMascotasUsuario(id);
@@ -41,15 +31,33 @@ const FormRegistrarTurno = () => {
             }
         }
 
-        obtenerMascotasUsuario(id)
+        obtenerMascotasUsuario(id);
+    }, [id]);
 
-    }, []);
+    // Función para verificar si una fecha es sábado o domingo
+    const esFinDeSemana = (fecha) => {
+        const dia = new Date(fecha).getDay();
+        return dia === 0 || dia === 6; // 0 = domingo, 6 = sábado
+    };
 
-    const reservar = (obj) => {
-        console.log(obj);
+    // Configuración del rango de fechas
+    const hoy = new Date().toISOString().split("T")[0];
+    const fechaMaxima = new Date();
+    fechaMaxima.setFullYear(new Date().getFullYear() + 1);
+    const maxFecha = fechaMaxima.toISOString().split("T")[0];
 
-        const nuevoTurno = { cliente: id, ...obj }
-        console.log(nuevoTurno);
+    // Validación para deshabilitar fines de semana
+    const manejarCambioFecha = (event) => {
+        const valorFecha = event.target.value;
+        if (esFinDeSemana(valorFecha)) {
+            event.target.setCustomValidity("Los días sábado y domingo no están disponibles.");
+        } else {
+            event.target.setCustomValidity("");
+        }
+    };
+
+    const reservar = (datos) => {
+        const nuevoTurno = { cliente: id, ...datos };
 
         Swal.fire({
             title: "¿Desea reservar este turno?",
@@ -64,48 +72,79 @@ const FormRegistrarTurno = () => {
             showDenyButton: true
         }).then(async (result) => {
             if (result.isConfirmed) {
-                
-                try{
+                try {
                     let res = await registrarTurno(nuevoTurno);
                     Swal.fire({
                         title: res.msg,
                         icon: "success",
                         background: '#393939',
                         color: '#fafafa',
-                    })
-                }catch(error){
+                    });
+                } catch (error) {
                     Swal.fire({
                         title: error.response.data.msg,
-                        icon:"error",
+                        icon: "error",
                         background: '#393939',
                         color: '#fafafa',
-                    })
+                    });
                 }
-                
-
             }
-        })
+        });
+    };
 
-    }
-
-    console.log(watch());
-    
-    const today = new Date().toISOString().split("T")[0];
-    const maxDate = new Date();
-    maxDate.setFullYear(maxDate.getFullYear() + 1);
-    const maxDateString = maxDate.toISOString().split("T")[0];
     return (
-        <form onSubmit={handleSubmit(reservar)}
-            className="flex flex-col gap-12 w-full max-w-lg p-6">
-            <Input label="Fecha del Turno" type="date" min={today} max={maxDateString} name="fecha" register={register} error={errors.fechaTurno?.message} />
-            <SelectMascotas label="Mascota" name="mascota" options={mascotasCliente} register={register} error={errors.mascotas?.message} />
-            <Select label="Veterinario" name="veterinario" options={["Dr.Juan Lopez" ,"Dr.Eugenia Rodriguez","Dr.Leandro Perez"]} register={register} error={errors.veterinario?.message} />
-            <Select label="Horario" name="hora" options={horarios} register={register} error={errors.horaTurno?.message} />
-            <Select label="Sucursal" name="sucursal" options={["Sucursal 1", "Sucursal 2"]} register={register} error={errors.sucursal?.message} />
-            <TextArea label="Detalle de cita" name="detalleCita" register={register} error={errors.detalleCita?.message}/>
-            <button type='submit' className='p-1.5 text-black font-semibold bg-rose-500 rounded-md p-1 mt-2 '>Reservar</button>
+        <form onSubmit={handleSubmit(reservar)} className="flex flex-col gap-12 w-full max-w-lg p-6">
+            <Input 
+                label="Fecha del Turno" 
+                type="date" 
+                name="fecha" 
+                register={register} 
+                error={errors.fecha?.message}
+                min={hoy} 
+                max={maxFecha} 
+                onInput={manejarCambioFecha} 
+            />
+            <SelectMascotas 
+                label="Mascota" 
+                name="mascota" 
+                options={mascotasCliente} 
+                register={register} 
+                error={errors.mascotas?.message} 
+            />
+            <Select 
+                label="Veterinario" 
+                name="veterinario" 
+                options={["Dr. Juan López", "Dr. Eugenia Rodríguez", "Dr. Leandro Pérez"]} 
+                register={register} 
+                error={errors.veterinario?.message} 
+            />
+            <Select 
+                label="Horario" 
+                name="hora" 
+                options={horarios} 
+                register={register} 
+                error={errors.horaTurno?.message} 
+            />
+            <Select 
+                label="Sucursal" 
+                name="sucursal" 
+                options={["Sucursal 1", "Sucursal 2"]} 
+                register={register} 
+                error={errors.sucursal?.message} 
+            />
+            <TextArea 
+                label="Detalle de cita" 
+                name="detalleCita" 
+                register={register} 
+                error={errors.detalleCita?.message} 
+            />
+            <button 
+                type="submit" 
+                className="p-1.5 text-black font-semibold bg-rose-500 rounded-md p-1 mt-2">
+                Reservar
+            </button>
         </form>
-    )
-}
+    );
+};
 
-export default FormRegistrarTurno
+export default FormRegistrarTurno;
