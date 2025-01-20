@@ -5,7 +5,7 @@ const firma = process.env.JWT_SECRET_KEY;
 const nodemailer = require("nodemailer")
 
 const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.email',
+    host: 'smtp.gmail.com',
     port: 587,
     auth: {
         user: process.env.USEREMAIL,
