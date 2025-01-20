@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-
+import { PawPrint } from 'lucide-react';
 const Error404 = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#00bcd4]">
