@@ -10,7 +10,8 @@ const Administrador = () => {
 
   useEffect(() => {
     const intervalo = setInterval(() => {
-      setHora(new Date().toLocaleTimeString());
+
+      setHora(new Date().toLocaleTimeString([], {hour12:false}));
     }, 1000);
 
     // Limpiar el intervalo cuando el componente se desmonte
