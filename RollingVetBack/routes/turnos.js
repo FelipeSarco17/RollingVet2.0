@@ -4,9 +4,9 @@ const { get, getOne, create, update, del, obtenerTurnosUsuario } = require("../c
 const { turnSchema } = require("../validations/turnSchema");
 const validateSchema = require("../middlewares/validarDatos")
 
-Router.get("/", get)
+Router.get("/obtenerTodos", get)
 
-Router.get("/:id", getOne)
+Router.get("/obtenerUno/:id", getOne)
 
 Router.post("/crearTurno", validateSchema(turnSchema),create)
 

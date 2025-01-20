@@ -8,6 +8,7 @@ import Cookies from "js-cookie"
 const urlPacientes = "http://localhost:8080/api/pacientes"
 const urlMascotas = "http://localhost:8080/api/mascotas"
 const urlEspecies = "http://localhost:8080/api/especies"
+const urlTurnos = "http://localhost:8080/api/turnos"
 //FUNCIONES PACIENTE
 
 export const ingresoUsuario = async (obj) => {
@@ -147,7 +148,6 @@ export const leerEspecies = async () => {
 
 export const capturarUnaEspecie = async (id) => {
     let especie = await axios.get(`/especies/obtenerUna/${id}`);
-    console.log(especie);
     return especie.data;
 }
 
@@ -174,11 +174,15 @@ export const registrarTurno = async (obj) => {
     return res.data;
 }
 
-export const traerTurnosUsuario = async (id) => {
+export const leerTurnos = async () => {
+    let turnos = await axios.get(`/turnos/obtenerTodos`);
+    if (!turnos.data) throw new Error("No hay turnos guardados.");
+    return turnos.data
+}
 
+export const traerTurnosUsuario = async (id) => {
     const res = await axios.get(`/turnos/obtenerTurnosUsuario/${id}`);
     return res.data;
-
 }
 
 export const eliminarTurnoUsuario = async(id) =>{
@@ -187,3 +191,4 @@ export const eliminarTurnoUsuario = async(id) =>{
     return res.data;
 
 }
+
