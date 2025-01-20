@@ -6,7 +6,7 @@ const DropdownPerfil = ({ user, userIcon, desloguear }) => {
     const dropdownRef = useRef(null);
 
     const handleMenuDrop = () => {
-        setMenuDrop(prevState => !prevState);
+        setMenuDrop((prevState) => !prevState);
     };
 
     useEffect(() => {
@@ -27,8 +27,9 @@ const DropdownPerfil = ({ user, userIcon, desloguear }) => {
             <button
                 onClick={handleMenuDrop}
                 id="imgUser"
-                className={`rounded-full lg:transform lg:transition ${menuDrop ? 'lg:scale-150' : ''
-                    } absolute right-0 lg:right-0 w-10 z-20 mx-3 mt-2 lg:me-6`}
+                className={`rounded-full lg:transform lg:transition ${
+                    menuDrop ? 'lg:scale-150' : ''
+                } absolute right-0 lg:right-0 w-10 z-20 mx-3 mt-4 lg:me-6`}
             >
                 <img className="rounded-full w-10 lg:me-4" src={userIcon} alt="logoUser" />
             </button>
@@ -36,11 +37,14 @@ const DropdownPerfil = ({ user, userIcon, desloguear }) => {
             {menuDrop && (
                 <div
                     ref={dropdownRef}
-                    className="absolute right-full translate-x-[-10px] flex flex-col bg-white shadow-lg rounded-lg border border-gray-300 z-20 min-w-[12rem]"
+                    className={`absolute top-full mt-2 flex flex-col bg-white shadow-lg rounded-lg border border-gray-300 z-20 min-w-[12rem]
+                    left-1/2 translate-x-[-50%] sm:left-1/2 sm:translate-x-[-50%] lg:left-auto lg:translate-x-[-50%] lg:translate-y-[-50%] lg:right-0`}
                 >
                     {/* Contenedor de datos del usuario */}
                     <div className="p-5 text-black">
-                        <p>{user.nombre} {user.apellido}</p>
+                        <p>
+                            {user.nombre} {user.apellido}
+                        </p>
                     </div>
 
                     {/* Contenedor de acciones del usuario */}
