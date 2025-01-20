@@ -8,6 +8,7 @@ import Planes from './views/Planes';
 import IniciarSesion from './views/IniciarSesion';
 import Registrarse from './views/Registrarse';
 import PaginaUsuario from './views/PaginaUsuario'
+import Administrador from './views/Administrador';
 import AdministrarPacientes from './views/AdministrarPacientes';
 import AdministrarTurnos from './views/AdministrarTurnos';
 import AdministrarMascotas from './views/AdministrarMascotas';
@@ -64,6 +65,7 @@ function App() {
             <Route path='/registrarse' element={<Registrarse />} />
           </Route>
           <Route element={<RutasProtegidasAdmin />}>
+            <Route path='/admin/' element={<Administrador />} />
             <Route path='/admin/gestionPacientes' element={<AdministrarPacientes />} />
             <Route path='/admin/gestionMascotas' element={<AdministrarMascotas />} />
             <Route path='/admin/gestionTurnos' element={<AdministrarTurnos />} />

@@ -1,5 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import FormModificarMascota from "../components/FormModificarMascota";
+import Swal from "sweetalert2";
 
 const ModificarMascotaAdmin = () => {
   const navigate = useNavigate();

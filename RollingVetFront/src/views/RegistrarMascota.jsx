@@ -60,6 +60,23 @@ const RegistrarMascota = () => {
             });
   }
 
+  const handleRegresar = () => {
+    Swal.fire({
+      title: "¿Deseas regresar?",
+      text: "Advertencia: No se guardarán los cambios.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#008000",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Aceptar",
+      cancelButtonText: "Cancelar"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        navigate("/user/userpage");
+      }
+    });
+  }
+
   return (
     <main className="flex justify-center items-center py-8">
       <div className="w-full max-w-lg bg-white p-6 rounded-lg shadow-lg">
@@ -68,7 +85,7 @@ const RegistrarMascota = () => {
         </h1>
         {/* Botón de regresar */}
         <button
-          onClick={() => navigate("/user/userpage")}
+          onClick={() => handleRegresar()}
           className="flex items-center gap-2 mb-6 py-2 px-4 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400"
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="22.703" height="21.928">

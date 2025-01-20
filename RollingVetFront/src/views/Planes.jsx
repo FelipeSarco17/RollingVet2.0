@@ -35,7 +35,7 @@ const Planes = () => {
   return (
     <main className="relative bg-gray-100 flex flex-col items-center justify-center gap-12 p-12 background-image" >
       
-      <h2 className="text-3xl font-semibold mb-4 text-center">Completa este formulario y nos pondremos en contacto <br/> contigo para informarte sobre este plan.</h2>
+      <h2 className="text-3xl font-semibold mb-4 text-center">Completa este formulario y nos pondremos en contacto <br/> contigo para informarte sobre nuestros planes.</h2>
       <div className="bg-white shadow-lg rounded-lg   md:w-1/2 p-12" >
         <form onSubmit={handleSubmit(enviarEmail)} className='flex flex-col gap-12' >
           <Input  label="Nombre y Apellido" name="nombre" register={register} type="text" error={errors.nombre?.message} />

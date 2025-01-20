@@ -10,8 +10,9 @@ import Swal from 'sweetalert2'
 import { useAuth } from "../../contexts/AuthProvider"
 import SelectMascotas from '../FormComponents/SelectMascotas'
 import { traerMascotasUsuario } from '../../utils/utils'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import TextArea from "../FormComponents/TextArea"
+
 
 const FormRegistrarTurno = () => {
     const {id} = useParams();
@@ -20,13 +21,13 @@ const FormRegistrarTurno = () => {
     const [mascotasError,setMascotasError] = useState();
     const {user} = useAuth()
     const { register, handleSubmit, formState: { errors }, watch } = useForm({ resolver: zodResolver(turnSchema) })
-
+    const navigate = useNavigate();
     const servicios = [
         "Peluqueria",
         "Consulta Veterinaria",
         "Baño"
     ]
-    const horarios = ["9:00", "10:00", "11:00", "17:00", "18:00", "19:00", "20:00"];
+    const horarios = ["9:00", "10:00", "11:00", "12:00", "17:00", "18:00", "19:00", "20:00"];
     console.log(user);
     
 
@@ -54,8 +55,8 @@ const FormRegistrarTurno = () => {
         Swal.fire({
             title: "¿Desea reservar este turno?",
             icon: 'question',
-            background: '#393939',
-            color: '#fafafa',
+            background: '#fafafa',
+            color: '#393939',
             confirmButtonColor: "#197600",
             cancelButtonColor: "#a40000",
             confirmButtonText: "Aceptar",
@@ -70,15 +71,16 @@ const FormRegistrarTurno = () => {
                     Swal.fire({
                         title: res.msg,
                         icon: "success",
-                        background: '#393939',
-                        color: '#fafafa',
-                    })
+                        background: '#fafafa',
+                        color: '#393939',
+                    });
+                    navigate("/user/userPage")
                 }catch(error){
                     Swal.fire({
                         title: error.response.data.msg,
                         icon:"error",
-                        background: '#393939',
-                        color: '#fafafa',
+                        background: '#fafafa',
+                        color: '#393939',
                     })
                 }
                 
