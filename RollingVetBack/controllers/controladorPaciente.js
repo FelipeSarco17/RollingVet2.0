@@ -82,7 +82,7 @@ const sendEmailContacto = async(req,res) =>{
 
     const info = await transporter.sendMail({
         from: `"${cliente} <${email}>"`,
-        to: "raegan23@ethereal.email",
+        to: "rollingvet7@gmail.com",
         subject: `Mensaje del cliente ${cliente} <${email}>`,
         text: texto
     });
