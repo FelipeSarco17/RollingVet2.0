@@ -2,9 +2,18 @@
 A Veterinary web site developed with React and Node.js using ExpressJS where as 
 a client you can create an account to register your pets and reserve turns for veterinary consults.
 
+Frontend deploy:
+https://rolling-vet2-0.vercel.app/
+
+Backend deploy:
+https://rollingvet2-0.onrender.com
+
+Taiga panel:
+https://tree.taiga.io/project/alberto-mainardi-rollingcode96i-proyecto-final-rollingvet
+
 Install guide:
-1- Go to RollingVetFront and put command "npm install"
-2- Go to RollingVetBack and put command "npm install"
+1- Change directory to RollingVetFront/ and enter command "npm install"
+2- Change directory to RollingVetBack/ and enter command "npm install"
 
 Used Dependencies on FrontEnd:
 "@hookform/resolvers": "^3.9.0",
