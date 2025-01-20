@@ -50,3 +50,7 @@ password: Hola123!
 
 email: admin1@gmail.com
 contraseña: Hola123!
+
+Authors:
+Felipe Raul Sarco
+Jose Alberto Mainardi
