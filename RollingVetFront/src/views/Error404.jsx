@@ -22,7 +22,7 @@ const Error404 = () => {
 
           <Link
             to={"/"}
-            className="inline-flex items-center px-6 py-3 rounded-full bg-white text-[#00bcd4] font-semibold text-lg hover:bg-white/90 transition-colors duration-200"
+            className="inline-flex items-center px-6 py-3 rounded-full bg-[#00bcd4] text-white font-semibold text-lg hover:bg-white/90 transition-colors duration-200"
           >
             <PawPrint className="w-5 h-5 mr-2" />
             Volver al Inicio
@@ -40,3 +40,4 @@ const Error404 = () => {
 }
 
 export default Error404
+
