@@ -29,7 +29,7 @@ const NavBarApp = () => {
     
 
     return (
-        <Navbar className='p-3 grid  grid-rows-1 grid-cols-2 bg-cyan-500 h-30 w-screen sm:gap-x-56 lg:grid-cols-5 lg:gap-0  '>
+        <Navbar className='p-3 grid  grid-rows-1 grid-cols-2 bg-cyan-500 h-30 w-full sm:gap-x-56 lg:grid-cols-5 lg:gap-0  '>
 
 
             <Nav className='w-32 col-span-1'>
@@ -102,7 +102,7 @@ const NavBarApp = () => {
 
                 {authenticated ? (
                     <DropdownPerfil user={user} userIcon={userIcon} desloguear={desloguear}/>)
-                    : (<><NavLink className='p-1.5 text-black font-semibold bg-rose-500 rounded-md p-1 mt-2 lg:m-0 lg:me-4 ' to="/ingresar">
+                    : (<><NavLink className='p-1.5 text-black font-semibold bg-rose-500 rounded-md mt-2 lg:m-0 lg:me-4 ' to="/ingresar">
                         Iniciar Sesion
                     </NavLink>
                     </>)}
