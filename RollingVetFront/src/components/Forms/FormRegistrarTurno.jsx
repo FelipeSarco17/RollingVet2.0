@@ -97,16 +97,30 @@ const FormRegistrarTurno = () => {
     maxDate.setFullYear(maxDate.getFullYear() + 1);
     const maxDateString = maxDate.toISOString().split("T")[0];
     return (
-        <form onSubmit={handleSubmit(reservar)}
-            className="flex flex-col gap-12 w-full max-w-lg p-6">
-            <Input label="Fecha del Turno" type="date" min={today} max={maxDateString} name="fecha" register={register} error={errors.fecha?.message} />
-            <SelectMascotas label="Mascota" name="mascota" options={mascotasCliente} register={register} error={errors.mascota?.message} />
-            <Select label="Veterinario" name="veterinario" options={["Dr.Juan Lopez" ,"Dr.Eugenia Rodriguez","Dr.Leandro Perez"]} register={register} error={errors.veterinario?.message} />
-            <Select label="Horario" name="hora" options={horarios} register={register} error={errors.hora?.message} />
-            <Select label="Sucursal" name="sucursal" options={["Sucursal 1", "Sucursal 2"]} register={register} error={errors.sucursal?.message} />
-            <TextArea label="Detalle de cita" name="detalleCita" register={register} error={errors.detalleCita?.message}/>
-            <button type='submit' className='p-1.5 text-black font-semibold bg-rose-500 rounded-md p-1 mt-2 '>Reservar</button>
-        </form>
+            mascotasCliente ? (
+                <form onSubmit={handleSubmit(reservar)}
+                className="flex flex-col gap-12 w-full max-w-lg p-6">
+                <Input label="Fecha del Turno" type="date" min={today} max={maxDateString} name="fecha" register={register} error={errors.fecha?.message} />
+                <SelectMascotas label="Mascota" name="mascota" options={mascotasCliente} register={register} error={errors.mascota?.message} />
+                <Select label="Veterinario" name="veterinario" options={["Dr.Juan Lopez" ,"Dr.Eugenia Rodriguez","Dr.Leandro Perez"]} register={register} error={errors.veterinario?.message} />
+                <Select label="Horario" name="hora" options={horarios} register={register} error={errors.hora?.message} />
+                <Select label="Sucursal" name="sucursal" options={["Sucursal 1", "Sucursal 2"]} register={register} error={errors.sucursal?.message} />
+                <TextArea label="Detalle de cita" name="detalleCita" register={register} error={errors.detalleCita?.message}/>
+                <button type='submit' className='p-1.5 text-black font-semibold bg-rose-500 rounded-md mt-2 '>Reservar</button>
+            </form>
+            ) : (
+                <>
+                <h2>¡Uh oh, parece que no tienes ninguna mascota!</h2>
+                <p>Para cargar un turno, primero debes registrar una mascota.</p>
+                <Link
+                  to={`/user/registrarMascota/${user.id}`}
+                  className="inline-block mt-4 py-2 px-4 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600"
+                >
+                  Agregar Mascota
+                </Link>
+                </>
+                
+            )
     )
 }
 
