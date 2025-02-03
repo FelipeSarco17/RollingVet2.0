@@ -43,7 +43,7 @@ const Inicio = () => {
       </article>
 
       <article className='flex flex-col gap-3 p-2 pb-16 bg-gradient-to-br from-cyan-500 to-blue-600 justify-center items-center'>
-        <h2 className=' text-xl text-center p-4 md:text-2xl font-semibold text-center'>Dale un vistazo a nuestros planes</h2>
+        <h2 className=' text-xl text-center p-4 md:text-2xl font-semibold'>Dale un vistazo a nuestros planes</h2>
         {planes.map((plan, index) => {
           return <PlanCard key={`plan${index}`} plan={plan} />
         })}
@@ -54,14 +54,14 @@ const Inicio = () => {
         <ReviewSlider reviews={reviews} />
       </article>
 
-      <article className='w-full flex flex-col items-center my-8 bg-gradient-to-br p-8 from-cyan-500 to-blue-600 p-2'>
+      <article className='w-full flex flex-col items-center my-8 bg-gradient-to-br p-8 from-cyan-500 to-blue-600'>
           <h3 className='font-bold text-3xl p-8 my-4 text-center'>Algunos de los productos que puedes encontrar en nuestros locales</h3>
           <div>
             <Galery/>
           </div>
       </article>
 
-      <article className='w-full flex flex-col items-center my-8 p-8 p-2'>
+      <article className='w-full flex flex-col items-center my-8 p-8'>
       <h3 className='font-bold text-3xl text-center p-8 my-4'>¡Trabajamos en conjunto con las siguientes marcas para ofrecerte el mejor servicio!</h3>
       <div className='flex flex-col xl:flex-row gap-12 items-center justify-items-center '>
           <img className='w-64' src="https://www.trixie.de/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FTRIXIE_LOGO_RGB_Rot_NEW2024.5a8a215d.png&w=3840&q=75" alt="trixieLogo" />
