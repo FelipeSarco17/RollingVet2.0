@@ -5,11 +5,11 @@ const firma = process.env.JWT_SECRET_KEY;
 const nodemailer = require("nodemailer")
 
 const transporter = nodemailer.createTransport({
-    host: 'smtp.ethereal.email',
+    host: 'smtp.gmail.com',
     port: 587,
     auth: {
-        user: 'raegan23@ethereal.email',
-        pass: '7yPbnkqzQqHQrfKvg4'
+        user: process.env.USEREMAIL,
+        pass: process.env.APIKEY
     }
 })
 
@@ -66,7 +66,7 @@ const sendEmail = async(req,res) => {
     const {email} = req.body;
 
     const info = await transporter.sendMail({
-        from: ' "Carevet" <RollingVet96i@gmail.com>',
+        from: ' "Carevet" <rollingvet7@gmail.com>',
         to: email,
         subject: "Contacto sobre planes",
         html: createMailWithTemplate()
@@ -82,7 +82,7 @@ const sendEmailContacto = async(req,res) =>{
 
     const info = await transporter.sendMail({
         from: `"${cliente} <${email}>"`,
-        to: "raegan23@ethereal.email",
+        to: "rollingvet7@gmail.com",
         subject: `Mensaje del cliente ${cliente} <${email}>`,
         text: texto
     });

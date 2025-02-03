@@ -49,8 +49,6 @@ function App() {
           <Route path='/nosotros' element={<Nosotros />} />
           <Route path='/contacto' element={<Contacto />} />
           <Route path='/planes' element={<Planes />} />
-          <Route path='/admin/gestionPacientes' element={<AdministrarPacientes />} />
-          <Route path='/admin/modificarPaciente/:id' element={<ModificarPaciente />} />
 
           <Route element={<RutasProtegidasUserLogueado />}>
           <Route path='/user/userpage' element={<PaginaUsuario/>} />
@@ -76,16 +74,7 @@ function App() {
             <Route path='/admin/registrarEspecie' element={<RegistrarEspecie />} />
           </Route>
 
-      {/* LAS RUTAS A CONTINUACIÓN SON PROVISORIAS HASTA QUE SE ARREGLEN LAS COOKIES */}
-            {/* <Route path='/admin/gestionPacientes' element={<AdministrarPacientes />} />
-            <Route path='/admin/gestionMascotas' element={<AdministrarMascotas />} />
-            <Route path='/admin/gestionTurnos' element={<AdministrarTurnos />} />
-
-            <Route path='/admin/gestionEspecies' element={<AdministrarEspecies />} />
-            <Route path='/admin/modificarMascota/:id' element={<ModificarMascotaAdmin/>}/>
-            <Route path='/admin/modificarPaciente/:id' element={<ModificarPaciente />} />
-            <Route path='/admin/registrarMascota' element={<RegistrarMascota />} />
-            <Route path='/admin/registrarEspecie' element={<RegistrarEspecie />} /> */}
+    
 
         </Routes>
         <Footer />
