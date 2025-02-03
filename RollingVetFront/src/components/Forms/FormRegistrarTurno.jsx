@@ -97,7 +97,7 @@ const FormRegistrarTurno = () => {
     maxDate.setFullYear(maxDate.getFullYear() + 1);
     const maxDateString = maxDate.toISOString().split("T")[0];
     return (
-            mascotasCliente.length > 0 ? (
+            user.mascotasIDs.length > 0 ? (
                 <form onSubmit={handleSubmit(reservar)}
                 className="flex flex-col gap-12 w-full max-w-lg p-6">
                 <Input label="Fecha del Turno" type="date" min={today} max={maxDateString} name="fecha" register={register} error={errors.fecha?.message} />
