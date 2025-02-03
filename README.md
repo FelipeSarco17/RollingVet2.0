@@ -44,12 +44,13 @@ Used Dependencies on BackEnd:
 "nodemailer": "^6.9.16",
 "zod": "^3.23.8"
 
-Admin accounts for test: 
-email : raulopez@gmail.com
-password: Hola123!
+Admin accounts for testing:
+
+email: raulopez@gmail.com
+clave: Hola123!
 
 email: admin1@gmail.com
-contraseña: Hola123!
+clave: Hola123!
 
 Authors:
 
