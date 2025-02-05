@@ -9,7 +9,7 @@ import Swal from "sweetalert2";
 
 const PaginaUsuario = () => {
   const [mascotasUsuario, setMascotasUsuario] = useState([]);
-  const { user, modificarUsuario } = useAuth();
+  const { user, editarUsuario } = useAuth();
   const [error, setError] = useState()
   const [turnosUsuario, setTurnosUsuario] = useState();
 
@@ -17,6 +17,9 @@ const PaginaUsuario = () => {
     try {
       const mascotasUs = await traerMascotasUsuario(id);
       setMascotasUsuario(mascotasUs.mascotas);
+      const usuarioNuevo = {...user, mascotasIDs: mascotasUs.mascotas}
+      console.log(usuarioNuevo);
+      editarUsuario(usuarioNuevo.id, usuarioNuevo)
     } catch (error) {
       setError(error.response.data.message);
     }
