@@ -38,7 +38,7 @@ const IniciarSesion = () => {
             <form action="#" method="POST" className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
               
               <Input type="text" error={errors.email?.message} label="Email" name="email" register={register}/>
-              <Input type="password" error={errors.clave?.message} label="Contraseña" name="clave" register={register}/>
+              <Input type="password" error={errors.password?.message} label="Contraseña" name="password" register={register}/>
               
 
               <div>
