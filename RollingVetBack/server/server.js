@@ -20,7 +20,7 @@ class Server {
         await dbConnection()
     }
     middlewares(){
-        this.app.use(cors({origin:["http://localhost:5173", "https://rolling-vet2-0.vercel.app"],credentials:true,optionsSuccessStatus:200}))
+        this.app.use(cors({origin:"https://rolling-vet2-0.vercel.app",credentials:true,optionsSuccessStatus:200}))
         this.app.use(express.json());
         this.app.use(cookieParser());
     }
